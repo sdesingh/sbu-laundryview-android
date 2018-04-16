@@ -36,10 +36,14 @@ public class DataManager {
         this.context = context;
         queue = Volley.newRequestQueue(context);
 
+        room = new Room(quad, building, 8, 8);
+
         dataURL = BASE_URL + "/" + quad + "/" + building;
     }
 
     public void getData(){
+
+        if(timeout == 2) return;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null, new Response.Listener<JSONObject>() {
 
@@ -148,6 +152,7 @@ public class DataManager {
         return false;
     }
 
+    public Room getRoom(){ return room; }
 
 
 }

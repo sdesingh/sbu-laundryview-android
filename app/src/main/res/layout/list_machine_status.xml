@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/White">
+    android:layout_height="wrap_content"
+    android:background="@color/White"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/Card"
@@ -38,27 +40,20 @@
                 android:tint="@color/Red"
                 android:tintMode="src_atop"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/bar"
-                app:layout_constraintStart_toStartOf="@+id/bar"
+                app:layout_constraintEnd_toEndOf="@+id/list_Machine_progress_ProgressBar"
+                app:layout_constraintStart_toStartOf="@+id/list_Machine_progress_ProgressBar"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/machine_icon" />
 
-            <fr.castorflex.android.circularprogressbar.CircularProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/bar"
+            <ProgressBar
+                android:id="@+id/list_Machine_progress_ProgressBar"
+                android:indeterminate="false"
+                android:progress="10"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:indeterminate="true"
-                android:progress="10"
-                app:cpb_color="@color/Red"
-                app:cpb_max_sweep_angle="250"
-                app:cpb_min_sweep_angle="5"
-                app:cpb_rotation_speed="1.0"
-                app:cpb_stroke_width="8dp"
-                app:cpb_sweep_speed="1.0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,7 +87,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/list_Machine_txt_TimeLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -106,7 +101,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/remaining"
+                android:id="@+id/list_Machine_txt_Status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -118,7 +113,7 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="@+id/list_Machine_txt_TimeLeft"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
         </android.support.constraint.ConstraintLayout>
@@ -138,7 +133,7 @@
         app:layout_constraintTop_toTopOf="@+id/space">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/list_Machine_txt_MachineNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
