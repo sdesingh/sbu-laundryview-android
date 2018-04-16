@@ -7,12 +7,12 @@
     android:background="@color/White">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="200dp"
+        android:id="@+id/Card"
+        android:layout_width="0dp"
         android:layout_height="210dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:foreground="@drawable/ripple_effect"
@@ -38,30 +38,28 @@
                 android:tint="@color/Red"
                 android:tintMode="src_atop"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/bar"
+                app:layout_constraintStart_toStartOf="@+id/bar"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/machine_icon" />
 
             <fr.castorflex.android.circularprogressbar.CircularProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/circularProgressBar"
+                android:id="@+id/bar"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:indeterminate="true"
                 android:progress="10"
                 app:cpb_color="@color/Red"
-                app:cpb_max_sweep_angle="50"
-                app:cpb_min_sweep_angle="1"
+                app:cpb_max_sweep_angle="250"
+                app:cpb_min_sweep_angle="5"
                 app:cpb_rotation_speed="1.0"
                 app:cpb_stroke_width="8dp"
                 app:cpb_sweep_speed="1.0"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,14 +77,15 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/Status"
         android:layout_width="155dp"
         android:layout_height="35dp"
-        android:layout_marginTop="190dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="28dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView2"
-        app:layout_constraintStart_toStartOf="@+id/cardView2"
-        app:layout_constraintTop_toTopOf="@+id/cardView2">
+        app:layout_constraintBottom_toBottomOf="@+id/space2"
+        app:layout_constraintRight_toRightOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -126,14 +125,17 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/MachineNumber"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="25dp"
         app:cardElevation="6dp"
-        app:layout_constraintStart_toStartOf="@+id/cardView2"
-        app:layout_constraintTop_toTopOf="@+id/cardView2">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/space">
 
         <TextView
             android:id="@+id/textView3"
@@ -145,4 +147,26 @@
             android:textColor="@android:color/black"
             android:textSize="20sp" />
     </android.support.v7.widget.CardView>
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        app:layout_constraintBottom_toTopOf="@+id/Card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Card" />
 </android.support.constraint.ConstraintLayout>

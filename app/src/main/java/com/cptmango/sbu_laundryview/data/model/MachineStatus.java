@@ -1,9 +1,13 @@
 package com.cptmango.sbu_laundryview.data.model;
 
-public enum  MachineStatus {
+/**
+ * Created by mango on 4/16/18.
+ */
 
-    IN_PROGRESS("Working."),
-    DONE("Done."),
+public enum MachineStatus {
+
+    IN_PROGRESS("Time remaining: "),
+    AVAILABLE("Available."),
     DONE_DOOR_CLOSED("Done. Door still closed."),
     OUT_OF_ORDER("Machine broken.");
 
