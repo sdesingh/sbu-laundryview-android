@@ -6,7 +6,7 @@ package com.cptmango.sbu_laundryview.data.model;
 
 public enum MachineStatus {
 
-    IN_PROGRESS("Time remaining: "),
+    IN_PROGRESS("mins remaining."),
     AVAILABLE("Available."),
     DONE_DOOR_CLOSED("Done. Door still closed."),
     OUT_OF_ORDER("Machine broken.");

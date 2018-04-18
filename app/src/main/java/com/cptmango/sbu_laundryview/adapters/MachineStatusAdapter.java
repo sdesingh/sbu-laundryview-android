@@ -4,19 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.data.model.Machine;
+import com.cptmango.sbu_laundryview.data.model.MachineStatus;
 import com.cptmango.sbu_laundryview.data.model.Room;
-
-import fr.castorflex.android.circularprogressbar.CircularProgressBar;
-import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 /**
  * Created by mango on 4/16/18.
@@ -65,16 +67,10 @@ public class MachineStatusAdapter extends BaseAdapter {
             holder.machineNumber = (TextView) convertView.findViewById(R.id.list_Machine_txt_MachineNumber);
             holder.machineStatus = (TextView) convertView.findViewById(R.id.list_Machine_txt_Status);
             holder.timeLeft = (TextView) convertView.findViewById(R.id.list_Machine_txt_TimeLeft);
-            holder.progressBar = (ProgressBar) convertView.findViewById(R.id.list_Machine_progress_ProgressBar);
-            holder.progressBar.setIndeterminateDrawable(new CircularProgressDrawable
-                    .Builder(context)
-                    .sweepSpeed(1f)
-                    .color(R.color.Red)
-                    .strokeWidth(16)
-                    .minSweepAngle(5)
-                    .maxSweepAngle(5)
-                    .style(CircularProgressDrawable.STYLE_ROUNDED)
-                    .build());
+            holder.progressBar = (CircularProgressBar) convertView.findViewById(R.id.list_Machine_progress_ProgressBar);
+            holder.machineIcon = (ImageView) convertView.findViewById(R.id.machineIcon);
+            holder.statusIcon = (CardView) convertView.findViewById(R.id.littleIcon);
+
             convertView.setTag(holder);
 
         }
@@ -82,19 +78,37 @@ public class MachineStatusAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        Machine machine = room.getMachine(position);
+
+        holder.machineStatus.setText(machine.machineStatus().getDescription());
         holder.machineNumber.setText(position + 1 + "");
-        holder.progressBar.invalidate();
-        holder.progressBar.setIndeterminateDrawable(new CircularProgressDrawable
-                .Builder(context)
-                .sweepSpeed(1f)
-                .color(R.color.Red)
-                .strokeWidth(16)
-                .minSweepAngle(5)
-                .maxSweepAngle((position + 1) * 40)
-                .style(CircularProgressDrawable.STYLE_ROUNDED)
-                .build());
+        setupCard(holder, machine);
 
         return convertView;
+    }
+
+    public void setupCard(ViewHolder holder, Machine machine){
+
+        if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
+            holder.timeLeft.setText(machine.timeLeft() + "");
+            holder.progressBar.setProgress(0);
+            double progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+            holder.progressBar.setProgressWithAnimation((int) progress, 800);
+
+            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
+            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
+            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Red));
+
+        }
+        else{
+            holder.progressBar.setProgress(100);
+            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Green));
+            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Green));
+
+            holder.timeLeft.setText("");
+        }
+
     }
 
     private static class ViewHolder{
@@ -102,7 +116,9 @@ public class MachineStatusAdapter extends BaseAdapter {
         TextView machineNumber;
         TextView timeLeft;
         TextView machineStatus;
-        ProgressBar progressBar;
+        CardView statusIcon;
+        ImageView machineIcon;
+        CircularProgressBar progressBar;
 
     }
 

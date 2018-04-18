@@ -5,23 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/White"
-    android:paddingBottom="20dp"
-    android:paddingTop="20dp">
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/Card"
-        android:layout_width="0dp"
-        android:layout_height="210dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="25dp"
         android:clickable="true"
         android:foreground="@drawable/ripple_effect"
         app:cardBackgroundColor="@color/offWhite"
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -30,36 +26,21 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="46dp"
-                android:layout_height="53dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:id="@+id/machineIcon"
+                android:layout_width="40dp"
+                android:layout_height="45dp"
                 android:tint="@color/Red"
                 android:tintMode="src_atop"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/list_Machine_progress_ProgressBar"
                 app:layout_constraintEnd_toEndOf="@+id/list_Machine_progress_ProgressBar"
                 app:layout_constraintStart_toStartOf="@+id/list_Machine_progress_ProgressBar"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/list_Machine_progress_ProgressBar"
                 app:srcCompat="@drawable/machine_icon" />
 
-            <ProgressBar
-                android:id="@+id/list_Machine_progress_ProgressBar"
-                android:indeterminate="false"
-                android:progress="10"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v7.widget.CardView
-                android:layout_width="15dp"
+                android:id="@+id/littleIcon"
+                android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -68,19 +49,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/list_Machine_progress_ProgressBar"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:cpb_background_progressbar_color="#FFCDD2"
+                app:cpb_background_progressbar_width="3dp"
+                app:cpb_progress="25"
+                app:cpb_progressbar_color="#F44336"
+                app:cpb_progressbar_width="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/Status"
-        android:layout_width="155dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="28dp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/space2"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/Card"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="@+id/Card">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -91,12 +93,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/lato_bl"
                 android:text="6"
                 android:textColor="@android:color/black"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/list_Machine_txt_Status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,27 +113,24 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="9dp"
                 android:fontFamily="@font/lato_light"
-                android:text="minutes remaining."
+                android:text="Available"
                 android:textColor="@android:color/black"
+                android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/list_Machine_txt_TimeLeft"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/MachineNumber"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        app:cardCornerRadius="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Status"
         app:layout_constraintTop_toTopOf="@+id/space">
 
         <TextView
@@ -140,24 +141,28 @@
             android:fontFamily="@font/lato_bl"
             android:text="4"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </android.support.v7.widget.CardView>
 
     <Space
         android:id="@+id/space"
         android:layout_width="0dp"
-        android:layout_height="31dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/Card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Space
         android:id="@+id/space2"
         android:layout_width="0dp"
-        android:layout_height="31dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

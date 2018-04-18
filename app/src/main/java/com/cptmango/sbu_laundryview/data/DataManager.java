@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.MachineStatus;
 import com.cptmango.sbu_laundryview.data.model.Room;
@@ -19,16 +20,14 @@ import org.json.JSONObject;
 
 public class DataManager {
 
-    private final String BASE_URL = "http://ec2-18-218-241-28.us-east-2.compute.amazonaws.com";
     private String quad;
     private String building;
-    private String dataURL = "";
+    private String dataURL;
     private int timeout = 0;
 
     Context context;
     Room room;
     RequestQueue queue;
-
 
     public DataManager(Context context, String quad, String building){
         this.quad = quad;
@@ -36,21 +35,20 @@ public class DataManager {
         this.context = context;
         queue = Volley.newRequestQueue(context);
 
-        room = new Room(quad, building, 8, 8);
-
-        dataURL = BASE_URL + "/" + quad + "/" + building;
+        dataURL = "http://ec2-18-218-241-28.us-east-2.compute.amazonaws.com" + "/" + quad + "/" + building;
     }
 
     public void getData(){
 
-        if(timeout == 2) return;
+        if(timeout != 0) System.out.println("Retrying request " + timeout);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
 
                 if(!parseData(response)){
+                    if(timeout == 3) return;
                     // Retry request.
                     timeout++;
                     getData();
@@ -146,13 +144,14 @@ public class DataManager {
 
         } catch (JSONException e){
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            return false;
         }
 
-
-        return false;
     }
 
-    public Room getRoom(){ return room; }
+    public Room getRoomData(){ return room; }
 
-
+    public RequestQueue getQueue() {
+        return queue;
+    }
 }
