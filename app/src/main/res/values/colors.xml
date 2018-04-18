@@ -9,5 +9,7 @@
 
 
     <color name="Red">#e74c3c</color>
+    <color name="Yellow">#f1c40f</color>
+    <color name="Orange">#ff5705</color>
     <color name="Green">#2ecc71</color>
 </resources>

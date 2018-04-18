@@ -1,6 +1,7 @@
 package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -66,6 +67,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             holder.statusIcon = (CardView) convertView.findViewById(R.id.littleIcon);
             holder.machineIcon = (ImageView) convertView.findViewById(R.id.machineIcon);
             holder.progressBar = (CircularProgressBar) convertView.findViewById(R.id.list_Machine_progress_ProgressBar);
+            holder.machineIconLittle = (ImageView) convertView.findViewById(R.id.statusImage);
 
             convertView.setTag(holder);
 
@@ -97,6 +99,8 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Red));
+            holder.machineIconLittle.setImageResource(R.drawable.icon_drying);
+            holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Red));
 
         }
         else{
@@ -104,6 +108,8 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Green));
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Green));
+            holder.machineIconLittle.setImageResource(R.drawable.icon_check);
+            holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Green));
 
             holder.timeLeft.setText("");
         }
@@ -117,6 +123,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         TextView machineStatus;
         CardView statusIcon;
         ImageView machineIcon;
+        ImageView machineIconLittle;
         CircularProgressBar progressBar;
 
     }

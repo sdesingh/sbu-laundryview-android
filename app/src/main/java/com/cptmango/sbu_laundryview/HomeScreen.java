@@ -24,7 +24,7 @@ public class HomeScreen extends AppCompatActivity {
 
     void connectToAPI() {
 
-        data = new DataManager(this, "Mendelsohn", "Oneill");
+        data = new DataManager(this, "Roth", "Cardozo");
         data.getData();
 
         data.getQueue().addRequestFinishedListener(response -> {
