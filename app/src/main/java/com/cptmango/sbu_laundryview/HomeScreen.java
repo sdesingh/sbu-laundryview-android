@@ -3,19 +3,16 @@ package com.cptmango.sbu_laundryview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.widget.GridView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.cptmango.sbu_laundryview.adapters.MachineStatusAdapter;
+import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
 
 public class HomeScreen extends AppCompatActivity {
 
     DataManager data;
-
-    ListView list;
-    MachineStatusAdapter adapter;
+    GridView grid;
+    MachineGridStatusAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +24,7 @@ public class HomeScreen extends AppCompatActivity {
 
     void connectToAPI() {
 
-        data = new DataManager(this, "Mendelsohn", "Irving");
+        data = new DataManager(this, "Mendelsohn", "Oneill");
         data.getData();
 
         data.getQueue().addRequestFinishedListener(response -> {
@@ -40,13 +37,27 @@ public class HomeScreen extends AppCompatActivity {
 
     void initializeUI(){
 
-        adapter = new MachineStatusAdapter(this, data.getRoomData(), true);
+        adapter = new MachineGridStatusAdapter(this, data.getRoomData(), true);
 
-        list = (ListView) findViewById(R.id.list);
-        list.setAdapter(adapter);
+        grid = (GridView) findViewById(R.id.grid);
+        grid.setColumnWidth(GridView.AUTO_FIT);
+        grid.setNumColumns(GridView.AUTO_FIT);
+
+        grid.setAdapter(adapter);
 
     }
 
+    void updateData(){
+
+        data.getData();
+
+        data.getQueue().addRequestFinishedListener(response -> {
+
+            if(data.getRoomData() != null) adapter.notifyDataSetChanged();
+
+        });
+
+    }
 
 
 }

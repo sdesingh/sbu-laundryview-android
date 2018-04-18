@@ -1,7 +1,6 @@
 package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cptmango.sbu_laundryview.R;
@@ -24,13 +22,13 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
  * Created by mango on 4/16/18.
  */
 
-public class MachineStatusAdapter extends BaseAdapter {
+public class MachineListStatusAdapter extends BaseAdapter {
 
     Room room;
     Activity context;
     boolean isWasher;
 
-    public MachineStatusAdapter(Activity context, Room room, boolean isWasher){
+    public MachineListStatusAdapter(Activity context, Room room, boolean isWasher){
 
         this.room = room;
         this.context = context;
@@ -61,7 +59,7 @@ public class MachineStatusAdapter extends BaseAdapter {
 
         if(convertView == null){
             LayoutInflater inflater = context.getLayoutInflater();
-            convertView = inflater.inflate(R.layout.list_machine_status, null);
+            convertView = inflater.inflate(R.layout.machine_status, null);
             holder = new ViewHolder();
 
             holder.machineNumber = (TextView) convertView.findViewById(R.id.list_Machine_txt_MachineNumber);
@@ -111,7 +109,7 @@ public class MachineStatusAdapter extends BaseAdapter {
 
     }
 
-    private static class ViewHolder{
+    private class ViewHolder{
 
         TextView machineNumber;
         TextView timeLeft;
