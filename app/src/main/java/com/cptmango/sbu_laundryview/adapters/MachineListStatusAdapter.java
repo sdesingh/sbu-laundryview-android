@@ -62,12 +62,12 @@ public class MachineListStatusAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.machine_status, null);
             holder = new ViewHolder();
 
-            holder.machineNumber = (TextView) convertView.findViewById(R.id.list_Machine_txt_MachineNumber);
-            holder.machineStatus = (TextView) convertView.findViewById(R.id.list_Machine_txt_Status);
-            holder.timeLeft = (TextView) convertView.findViewById(R.id.list_Machine_txt_TimeLeft);
-            holder.progressBar = (CircularProgressBar) convertView.findViewById(R.id.list_Machine_progress_ProgressBar);
-            holder.machineIcon = (ImageView) convertView.findViewById(R.id.machineIcon);
-            holder.statusIcon = (CardView) convertView.findViewById(R.id.littleIcon);
+            holder.machineNumber = (TextView) convertView.findViewById(R.id.Machine_txt_MachineNumber);
+            holder.machineStatus = (TextView) convertView.findViewById(R.id.Machine_txt_Status);
+            holder.timeLeft = (TextView) convertView.findViewById(R.id.Machine_txt_TimeLeft);
+            holder.progressBar = (CircularProgressBar) convertView.findViewById(R.id.Machine_progress_ProgressBar);
+            holder.machineIcon = (ImageView) convertView.findViewById(R.id.Machine_image_MachineIcon);
+            holder.statusIcon = (CardView) convertView.findViewById(R.id.Machine_cardView_StatusIndicator);
 
             convertView.setTag(holder);
 
@@ -97,6 +97,14 @@ public class MachineListStatusAdapter extends BaseAdapter {
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Red));
 
+        }
+        else if(machine.machineStatus() == MachineStatus.DONE_DOOR_CLOSED){
+            holder.progressBar.setProgress(100);
+            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
+            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Yellow));
+            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Yellow));
+
+            holder.timeLeft.setText("");
         }
         else{
             holder.progressBar.setProgress(100);

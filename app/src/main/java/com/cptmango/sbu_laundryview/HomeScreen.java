@@ -3,7 +3,9 @@ package com.cptmango.sbu_laundryview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
@@ -24,7 +26,7 @@ public class HomeScreen extends AppCompatActivity {
 
     void connectToAPI() {
 
-        data = new DataManager(this, "Roth", "Cardozo");
+        data = new DataManager(this, "Mendelsohn", "Irving");
         data.getData();
 
         data.getQueue().addRequestFinishedListener(response -> {
@@ -56,6 +58,22 @@ public class HomeScreen extends AppCompatActivity {
             if(data.getRoomData() != null) adapter.notifyDataSetChanged();
 
         });
+
+    }
+
+    void buttonClicked(View view){
+
+        switch(view.getId()){
+
+            case R.id.refresh: updateData();
+                Toast.makeText(this, "Refreshing data.", Toast.LENGTH_SHORT).show();
+            break;
+
+            default: return;
+
+        }
+
+
 
     }
 

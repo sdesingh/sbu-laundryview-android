@@ -1,7 +1,6 @@
 package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
-import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -61,13 +60,13 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.machine_status, null, false);
             holder = new ViewHolder();
 
-            holder.machineNumber = (TextView) convertView.findViewById(R.id.list_Machine_txt_MachineNumber);
-            holder.machineStatus = (TextView) convertView.findViewById(R.id.list_Machine_txt_Status);
-            holder.timeLeft = (TextView) convertView.findViewById(R.id.list_Machine_txt_TimeLeft);
-            holder.statusIcon = (CardView) convertView.findViewById(R.id.littleIcon);
-            holder.machineIcon = (ImageView) convertView.findViewById(R.id.machineIcon);
-            holder.progressBar = (CircularProgressBar) convertView.findViewById(R.id.list_Machine_progress_ProgressBar);
-            holder.machineIconLittle = (ImageView) convertView.findViewById(R.id.statusImage);
+            holder.machineNumber = (TextView) convertView.findViewById(R.id.Machine_txt_MachineNumber);
+            holder.machineStatus = (TextView) convertView.findViewById(R.id.Machine_txt_Status);
+            holder.timeLeft = (TextView) convertView.findViewById(R.id.Machine_txt_TimeLeft);
+            holder.statusIcon = (CardView) convertView.findViewById(R.id.Machine_cardView_StatusIndicator);
+            holder.machineIcon = (ImageView) convertView.findViewById(R.id.Machine_image_MachineIcon);
+            holder.progressBar = (CircularProgressBar) convertView.findViewById(R.id.Machine_progress_ProgressBar);
+            holder.machineIconLittle = (ImageView) convertView.findViewById(R.id.Machine_image_StatusIcon);
 
             convertView.setTag(holder);
 
@@ -101,7 +100,21 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Red));
             holder.machineIconLittle.setImageResource(R.drawable.icon_drying);
             holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Red));
+            holder.machineIconLittle.requestLayout();
+            holder.machineIconLittle.getLayoutParams().height = 30;
+            holder.machineIconLittle.getLayoutParams().width = 30;
 
+
+        }
+        else if(machine.machineStatus() == MachineStatus.DONE_DOOR_CLOSED){
+            holder.progressBar.setProgress(100);
+            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
+            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Yellow));
+            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Yellow));
+            holder.machineIconLittle.setImageResource(R.drawable.icon_waiting);
+            holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
+
+            holder.timeLeft.setText("");
         }
         else{
             holder.progressBar.setProgress(100);

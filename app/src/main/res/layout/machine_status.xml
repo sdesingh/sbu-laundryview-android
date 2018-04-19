@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/White"
-    android:paddingBottom="15dp"
-    android:paddingTop="15dp">
+    android:layout_gravity="center"
+    android:paddingBottom="0dp"
+    android:paddingTop="0dp"
+    android:clickable="false">
 
     <android.support.v7.widget.CardView
         android:id="@+id/Card"
@@ -26,20 +27,20 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/machineIcon"
+                android:id="@+id/Machine_image_MachineIcon"
                 android:layout_width="40dp"
                 android:layout_height="45dp"
                 android:tint="@color/Red"
                 android:tintMode="src_atop"
-                app:layout_constraintBottom_toBottomOf="@+id/list_Machine_progress_ProgressBar"
-                app:layout_constraintEnd_toEndOf="@+id/list_Machine_progress_ProgressBar"
-                app:layout_constraintStart_toStartOf="@+id/list_Machine_progress_ProgressBar"
-                app:layout_constraintTop_toTopOf="@+id/list_Machine_progress_ProgressBar"
+                app:layout_constraintBottom_toBottomOf="@+id/Machine_progress_ProgressBar"
+                app:layout_constraintEnd_toEndOf="@+id/Machine_progress_ProgressBar"
+                app:layout_constraintStart_toStartOf="@+id/Machine_progress_ProgressBar"
+                app:layout_constraintTop_toTopOf="@+id/Machine_progress_ProgressBar"
                 app:srcCompat="@drawable/machine_icon" />
 
 
             <android.support.v7.widget.CardView
-                android:id="@+id/littleIcon"
+                android:id="@+id/Machine_cardView_StatusIndicator"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginStart="8dp"
@@ -50,7 +51,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                android:id="@+id/list_Machine_progress_ProgressBar"
+                android:id="@+id/Machine_progress_ProgressBar"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_marginBottom="20dp"
@@ -68,17 +69,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/statusImage"
+                android:id="@+id/Machine_image_StatusIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="9dp"
                 android:layout_marginTop="8dp"
                 android:tint="@color/Red"
-                app:layout_constraintBottom_toBottomOf="@+id/machineIcon"
-                app:layout_constraintEnd_toEndOf="@+id/machineIcon"
-                app:layout_constraintStart_toStartOf="@+id/machineIcon"
-                app:layout_constraintTop_toTopOf="@+id/machineIcon"
+                app:layout_constraintBottom_toBottomOf="@+id/Machine_image_MachineIcon"
+                app:layout_constraintEnd_toEndOf="@+id/Machine_image_MachineIcon"
+                app:layout_constraintStart_toStartOf="@+id/Machine_image_MachineIcon"
+                app:layout_constraintTop_toTopOf="@+id/Machine_image_MachineIcon"
                 app:srcCompat="@drawable/icon_check" />
 
         </android.support.constraint.ConstraintLayout>
@@ -99,40 +100,37 @@
         app:layout_constraintStart_toStartOf="@+id/Card">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <TextView
-                android:id="@+id/list_Machine_txt_TimeLeft"
+                android:id="@+id/Machine_txt_TimeLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="9dp"
                 android:fontFamily="@font/lato_bl"
                 android:text="6"
                 android:textColor="@android:color/black"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/list_Machine_txt_Status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/list_Machine_txt_Status"
+                android:id="@+id/Machine_txt_Status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="9dp"
-                android:fontFamily="@font/lato_light"
-                android:text="Available"
+                android:fontFamily="@font/lato_regular"
+                android:text="mins remaining"
                 android:textColor="@android:color/black"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Machine_txt_TimeLeft"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
@@ -148,7 +146,7 @@
         app:layout_constraintTop_toTopOf="@+id/space">
 
         <TextView
-            android:id="@+id/list_Machine_txt_MachineNumber"
+            android:id="@+id/Machine_txt_MachineNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
