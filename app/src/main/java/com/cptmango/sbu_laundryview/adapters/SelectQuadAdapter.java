@@ -2,11 +2,7 @@ package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.media.Image;
-import android.os.Build;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,23 +73,6 @@ public class SelectQuadAdapter extends BaseAdapter {
         holder.quadTagLine.setText(quadTagLines[position]);
         holder.quadTagLine.setTextColor(Color.parseColor(quadColors[position]));
         holder.quadColor.setColorFilter(Color.parseColor(quadColors[position]));
-        convertView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-//                if(holder.selected){
-//                    holder.quadColor.animate().translationX(0).setDuration(300);
-//                    holder.selected = false;
-//                }else{
-//                    holder.quadColor.animate().translationX(-350f).setDuration(300);
-//                    holder.selected = true;
-//                }
-
-
-            }
-        });
 
         return convertView;
     }

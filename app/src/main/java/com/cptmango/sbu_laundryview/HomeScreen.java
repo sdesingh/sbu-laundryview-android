@@ -1,6 +1,7 @@
 package com.cptmango.sbu_laundryview;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,26 +17,27 @@ import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
 
-//    DataManager data;
-//    GridView grid;
-//    MachineGridStatusAdapter adapter;
+    DataManager data;
+    GridView grid;
+    MachineGridStatusAdapter adapter;
 
-    ListView quadList;
-    SelectQuadAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_room);
+        setContentView(R.layout.activity_list);
 
-        quadList = (ListView) findViewById(R.id.list_quadList);
-        adapter = new SelectQuadAdapter(this);
-        quadList.setAdapter(adapter);
-
+        startRoomPick();
         //connectToAPI();
     }
 
-    /*
+    void startRoomPick(){
+
+        Intent intent = new Intent(this, SelectRoom.class);
+        startActivity(intent);
+
+    }
+
     void connectToAPI() {
 
         data = new DataManager(this, "Mendelsohn", "Irving");
@@ -88,6 +90,6 @@ public class HomeScreen extends AppCompatActivity {
 
 
     }
-    */
+
 
 }
