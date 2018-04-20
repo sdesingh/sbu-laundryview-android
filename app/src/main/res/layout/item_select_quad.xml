@@ -4,12 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp">
+    android:clickable="true">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card_quadCard"
         android:layout_width="0dp"
-        android:layout_height="108dp"
-        android:elevation="5dp"
+        android:layout_height="120dp"
+        android:background="@drawable/card_shadow"
+        android:clickable="false"
+        android:clipToPadding="false"
+        android:foreground="@drawable/ripple_effect"
+        android:hapticFeedbackEnabled="false"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,19 +27,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/text_quadName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/lato_bl"
                 android:text="Mendelsohn"
                 android:textColor="@color/Black"
-                android:textSize="32sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView6"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toTopOf="@+id/text_quadTagLine"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/text_quadTagLine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -39,15 +47,14 @@
                 android:fontFamily="@font/lato_regular"
                 android:text="Information and Technology"
                 android:textColor="@color/Yellow"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                android:id="@+id/bar"
-                android:layout_width="10dp"
+                android:id="@+id/bar_quadColor"
+                android:layout_width="15dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="130dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -55,14 +62,25 @@
                 app:srcCompat="@color/Yellow" />
 
             <ListView
-                android:id="@+id/list_buildingListt"
+                android:id="@+id/list_buildingList"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/bar"
+                app:layout_constraintStart_toEndOf="@+id/bar_quadColor"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:alpha="0.2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/card_shadow" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

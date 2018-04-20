@@ -10,11 +10,12 @@
         <item>Kelly</item>
         <item>Roosevelt</item>
         <item>H Quad</item>
-        <item>West Apartments</item>
+        <item>West</item>
         <item>Chavez/Tubman</item>
 
 
     </string-array>
+
     <string-array name="quad_taglines">
 
         <item>Arts, Culture and Humanities</item>
@@ -26,16 +27,16 @@
         <item> </item>
         <item> </item>
 
-
     </string-array>
+
     <string-array name="quad_colors">
 
-        <item>#b3002e</item>
-        <item>#fabd2f</item>
+        <item>#e74c3c</item>
+        <item>#f1c40f</item>
         <item>#095892</item>
-        <item>#4d238a</item>
-        <item>#ea7727</item>
-        <item>#138b70</item>
+        <item>#8e44ad</item>
+        <item>#ff5705</item>
+        <item>#27ae60</item>
         <item>#8b052a</item>
         <item>#96d8f2</item>
 
