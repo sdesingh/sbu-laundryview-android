@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Quad Information-->
+    <string-array name="quad_names">
+
+        <item>Tabler</item>
+        <item>Mendelsohn</item>
+        <item>Roth</item>
+        <item>Kelly</item>
+        <item>Roosevelt</item>
+        <item>H Quad</item>
+        <item>West Apartments</item>
+        <item>Chavez/Tubman</item>
+
+
+    </string-array>
+    <string-array name="quad_taglines">
+
+        <item>Arts, Culture and Humanities</item>
+        <item>Information and Technology</item>
+        <item>Science and Society</item>
+        <item>Human Development</item>
+        <item>Global Studies</item>
+        <item>Leadership and Service</item>
+        <item> </item>
+        <item> </item>
+
+
+    </string-array>
+    <string-array name="quad_colors">
+
+        <item>#b3002e</item>
+        <item>#fabd2f</item>
+        <item>#095892</item>
+        <item>#4d238a</item>
+        <item>#ea7727</item>
+        <item>#138b70</item>
+        <item>#8b052a</item>
+        <item>#96d8f2</item>
+
+    </string-array>
+
+    <string-array name="mendelsohn">
+
+        <item>Information and Technology</item>
+        <item>Irving</item>
+        <item>O'neill</item>
+        <item>Gray</item>
+        <item>Amman</item>
+
+    </string-array>
+    <string-array name="roth">
+
+        <item>Science and Society</item>
+        <item>Cardozo</item>
+        <item>Gershwin</item>
+        <item>Hendrix</item>
+        <item>Mount</item>
+        <item>Whitman</item>
+
+    </string-array>
+    <string-array name="tabler">
+
+        <item>Arts, Culture and Humanities</item>
+
+    </string-array>
+    <string-array name="kelly">
+
+        <item>Human Development</item>
+
+    </string-array>
+    <string-array name="roosevelt">
+
+        <item>Global Studies</item>
+
+    </string-array>
+    <string-array name="h_quad">
+
+        <item>Leadership and Service</item>
+
+    </string-array>
+    <string name="chavez_tubman">
+
+        <item> </item>
+
+    </string>
+
+    <string name="west">
+
+        <item> </item>
+
+    </string>
+</resources>
