@@ -7,21 +7,22 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="30dp"
-        app:cardBackgroundColor="@color/Red"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp" >
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/text_roomName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/lato_bl"
             android:letterSpacing="0.5"
             android:text="IRVING"
-            android:textColor="@color/White" />
+            android:textColor="@color/Black"
+            android:textSize="22sp" />
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

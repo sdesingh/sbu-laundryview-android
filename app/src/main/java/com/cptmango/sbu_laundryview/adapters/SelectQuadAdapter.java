@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cptmango.sbu_laundryview.R;
+import com.cptmango.sbu_laundryview.ui.Animations;
 
 import org.w3c.dom.Text;
 
@@ -21,14 +22,20 @@ public class SelectQuadAdapter extends BaseAdapter {
     String[] quadNames;
     String[] quadTagLines;
     String[] quadColors;
+
+    View selectRoomMenu;
+    SelectRoomAdapter adapter;
+    ListView selectRoomList;
+
     Vibrator vibrate;
 
-
-    public SelectQuadAdapter(Activity context){
+    public SelectQuadAdapter(Activity context, View selectRoomMenu){
         this.context = context;
+        this.selectRoomMenu = selectRoomMenu;
         quadNames = context.getResources().getStringArray(R.array.quad_names);
         quadTagLines = context.getResources().getStringArray(R.array.quad_taglines);
         quadColors = context.getResources().getStringArray(R.array.quad_colors);
+        selectRoomList = (ListView) selectRoomMenu.findViewById(R.id.list_roomList);
     }
 
     @Override
@@ -69,12 +76,29 @@ public class SelectQuadAdapter extends BaseAdapter {
 
         }
 
+        setupItem(holder, position);
+
+        convertView.setOnClickListener((view) -> {
+            adapter = new SelectRoomAdapter(context, quadNames[position]);
+            selectRoomList.setAdapter(adapter);
+            Animations.show(selectRoomMenu);
+        });
+
+        return convertView;
+    }
+
+    void setupItem(ViewHolder holder, int position){
+
         holder.quadName.setText(quadNames[position]);
         holder.quadTagLine.setText(quadTagLines[position]);
         holder.quadTagLine.setTextColor(Color.parseColor(quadColors[position]));
         holder.quadColor.setColorFilter(Color.parseColor(quadColors[position]));
 
-        return convertView;
+
+
+
+
+
     }
 
     class ViewHolder{

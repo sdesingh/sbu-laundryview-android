@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
-import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
 
 import java.util.List;

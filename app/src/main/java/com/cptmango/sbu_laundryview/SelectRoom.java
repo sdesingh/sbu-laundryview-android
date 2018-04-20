@@ -1,8 +1,8 @@
 package com.cptmango.sbu_laundryview;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 
 import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
@@ -13,8 +13,10 @@ import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
 
 public class SelectRoom extends AppCompatActivity{
 
-    ListView list;
-    SelectQuadAdapter adapter;
+    ListView quadList;
+    SelectQuadAdapter quadAdapter;
+    View roomSelectMenu;
+
 
 
     @Override
@@ -27,11 +29,13 @@ public class SelectRoom extends AppCompatActivity{
 
     void initializeUI(){
 
-        list = (ListView) findViewById(R.id.list_quadList);
-        adapter = new SelectQuadAdapter(this);
-        list.setAdapter(adapter);
+        roomSelectMenu = findViewById(R.id.menu_roomSelect);
+        quadList = (ListView) findViewById(R.id.list_quadList);
+        quadAdapter = new SelectQuadAdapter(this, roomSelectMenu);
+        quadList.setAdapter(quadAdapter);
 
     }
+
 
 
 

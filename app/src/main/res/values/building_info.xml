@@ -9,9 +9,10 @@
         <item>Roth</item>
         <item>Kelly</item>
         <item>Roosevelt</item>
-        <item>H Quad</item>
+        <item>H_Quad</item>
         <item>West</item>
-        <item>Chavez/Tubman</item>
+        <item>Chavez</item>
+        <item>Tubman</item>
 
 
     </string-array>
@@ -24,6 +25,7 @@
         <item>Human Development</item>
         <item>Global Studies</item>
         <item>Leadership and Service</item>
+        <item> </item>
         <item> </item>
         <item> </item>
 
@@ -39,10 +41,18 @@
         <item>#27ae60</item>
         <item>#8b052a</item>
         <item>#96d8f2</item>
+        <item>#96d8f2</item>
 
     </string-array>
 
-    <string-array name="mendelsohn">
+    <!--Tabler Buildings-->
+    <string-array name="Tabler">
+
+        <item>Arts, Culture and Humanities</item>
+
+    </string-array>
+    <!--Mendelsohn Buildings-->
+    <string-array name="Mendelsohn">
 
         <item>Information and Technology</item>
         <item>Irving</item>
@@ -51,7 +61,8 @@
         <item>Amman</item>
 
     </string-array>
-    <string-array name="roth">
+    <!--Roth Buildings-->
+    <string-array name="Roth">
 
         <item>Science and Society</item>
         <item>Cardozo</item>
@@ -61,35 +72,42 @@
         <item>Whitman</item>
 
     </string-array>
-    <string-array name="tabler">
-
-        <item>Arts, Culture and Humanities</item>
-
-    </string-array>
-    <string-array name="kelly">
+    <!--Kelly Buildings-->
+    <string-array name="Kelly">
 
         <item>Human Development</item>
 
     </string-array>
-    <string-array name="roosevelt">
+    <!--Roosevelt Buildings-->
+    <string-array name="Roosevelt">
 
         <item>Global Studies</item>
 
     </string-array>
-    <string-array name="h_quad">
+    <!--H Quad Buildings-->
+    <string-array name="H_Quad">
 
         <item>Leadership and Service</item>
 
     </string-array>
-    <string name="chavez_tubman">
+    <!--West Buildings-->
+    <string name="West">
+
+        <item> </item>
+
+    </string>
+    <!--Chavez Buildings-->
+    <string name="Chavez">
+
+        <item> </item>
+
+    </string>
+    <!--Tubman Buildings-->
+    <string name="Tubman">
 
         <item> </item>
 
     </string>
 
-    <string name="west">
 
-        <item> </item>
-
-    </string>
 </resources>
