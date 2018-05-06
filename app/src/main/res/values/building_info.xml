@@ -9,7 +9,7 @@
         <item>Roth</item>
         <item>Kelly</item>
         <item>Roosevelt</item>
-        <item>H_Quad</item>
+        <item>H Quad</item>
         <item>West</item>
         <item>Chavez</item>
         <item>Tubman</item>
@@ -48,15 +48,14 @@
     <!--Tabler Buildings-->
     <string-array name="Tabler">
 
-        <item>Arts, Culture and Humanities</item>
+        <item>Test Item</item>
 
     </string-array>
     <!--Mendelsohn Buildings-->
     <string-array name="Mendelsohn">
 
-        <item>Information and Technology</item>
         <item>Irving</item>
-        <item>O'neill</item>
+        <item>Oneill</item>
         <item>Gray</item>
         <item>Amman</item>
 
@@ -64,7 +63,6 @@
     <!--Roth Buildings-->
     <string-array name="Roth">
 
-        <item>Science and Society</item>
         <item>Cardozo</item>
         <item>Gershwin</item>
         <item>Hendrix</item>
@@ -75,39 +73,38 @@
     <!--Kelly Buildings-->
     <string-array name="Kelly">
 
-        <item>Human Development</item>
+        <item>Test Room</item>
 
     </string-array>
     <!--Roosevelt Buildings-->
     <string-array name="Roosevelt">
 
-        <item>Global Studies</item>
 
     </string-array>
     <!--H Quad Buildings-->
     <string-array name="H_Quad">
 
-        <item>Leadership and Service</item>
+        <item>Test Room</item>
 
     </string-array>
     <!--West Buildings-->
-    <string name="West">
+    <string-array name="West">
 
-        <item> </item>
+        <item>Test Room</item>
 
-    </string>
+    </string-array>
     <!--Chavez Buildings-->
-    <string name="Chavez">
+    <string-array name="Chavez">
 
-        <item> </item>
+        <item>Test Room</item>
 
-    </string>
+    </string-array>
     <!--Tubman Buildings-->
-    <string name="Tubman">
+    <string-array name="Tubman">
 
-        <item> </item>
+        <item>Test Room</item>
 
-    </string>
+    </string-array>
 
 
 </resources>

@@ -94,11 +94,6 @@ public class SelectQuadAdapter extends BaseAdapter {
         holder.quadTagLine.setTextColor(Color.parseColor(quadColors[position]));
         holder.quadColor.setColorFilter(Color.parseColor(quadColors[position]));
 
-
-
-
-
-
     }
 
     class ViewHolder{

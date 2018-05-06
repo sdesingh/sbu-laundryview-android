@@ -19,9 +19,48 @@ public class SelectRoomAdapter extends BaseAdapter {
 
     public SelectRoomAdapter(Activity context, String quadName){
         this.context = context;
-        System.out.println(quadName);
-        int identifier = context.getResources().getIdentifier(quadName, "string-array", context.getPackageName());
-        roomNames = context.getResources().getStringArray(identifier);
+        roomNames = getRoomNames(quadName);
+    }
+
+    private String[] getRoomNames(String quadName){
+
+        String[] roomNames;
+
+        switch(quadName){
+
+            case "Tabler": roomNames = context.getResources().getStringArray(R.array.Tabler);
+            break;
+
+            case "Mendelsohn": roomNames = context.getResources().getStringArray(R.array.Mendelsohn);
+            break;
+
+            case "Roth": roomNames = context.getResources().getStringArray(R.array.Roth);
+            break;
+
+            case "Kelly": roomNames = context.getResources().getStringArray(R.array.Kelly);
+            break;
+
+            case "Roosevelt": roomNames = context.getResources().getStringArray(R.array.Roosevelt);
+            break;
+
+            case "H Quad": roomNames = context.getResources().getStringArray(R.array.H_Quad);
+            break;
+
+            case "West": roomNames = context.getResources().getStringArray(R.array.West);
+            break;
+
+            case "Chavez": roomNames = context.getResources().getStringArray(R.array.Chavez);
+            break;
+
+            case "Tubman": roomNames = context.getResources().getStringArray(R.array.Tubman);
+            break;
+
+            default: roomNames = new String[0];
+            break;
+        }
+
+        return roomNames;
+
     }
 
     @Override
@@ -49,7 +88,7 @@ public class SelectRoomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.item_select_room, null, false);
-            holder.roomName = (TextView) convertView.findViewById(R.id.text_quadName);
+            holder.roomName = (TextView) convertView.findViewById(R.id.text_roomName);
 
             convertView.setTag(holder);
         }else{

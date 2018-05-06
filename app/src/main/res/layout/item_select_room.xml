@@ -20,9 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/lato_bl"
-            android:letterSpacing="0.5"
-            android:text="IRVING"
+            android:text="Irving"
             android:textColor="@color/Black"
-            android:textSize="22sp" />
+            android:textSize="18sp" />
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
