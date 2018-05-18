@@ -48,7 +48,16 @@
     <!--Tabler Buildings-->
     <string-array name="Tabler">
 
-        <item>Test Item</item>
+        <item>Douglass A</item>
+        <item>Douglass B</item>
+        <item>Dreiser A</item>
+        <item>Dreiser B</item>
+        <item>Hand A</item>
+        <item>Hand B</item>
+        <item>Sanger A</item>
+        <item>Sanger B</item>
+        <item>Toscanini A</item>
+        <item>Toscanini B</item>
 
     </string-array>
     <!--Mendelsohn Buildings-->
@@ -73,12 +82,23 @@
     <!--Kelly Buildings-->
     <string-array name="Kelly">
 
-        <item>Test Room</item>
+        <item>Baruch</item>
+        <item>Dewey</item>
+        <item>Eisenhower</item>
+        <item>Hamilton</item>
+        <item>Schick</item>
 
     </string-array>
     <!--Roosevelt Buildings-->
     <string-array name="Roosevelt">
 
+        <item>Greeley A</item>
+        <item>Greeley B</item>
+        <item>Keller A</item>
+        <item>Keller B</item>
+        <item>Stimson A</item>
+        <item>Stimson B</item>
+        <item>Wagner A</item>
 
     </string-array>
     <!--H Quad Buildings-->

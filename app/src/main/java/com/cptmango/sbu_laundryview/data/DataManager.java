@@ -35,7 +35,8 @@ public class DataManager {
         this.context = context;
         queue = Volley.newRequestQueue(context);
 
-        dataURL = "http://ec2-18-218-241-28.us-east-2.compute.amazonaws.com" + "/" + quad + "/" + building;
+        String url = context.getResources().getString(R.string.url);
+        dataURL = url + "/" + quad + "/" + building;
     }
 
     public void getData(){

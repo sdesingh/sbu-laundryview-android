@@ -7,7 +7,7 @@
     android:background="@color/cardview_light_background">
 
     <GridView
-        android:id="@+id/grid"
+        android:id="@+id/grid_washers"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clickable="false"
@@ -19,7 +19,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="75dp"
         android:background="@color/White"
         android:elevation="5dp"
         android:minHeight="?attr/actionBarSize"
@@ -29,59 +29,59 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txt_buildingName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
         android:elevation="5dp"
         android:fontFamily="@font/lato_bl"
-        android:text="Irving"
+        android:text="Loading"
         android:textColor="@color/Black"
-        android:textSize="25sp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txt_quadName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:elevation="5dp"
         android:fontFamily="@font/lato_bl"
         android:letterSpacing="0.3"
-        android:text="MENDELSOHN"
+        android:text="Please Wait..."
         android:textColor="@color/Black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@+id/img_highlightL"
+        app:layout_constraintTop_toBottomOf="@+id/txt_buildingName" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/img_highlightL"
         android:layout_width="3dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="2dp"
         android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_quadName"
+        app:layout_constraintStart_toStartOf="@+id/txt_buildingName"
+        app:layout_constraintTop_toTopOf="@+id/txt_quadName"
         app:srcCompat="@color/Yellow" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/img_highlightR"
         android:layout_width="3dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="2dp"
         android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_quadName"
+        app:layout_constraintStart_toEndOf="@+id/txt_quadName"
+        app:layout_constraintTop_toTopOf="@+id/txt_quadName"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@color/Yellow" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/refresh"
+        android:id="@+id/btn_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

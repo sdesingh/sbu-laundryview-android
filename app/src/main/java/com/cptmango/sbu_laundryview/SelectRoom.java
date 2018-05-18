@@ -27,11 +27,15 @@ public class SelectRoom extends AppCompatActivity{
         initializeUI();
     }
 
+    /**
+     * Initial setup of the UI.
+     */
     void initializeUI(){
 
         roomSelectMenu = findViewById(R.id.menu_roomSelect);
         quadList = (ListView) findViewById(R.id.list_quadList);
-        quadAdapter = new SelectQuadAdapter(this, roomSelectMenu);
+
+        quadAdapter = new SelectQuadAdapter(this, roomSelectMenu, findViewById(R.id.img_darkMenu));
         quadList.setAdapter(quadAdapter);
 
     }
@@ -44,7 +48,11 @@ public class SelectRoom extends AppCompatActivity{
             case R.id.btn_closeRoomMenu: closeRoomMenu();
             break;
 
-            case R.id.btn_selectRoom: selectRoom();
+            // If the user clicks away from the room select menu.
+            case R.id.img_darkMenu: closeRoomMenu();
+            break;
+
+            case R.id.btn_selectRoom: setResult(RESULT_OK); roomSelected();
             break;
 
         }
@@ -55,12 +63,14 @@ public class SelectRoom extends AppCompatActivity{
     public void closeRoomMenu(){
 
         View roomMenu = findViewById(R.id.menu_roomSelect);
+        View menuDark = findViewById(R.id.img_darkMenu);
         Animations.hide(roomMenu);
+        Animations.hide(menuDark);
 
     }
 
-    public void selectRoom(){
-
+    public void roomSelected(){
+        finish();
     }
 
 }

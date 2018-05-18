@@ -1,8 +1,10 @@
 package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,6 @@ import android.widget.TextView;
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.ui.Animations;
 
-import org.w3c.dom.Text;
-
 public class SelectQuadAdapter extends BaseAdapter {
 
     Activity context;
@@ -24,18 +24,23 @@ public class SelectQuadAdapter extends BaseAdapter {
     String[] quadColors;
 
     View selectRoomMenu;
+    View menuDark;
     SelectRoomAdapter adapter;
     ListView selectRoomList;
 
     Vibrator vibrate;
 
-    public SelectQuadAdapter(Activity context, View selectRoomMenu){
+    public SelectQuadAdapter(Activity context, View selectRoomMenu, View menuDark){
         this.context = context;
         this.selectRoomMenu = selectRoomMenu;
+        this.menuDark = menuDark;
         quadNames = context.getResources().getStringArray(R.array.quad_names);
         quadTagLines = context.getResources().getStringArray(R.array.quad_taglines);
         quadColors = context.getResources().getStringArray(R.array.quad_colors);
         selectRoomList = (ListView) selectRoomMenu.findViewById(R.id.list_roomList);
+
+        selectRoomMenu.setAlpha(0f);
+        menuDark.setAlpha(0f);
     }
 
     @Override
@@ -81,18 +86,43 @@ public class SelectQuadAdapter extends BaseAdapter {
         convertView.setOnClickListener((view) -> {
             adapter = new SelectRoomAdapter(context, quadNames[position]);
             selectRoomList.setAdapter(adapter);
-            Animations.show(selectRoomMenu);
+
+            // Store the selected quad and colors.
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = prefs.edit();
+
+            editor.putString("quad", quadNames[position]);
+            editor.putString("quadColor", quadColors[position]);
+            editor.commit();
+
+            showRoomMenu(position);
         });
 
         return convertView;
     }
 
-    void setupItem(ViewHolder holder, int position){
+    private void setupItem(ViewHolder holder, int position){
 
         holder.quadName.setText(quadNames[position]);
         holder.quadTagLine.setText(quadTagLines[position]);
         holder.quadTagLine.setTextColor(Color.parseColor(quadColors[position]));
         holder.quadColor.setColorFilter(Color.parseColor(quadColors[position]));
+
+    }
+
+    private void showRoomMenu(int position){
+
+        Animations.show(selectRoomMenu);
+        Animations.show(menuDark, 0.6f);
+
+        TextView quadName = (TextView) selectRoomMenu.findViewById(R.id.txt_buildingName);
+        ImageView topBar = (ImageView) selectRoomMenu.findViewById(R.id.img_topBar);
+
+//        Button back = (Button) selectRoomMenu.findViewById(R.id.btn_closeRoomMenu);
+//        back.setBackgroundColor(Color.parseColor(quadColors[position]));
+
+        quadName.setText(quadNames[position]);
+        topBar.setColorFilter(Color.parseColor(quadColors[position]));
 
     }
 

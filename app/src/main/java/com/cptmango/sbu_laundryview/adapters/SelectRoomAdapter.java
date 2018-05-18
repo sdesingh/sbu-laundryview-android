@@ -1,7 +1,9 @@
 package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
 
@@ -17,8 +20,11 @@ public class SelectRoomAdapter extends BaseAdapter {
     Activity context;
     String[] roomNames;
 
+    String quadName;
+
     public SelectRoomAdapter(Activity context, String quadName){
         this.context = context;
+        this.quadName = quadName;
         roomNames = getRoomNames(quadName);
     }
 
@@ -97,8 +103,23 @@ public class SelectRoomAdapter extends BaseAdapter {
 
         holder.roomName.setText(roomNames[position]);
 
+        convertView.setOnClickListener((view) ->{
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = prefs.edit();
+
+            editor.putString("building", roomNames[position]);
+
+            Toast.makeText(context, roomNames[position] + " selected.", Toast.LENGTH_SHORT).show();
+
+            editor.commit();
+
+        });
+
         return convertView;
     }
+
+    public
 
     class ViewHolder{
 

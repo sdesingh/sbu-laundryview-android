@@ -24,6 +24,16 @@ public class Animations {
 
     }
 
+    public static void show(View view, float alpha){
+
+        view.setVisibility(View.VISIBLE);
+
+        view.animate()
+                .alpha(alpha)
+                .setDuration(300);
+
+    }
+
 
 
 }

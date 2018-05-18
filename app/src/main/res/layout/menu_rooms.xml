@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:elevation="6dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="350dp"
-        android:layout_marginBottom="8dp"
         android:clipChildren="true"
         android:clipToPadding="true"
         app:cardBackgroundColor="@color/cardview_light_background"
@@ -22,10 +22,24 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="ExtraText">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imageView7"
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:alpha="0.3"
+                android:elevation="7dp"
+                android:rotation="180"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/card_shadow" />
+
+            <ImageView
+                android:id="@+id/img_topBar"
                 android:layout_width="0dp"
                 android:layout_height="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,30 +47,51 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@color/Yellow" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="You can change your room selection in the settings."
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.482"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <ListView
                 android:id="@+id/list_roomList"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView8"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                app:layout_constraintTop_toBottomOf="@+id/img_topBar" >
+
+            </ListView>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    android:id="@+id/btn_closeRoomMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/cardview_light_background"
+                    android:onClick="onButtonClick"
+                    android:text="Back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_selectRoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/White"
+                    android:onClick="onButtonClick"
+                    android:text="Next"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
@@ -72,23 +107,24 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_quadName"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/space4">
+        app:layout_constraintBottom_toBottomOf="@+id/space4"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/txt_buildingName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/lato_bl"
-            android:text="Chavez/Tubman"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Roth"
             android:textColor="@color/Black"
             android:textSize="20sp" />
     </android.support.v7.widget.CardView>
@@ -102,36 +138,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_selectRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="28dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="onButtonClick"
-        app:backgroundTint="@color/White"
-        app:elevation="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/card_quadName"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:srcCompat="@drawable/icon_next_black" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_closeRoomMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="32dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="onButtonClick"
-        app:backgroundTint="@color/White"
-        app:layout_constraintBottom_toBottomOf="@+id/card_quadName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:srcCompat="@drawable/icon_close" />
 
 </android.support.constraint.ConstraintLayout>
