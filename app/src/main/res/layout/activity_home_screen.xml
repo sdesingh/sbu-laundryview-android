@@ -104,10 +104,14 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_items"/>
+        app:menu="@menu/nav_items" />
 
 </android.support.constraint.ConstraintLayout>

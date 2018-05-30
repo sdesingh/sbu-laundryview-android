@@ -5,14 +5,20 @@
 
     <item
         android:id="@+id/nav_washers"
+        android:enabled="true"
         android:icon="@drawable/icon_water"
         android:title="@string/nav_washers" />
     <item
         android:id="@+id/nav_summary"
+        android:checkable="false"
+        android:checked="false"
+        android:enabled="true"
         android:icon="@drawable/icon_home"
         android:title="@string/nav_Home" />
     <item
         android:id="@+id/nav_dryers"
+        android:checkable="false"
+        android:enabled="true"
         android:icon="@drawable/icon_drying"
         android:title="@string/nav_Dryers" />
 </menu>

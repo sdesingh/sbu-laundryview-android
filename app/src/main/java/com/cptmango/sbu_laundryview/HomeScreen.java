@@ -124,6 +124,8 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                item.setChecked(true);
+
                 switch(item.getItemId()){
 
                     case R.id.nav_washers:
@@ -136,18 +138,17 @@ public class HomeScreen extends AppCompatActivity {
                     washerGrid.setColumnWidth(GridView.AUTO_FIT);
                     washerGrid.setNumColumns(GridView.AUTO_FIT);
                     washerGrid.setAdapter(washerAdapter);
-
                     break;
 
                     case R.id.nav_summary:
 
                     pager.setCurrentItem(1);
+
                     break;
 
                     case R.id.nav_dryers:
 
                     pager.setCurrentItem(2);
-
 
                     // Setting up the dryerGrid view.
                     dryerGrid = (GridView) pager.findViewById(R.id.grid_dryers);
@@ -155,6 +156,7 @@ public class HomeScreen extends AppCompatActivity {
                     dryerGrid.setAdapter(dryerAdapter);
                     dryerGrid.setColumnWidth(GridView.AUTO_FIT);
                     dryerGrid.setNumColumns(GridView.AUTO_FIT);
+
                     break;
 
                 }
