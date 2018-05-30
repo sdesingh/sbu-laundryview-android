@@ -1,45 +1,55 @@
 package com.cptmango.sbu_laundryview;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
 import com.cptmango.sbu_laundryview.ui.GeneralUI;
 
-import org.w3c.dom.Text;
-
 public class HomeScreen extends AppCompatActivity {
 
     DataManager data;
-    GridView grid;
-    MachineGridStatusAdapter adapter;
+    GridView washerGrid;
+    GridView dryerGrid;
+    ViewPager pager;
+    MachineGridStatusAdapter washerAdapter;
+    MachineGridStatusAdapter dryerAdapter;
+    HomeScreenFragmentPagerAdapter pagerAdapter;
+
+    BottomNavigationView bottomNavigationView;
 
     String quadName;
     String buildingName;
     String quadColor;
 
+    Activity context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_home_screen);
 
+        context = this;
         initialCheck();
     }
 
@@ -74,7 +84,6 @@ public class HomeScreen extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 connectToAPI();
             }
-
         }
 
     }
@@ -101,13 +110,58 @@ public class HomeScreen extends AppCompatActivity {
 
     void initializeUI(){
 
-        adapter = new MachineGridStatusAdapter(this, data.getRoomData(), true);
+        //Setting up view pager.
+        pagerAdapter = new HomeScreenFragmentPagerAdapter(getSupportFragmentManager(), this);
+        pager = (ViewPager) findViewById(R.id.pager_HomeScreen);
+        pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(1);
 
-        grid = (GridView) findViewById(R.id.grid_washers);
-        grid.setColumnWidth(GridView.AUTO_FIT);
-        grid.setNumColumns(GridView.AUTO_FIT);
+        //Tab Listener
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_summary);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        grid.setAdapter(adapter);
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()){
+
+                    case R.id.nav_washers:
+
+                    pager.setCurrentItem(0);
+
+                    washerGrid = (GridView) pager.findViewById(R.id.grid_washers);
+                    // Setting up washer washerGrid view.
+                    washerAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), true);
+                    washerGrid.setColumnWidth(GridView.AUTO_FIT);
+                    washerGrid.setNumColumns(GridView.AUTO_FIT);
+                    washerGrid.setAdapter(washerAdapter);
+
+                    break;
+
+                    case R.id.nav_summary:
+
+                    pager.setCurrentItem(1);
+                    break;
+
+                    case R.id.nav_dryers:
+
+                    pager.setCurrentItem(2);
+
+
+                    // Setting up the dryerGrid view.
+                    dryerGrid = (GridView) pager.findViewById(R.id.grid_dryers);
+                    dryerAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), false);
+                    dryerGrid.setAdapter(dryerAdapter);
+                    dryerGrid.setColumnWidth(GridView.AUTO_FIT);
+                    dryerGrid.setNumColumns(GridView.AUTO_FIT);
+                    break;
+
+                }
+
+                return false;
+            }
+        });
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
@@ -130,7 +184,10 @@ public class HomeScreen extends AppCompatActivity {
 
         data.getQueue().addRequestFinishedListener(response -> {
 
-            if(data.getRoomData() != null) adapter.notifyDataSetChanged();
+            if(data.getRoomData() != null){
+                washerAdapter.notifyDataSetChanged();
+                Toast.makeText(this, "Refreshed successfully.", Toast.LENGTH_SHORT).show();
+            }
 
         });
 

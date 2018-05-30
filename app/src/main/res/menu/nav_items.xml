@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_washers"
+        android:icon="@drawable/icon_water"
+        android:title="@string/nav_washers" />
+    <item
+        android:id="@+id/nav_summary"
+        android:icon="@drawable/icon_home"
+        android:title="@string/nav_Home" />
+    <item
+        android:id="@+id/nav_dryers"
+        android:icon="@drawable/icon_drying"
+        android:title="@string/nav_Dryers" />
+</menu>

@@ -6,6 +6,7 @@
     <color name="Black">#000</color>
     <color name="White">#ffffff</color>
     <color name="offWhite">#fafafa</color>
+    <color name="slightGray">#f8f8f8</color>
 
 
     <color name="Red">#e74c3c</color>

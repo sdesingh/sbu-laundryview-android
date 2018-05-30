@@ -77,10 +77,17 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
 
-        Machine machine = room.getMachine(position);
+        int machineNumber;
+        if(isWasher){
+            machineNumber = position;
+            holder.machineNumber.setText(machineNumber + 1 + "");
+        }else{
+            machineNumber = position + room.washers() - 1;
+            holder.machineNumber.setText(machineNumber + 2 + "");
+        }
 
+        Machine machine = room.getMachine(machineNumber);
         holder.machineStatus.setText(machine.machineStatus().getDescription());
-        holder.machineNumber.setText(position + 1 + "");
         setupCard(holder, machine);
 
         return convertView;
