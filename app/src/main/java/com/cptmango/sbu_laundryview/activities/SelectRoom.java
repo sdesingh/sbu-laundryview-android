@@ -1,4 +1,4 @@
-package com.cptmango.sbu_laundryview;
+package com.cptmango.sbu_laundryview.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ListView;
 
+import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
 import com.cptmango.sbu_laundryview.ui.Animations;
 

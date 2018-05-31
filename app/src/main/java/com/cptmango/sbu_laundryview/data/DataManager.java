@@ -35,8 +35,11 @@ public class DataManager {
         this.context = context;
         queue = Volley.newRequestQueue(context);
 
+
+
+
         String url = context.getResources().getString(R.string.url);
-        dataURL = url + "/" + quad + "/" + building;
+        dataURL = url + "/" + getURLName(quad) + "/" + getURLName(building);
     }
 
     public void getData(){
@@ -154,5 +157,29 @@ public class DataManager {
 
     public RequestQueue getQueue() {
         return queue;
+    }
+
+
+    /**
+     * Changes the spaces of the names within building to underscores.
+     * Example --> "Greeley A" to "Greeley_A"
+     * @param string The name of the building/quad to be converted to be URL compliant.
+     * @return URL compliant name of the building/quad.
+     */
+    private String getURLName(String string){
+
+
+        if(string.contains(" ")){
+
+            return string.replace(" ", "_");
+
+        }
+        else if(string.contains("'")){
+
+            return "Oneill";
+        }
+        else return string;
+
+
     }
 }

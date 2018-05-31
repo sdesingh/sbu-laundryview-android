@@ -125,7 +125,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="9dp"
-                android:fontFamily="@font/lato_regular"
+                android:fontFamily="@font/lato_bold"
                 android:text="mins remaining"
                 android:textColor="@android:color/black"
                 android:textSize="9sp"

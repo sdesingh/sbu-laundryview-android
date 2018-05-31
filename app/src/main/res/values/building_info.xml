@@ -104,7 +104,10 @@
     <!--H Quad Buildings-->
     <string-array name="H_Quad">
 
-        <item>Test Room</item>
+        <item>Benedict AB</item>
+        <item>Benedict DE</item>
+        <item>James</item>
+        <item>Langmuir</item>
 
     </string-array>
     <!--West Buildings-->
