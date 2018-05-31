@@ -113,19 +113,19 @@
     <!--West Buildings-->
     <string-array name="West">
 
-        <item>Test Room</item>
+        <item>Unavailable</item>
 
     </string-array>
     <!--Chavez Buildings-->
     <string-array name="Chavez">
 
-        <item>Test Room</item>
+        <item>Unavailable</item>
 
     </string-array>
     <!--Tubman Buildings-->
     <string-array name="Tubman">
 
-        <item>Test Room</item>
+        <item>Unavailable</item>
 
     </string-array>
 
