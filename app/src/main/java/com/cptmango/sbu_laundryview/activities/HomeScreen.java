@@ -1,6 +1,5 @@
 package com.cptmango.sbu_laundryview.activities;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +67,7 @@ public class HomeScreen extends AppCompatActivity {
 
         Intent intent = new Intent(this, SelectRoom.class);
         startActivityForResult(intent, 1);
+
         /* ENABLE THIS ONCE TESTING DONE
         if(!prefs.contains("quad")){
 
@@ -127,9 +127,10 @@ public class HomeScreen extends AppCompatActivity {
         showWasherData();
         showDryerData();
 
-        //Tab Listener
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_summary);
+
+        //Bottom Tab Listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -140,17 +141,17 @@ public class HomeScreen extends AppCompatActivity {
                 switch(item.getItemId()){
 
                     case R.id.nav_washers:
-                        pager.setCurrentItem(0);
-                        showWasherData();
+                        pager.setCurrentItem(0, true);
+//                        showWasherData();
                     break;
 
                     case R.id.nav_summary:
-                        pager.setCurrentItem(1);
+                        pager.setCurrentItem(1, true);
                     break;
 
                     case R.id.nav_dryers:
-                        pager.setCurrentItem(2);
-                        showDryerData();
+                        pager.setCurrentItem(2, true);
+//                        showDryerData();
                     break;
 
                 }
@@ -205,6 +206,8 @@ public class HomeScreen extends AppCompatActivity {
 
         quadNameText.setText(quadName.toUpperCase());
         buildingNameText.setText(buildingName);
+
+        // Changing the color of UI elements to match the quad's color.
         refresh.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
         settings.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
         colorL.setColorFilter(Color.parseColor(quadColor));
@@ -248,6 +251,8 @@ public class HomeScreen extends AppCompatActivity {
 
         dryerGrid = (GridView) pager.findViewById(R.id.grid_dryers);
 
+//        dryerGrid.setEnabled(false);
+
         // Setting up the dryerGrid view.
 
         dryerAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), false);
@@ -260,6 +265,8 @@ public class HomeScreen extends AppCompatActivity {
     void showWasherData(){
 
         washerGrid = (GridView) pager.findViewById(R.id.grid_washers);
+
+//        washerGrid.setEnabled(false);
 
         // Setting up washer washerGrid view.
         washerAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), true);

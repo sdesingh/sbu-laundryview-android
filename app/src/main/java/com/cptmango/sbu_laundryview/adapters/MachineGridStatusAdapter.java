@@ -39,6 +39,10 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         return isWasher ? room.washers() : room.dryers();
     }
 
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
     @Override
     public Object getItem(int position) {
         return null;
