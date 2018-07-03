@@ -14,6 +14,7 @@ import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.MachineStatus;
 import com.cptmango.sbu_laundryview.data.model.Room;
+import com.cptmango.sbu_laundryview.ui.Animations;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 /**
@@ -25,12 +26,14 @@ public class MachineGridStatusAdapter extends BaseAdapter {
     Room room;
     Activity context;
     boolean isWasher;
+    View machineMenu;
 
     public MachineGridStatusAdapter(Activity context, Room roomData, boolean isWasher){
 
         this.context = context;
         this.room = roomData;
         this.isWasher = isWasher;
+        this.machineMenu = context.findViewById(R.id.machine_menu);
 
     }
 
@@ -64,6 +67,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.machine_status, null, false);
             holder = new ViewHolder();
 
+            holder.container = (CardView) convertView.findViewById(R.id.Card);
             holder.machineNumber = (TextView) convertView.findViewById(R.id.Machine_txt_MachineNumber);
             holder.machineStatus = (TextView) convertView.findViewById(R.id.Machine_txt_Status);
             holder.timeLeft = (TextView) convertView.findViewById(R.id.Machine_txt_TimeLeft);
@@ -92,13 +96,22 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         Machine machine = room.getMachine(machineNumber);
         holder.machineStatus.setText(machine.machineStatus().getDescription());
-        setupCard(holder, machine);
+
+        //Setup All of the Views
+        setupView(holder, machine);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Animations.show(machineMenu);
+            }
+        });
 
         return convertView;
     }
 
 
-    public void setupCard(ViewHolder holder, Machine machine){
+    public void setupView(ViewHolder holder, Machine machine){
 
         if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
             holder.timeLeft.setText(machine.timeLeft() + "");
@@ -142,6 +155,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
     private class ViewHolder{
 
+        CardView container;
         TextView machineNumber;
         TextView timeLeft;
         TextView machineStatus;

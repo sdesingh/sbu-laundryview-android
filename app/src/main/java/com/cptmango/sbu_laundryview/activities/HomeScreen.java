@@ -54,7 +54,6 @@ public class HomeScreen extends AppCompatActivity {
         initialCheck();
     }
 
-
     /**
      * Performed every time the app is run.
      * Checks whether the user has chosen a room yet.
@@ -209,6 +208,13 @@ public class HomeScreen extends AppCompatActivity {
 
         // Changing the color of UI elements to match the quad's color.
         refresh.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateData();
+                Toast.makeText(context, "Refreshing data.", Toast.LENGTH_SHORT).show();
+            }
+        });
         settings.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
         colorL.setColorFilter(Color.parseColor(quadColor));
         colorR.setColorFilter(Color.parseColor(quadColor));
@@ -228,22 +234,6 @@ public class HomeScreen extends AppCompatActivity {
             }
 
         });
-
-    }
-
-    void buttonClicked(View view){
-
-        switch(view.getId()){
-
-            case R.id.btn_refresh: updateData();
-                Toast.makeText(this, "Refreshing data.", Toast.LENGTH_SHORT).show();
-            break;
-
-            default: return;
-
-        }
-
-
 
     }
 

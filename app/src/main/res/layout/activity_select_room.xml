@@ -9,7 +9,7 @@
         android:id="@+id/img_darkMenu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:alpha="0.6"
+        android:alpha="0"
         android:clickable="true"
         android:elevation="5dp"
         android:onClick="onButtonClick"

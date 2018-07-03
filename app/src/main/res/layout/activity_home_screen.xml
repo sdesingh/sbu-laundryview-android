@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background">
 
+    <!--Machine Menu-->
+    <include
+        layout="@layout/menu_machine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/machine_menu"
+        android:visibility="gone"
+    />
+
+    <!--Top Toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -18,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <!--Building Name--><TextView
         android:id="@+id/txt_buildingName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <!--Quad Name--><TextView
         android:id="@+id/txt_quadName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,31 +60,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_buildingName" />
 
+    <!--Highlights Top-->
     <ImageView
-        android:id="@+id/img_highlightL"
-        android:layout_width="3dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginTop="2dp"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_quadName"
-        app:layout_constraintEnd_toStartOf="@+id/txt_quadName"
-        app:layout_constraintTop_toTopOf="@+id/txt_quadName"
-        app:srcCompat="@color/Yellow" />
-
+                android:id="@+id/img_highlightL"
+                android:layout_width="3dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="2dp"
+                android:elevation="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_quadName"
+                app:layout_constraintEnd_toStartOf="@+id/txt_quadName"
+                app:layout_constraintTop_toTopOf="@+id/txt_quadName"
+                app:srcCompat="@color/Yellow" />
     <ImageView
-        android:id="@+id/img_highlightR"
-        android:layout_width="3dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="2dp"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_quadName"
-        app:layout_constraintStart_toEndOf="@+id/txt_quadName"
-        app:layout_constraintTop_toTopOf="@+id/txt_quadName"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@color/Yellow" />
+                android:id="@+id/img_highlightR"
+                android:layout_width="3dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:elevation="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_quadName"
+                app:layout_constraintStart_toEndOf="@+id/txt_quadName"
+                app:layout_constraintTop_toTopOf="@+id/txt_quadName"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@color/Yellow" />
 
+    <!--Refresh Button-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_refresh"
         android:layout_width="wrap_content"
@@ -84,7 +95,6 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:hapticFeedbackEnabled="true"
-        android:onClick="buttonClicked"
         app:backgroundTint="@color/Yellow"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
@@ -92,43 +102,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon_refresh" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="0dp"
-        android:layout_height="5dp"
-        android:alpha="0.2"
-        android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/card_shadow" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager_HomeScreen"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
-
-    </android.support.v4.view.ViewPager>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:itemIconTint="@color/bottom_nav_color"
-        app:itemTextColor="@color/bottom_nav_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_items" >
-
-    </android.support.design.widget.BottomNavigationView>
-
+    <!--Settings Button-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_settings"
         android:layout_width="wrap_content"
@@ -143,5 +117,49 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon_settings" />
+
+    <!--Bottom Bar-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:paddingTop="2dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/nav_items" >
+
+    </android.support.design.widget.BottomNavigationView>
+    <!--Shadow-->
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:alpha="0.2"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/card_shadow" />
+
+    <!--Main View Pager-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_HomeScreen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+
+    </android.support.v4.view.ViewPager>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

@@ -53,7 +53,7 @@ public class SelectRoom extends AppCompatActivity{
             case R.id.img_darkMenu: closeRoomMenu();
             break;
 
-            case R.id.btn_selectRoom: setResult(RESULT_OK); roomSelected();
+            case R.id.btn_selectRoom: setResult(RESULT_OK); finish();
             break;
 
         }
@@ -68,10 +68,6 @@ public class SelectRoom extends AppCompatActivity{
         Animations.hide(roomMenu);
         Animations.hide(menuDark);
 
-    }
-
-    public void roomSelected(){
-        finish();
     }
 
 }

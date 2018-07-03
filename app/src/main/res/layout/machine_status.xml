@@ -15,6 +15,7 @@
         android:layout_height="150dp"
         android:layout_marginStart="20dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="@drawable/ripple_effect"
         app:cardBackgroundColor="@color/offWhite"
         app:cardCornerRadius="15dp"
