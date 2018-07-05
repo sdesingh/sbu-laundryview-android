@@ -62,7 +62,9 @@ public class DataManager {
 
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {}
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("An error has occured retrieving the data. Retrying.");
+            }
         });
 
         queue.add(request);
@@ -158,7 +160,6 @@ public class DataManager {
     public RequestQueue getQueue() {
         return queue;
     }
-
 
     /**
      * Changes the spaces of the names within building to underscores.
