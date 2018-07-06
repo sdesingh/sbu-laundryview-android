@@ -278,6 +278,7 @@ public class HomeScreen extends AppCompatActivity {
 
             if(data.getRoomData() != null){
                 washerAdapter.notifyDataSetChanged();
+                dryerAdapter.notifyDataSetChanged();
 
                 View refreshed = findViewById(R.id.network_status);
                 refreshed.setVisibility(View.VISIBLE);
