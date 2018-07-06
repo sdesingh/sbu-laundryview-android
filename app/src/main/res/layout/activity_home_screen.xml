@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background">
 
-    <!--Machine Menu-->
-    <include
-        layout="@layout/menu_machine"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/machine_menu"
-        android:visibility="gone"
-    />
 
     <!--Top Toolbar-->
     <android.support.v7.widget.Toolbar
@@ -146,6 +138,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/card_shadow" />
 
+    <!--Network Status Bar-->
+    <include
+        layout="@layout/item_networkstatus"
+        android:id="@+id/network_status"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
     <!--Main View Pager-->
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_HomeScreen"
@@ -154,10 +154,18 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+        app:layout_constraintTop_toBottomOf="@+id/network_status" >
 
     </android.support.v4.view.ViewPager>
 
+    <!--Machine Menu-->
+    <include
+        layout="@layout/menu_machine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/machine_menu"
+        android:visibility="gone"
+        />
 
 
 

@@ -44,7 +44,10 @@ public class DataManager {
 
     public void getData(){
 
-        if(timeout != 0) System.out.println("Retrying request " + timeout);
+        if(timeout != 0) {
+            Toast.makeText(context, "Retrying refresh request " + timeout, Toast.LENGTH_SHORT).show();
+            System.out.println("Retrying request " + timeout);
+        }
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null, new Response.Listener<JSONObject>() {
 
@@ -63,6 +66,7 @@ public class DataManager {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "An error occured while retrieving data.", Toast.LENGTH_LONG).show();
                 System.out.println("An error has occured retrieving the data. Retrying.");
             }
         });

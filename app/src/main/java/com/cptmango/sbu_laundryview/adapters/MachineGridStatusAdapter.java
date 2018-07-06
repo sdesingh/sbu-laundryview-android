@@ -34,6 +34,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         this.room = roomData;
         this.isWasher = isWasher;
         this.machineMenu = context.findViewById(R.id.machine_menu);
+        machineMenu.setAlpha(0f);
 
     }
 
