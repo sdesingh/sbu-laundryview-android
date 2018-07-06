@@ -7,6 +7,15 @@
     android:elevation="10dp">
 
 
+    <ImageView
+        android:id="@+id/bg"
+        android:background="@color/Black"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:alpha="0.6"
+        android:onClick="onClick"
+        />
+
     <!--Spacer-->
     <Space
         android:id="@+id/space4"
@@ -81,6 +90,7 @@
         app:cardBackgroundColor="@color/cardview_light_background"
         app:cardCornerRadius="0dp"
         app:cardElevation="5dp"
+        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"

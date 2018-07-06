@@ -25,6 +25,7 @@ import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
+import com.cptmango.sbu_laundryview.ui.Animations;
 import com.cptmango.sbu_laundryview.ui.GeneralUI;
 
 public class HomeScreen extends AppCompatActivity {
@@ -221,6 +222,19 @@ public class HomeScreen extends AppCompatActivity {
         lineR.setColorFilter(Color.parseColor(quadColor));
     }
 
+    @Override
+    public void onBackPressed() {
+
+        View machineMenu = findViewById(R.id.machine_menu);
+        if(machineMenu.getAlpha() == 1.0){
+            Animations.hide(machineMenu);
+        }else {
+            super.onBackPressed();
+        }
+
+
+    }
+
     void updateData(){
 
         data.getData();
@@ -262,6 +276,18 @@ public class HomeScreen extends AppCompatActivity {
         washerGrid.setColumnWidth(GridView.AUTO_FIT);
         washerGrid.setNumColumns(GridView.AUTO_FIT);
         washerGrid.setAdapter(washerAdapter);
+    }
+
+    void onClick(View view){
+
+        switch(view.getId()){
+
+            case R.id.bg:
+                View machineMenu = findViewById(R.id.machine_menu);
+                Animations.hide(machineMenu);
+            default: return;
+        }
+
     }
 
 
