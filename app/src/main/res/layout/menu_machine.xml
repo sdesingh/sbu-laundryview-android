@@ -132,16 +132,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <ImageButton
-                    android:id="@+id/btn_selectRoom"
-                    android:layout_width="match_parent"
-                    android:src="@drawable/ic_star_black_24dp"
-                    android:layout_height="40dp"
-
-                    android:layout_weight="1"
-                    android:background="@color/White"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+            <ImageButton
+                android:id="@+id/btn_selectRoom"
+                android:layout_width="match_parent"
+                android:src="@drawable/ic_star_black_24dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/White"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             </LinearLayout>
 

@@ -40,6 +40,8 @@ public class HomeScreen extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
 
+    boolean paused = false;
+
     String quadName;
     String buildingName;
     String quadColor;
@@ -90,6 +92,7 @@ public class HomeScreen extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 connectToAPI();
+                paused = false;
             }
         }
 
@@ -220,6 +223,24 @@ public class HomeScreen extends AppCompatActivity {
         colorR.setColorFilter(Color.parseColor(quadColor));
         lineL.setColorFilter(Color.parseColor(quadColor));
         lineR.setColorFilter(Color.parseColor(quadColor));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(paused){
+//            For Debugging
+//            Toast.makeText(this, "We are starting again!", Toast.LENGTH_SHORT).show();
+            updateData();
+            paused = false;
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        paused = true;
     }
 
     @Override
