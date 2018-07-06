@@ -45,7 +45,7 @@ public class DataManager {
     public void getData(){
 
         if(timeout != 0) {
-            Toast.makeText(context, "Retrying refresh request " + timeout, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Retrying refresh request " + timeout, Toast.LENGTH_SHORT).show();
             System.out.println("Retrying request " + timeout);
         }
 
@@ -66,7 +66,7 @@ public class DataManager {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
                 System.out.println("An error has occurred retrieving the data. Retrying.");
             }
         });

@@ -84,12 +84,13 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:clipChildren="true"
         android:clipToPadding="true"
         app:cardBackgroundColor="@color/cardview_light_background"
         app:cardCornerRadius="0dp"
         app:cardElevation="5dp"
+        android:clickable="false"
         android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,6 +139,7 @@
                 android:layout_marginStart="25dp"/>
             <!--Time Extra Text-->
             <TextView
+                android:id="@+id/txt_timeExtraText"
                 android:text="minutes."
                 android:fontFamily="@font/lato_regular"
                 android:textColor="@color/Black"
@@ -155,6 +157,7 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginStart="25dp"
                 android:progress="45"
@@ -163,53 +166,60 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_timeLeft" />
 
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/linearLayout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent">-->
-
-                <!--<ImageButton-->
-                    <!--android:id="@+id/btn_selectRoom"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:src="@drawable/ic_star_black_24dp"-->
-                    <!--android:layout_height="40dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@color/White"-->
-                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--app:layout_constraintEnd_toEndOf="parent" />-->
-
-            <!--</LinearLayout>-->
-
-            <android.support.v7.widget.CardView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="151dp"
-                app:cardCornerRadius="25dp"
-                app:cardElevation="6dp"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progressBar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:foreground="@drawable/ripple_effect">
+                app:layout_constraintTop_toBottomOf="@id/progressBar">
 
-                <TextView
-                    android:fontFamily="@font/lato_regular"
-                    android:letterSpacing="0.1"
-                    android:textColor="@color/Black"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:text="NOTIFY WHEN DONE"/>
+                <!--Notify Button-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/btn_notify"
+                    android:layout_width="180dp"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="3dp">
 
-            </android.support.v7.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/lato_regular"
+                        android:letterSpacing="0.1"
+                        android:text="NOTIFY WHEN DONE"
+                        android:textColor="@color/Black"
+                        android:textSize="12sp" />
+
+
+                </android.support.v7.widget.CardView>
+
+                <Space android:layout_width="15dp" android:layout_height="10dp"/>
+
+                <!--Favorite Button-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/btn_favorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="3dp">
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_star_black_24dp"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
 
 
         </android.support.constraint.ConstraintLayout>

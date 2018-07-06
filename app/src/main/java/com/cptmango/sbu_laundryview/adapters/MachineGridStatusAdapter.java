@@ -1,6 +1,9 @@
 package com.cptmango.sbu_laundryview.adapters;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -100,7 +103,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMachineMenu(numberToShow, isWasher ? "washer" : "dryer");
+                showMachineMenu(numberToShow, isWasher ? "washer" : "dryer", machine);
             }
         });
 
@@ -149,13 +152,60 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
     }
 
-    void showMachineMenu(int machinePosition, String machineType){
+    private void showMachineMenu(int machinePosition, String machineType, Machine machine){
+
+        // Finding all the views.
         TextView pos = machineMenu.findViewById(R.id.txt_machineNumber);
         TextView type = machineMenu.findViewById(R.id.txt_machineType);
+        CardView cardNumberContainer = machineMenu.findViewById(R.id.card_machineNumber);
+        ImageView topBar = machineMenu.findViewById(R.id.img_topBar);
+        TextView timeLeft = machineMenu.findViewById(R.id.txt_timeLeft);
+        TextView timeExtraText = machineMenu.findViewById(R.id.txt_timeExtraText);
+
+        // Retrieving quad colors.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String quadColor = prefs.getString("quadColor", "000000");
 
         pos.setText(machinePosition + "");
         type.setText(machineType);
 
+
+        switch(machine.machineStatus()){
+
+            case AVAILABLE:
+                machineMenu.findViewById(R.id.btn_notify).setVisibility(View.GONE);
+
+                timeLeft.setText("Available.");
+                timeLeft.setPadding(0, 25, 0, 0);
+                timeLeft.setTextSize(45f);
+                timeExtraText.setText("");
+            break;
+
+            case IN_PROGRESS:
+                machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
+
+                timeLeft.setText(machine.timeLeft() + "");
+                timeExtraText.setText("minutes.");
+            break;
+
+            case DONE_DOOR_CLOSED:
+                machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
+
+                timeLeft.setText("Done. Door closed.");
+                timeLeft.setPadding(0, 25, 0, 0);
+                timeLeft.setTextSize(35f);
+                timeExtraText.setText("");
+            break;
+
+        }
+
+
+        // Change color to quad/theme color.
+        cardNumberContainer.setCardBackgroundColor(Color.parseColor(quadColor));
+        topBar.setColorFilter(Color.parseColor(quadColor));
+
+
+        // Show the machine menu.
         Animations.show(machineMenu);
     }
 
