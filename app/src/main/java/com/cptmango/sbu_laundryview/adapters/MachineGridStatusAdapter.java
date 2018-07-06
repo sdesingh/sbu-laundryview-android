@@ -86,14 +86,10 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
 
-        int machineNumber;
-        if(isWasher){
-            machineNumber = position;
-            holder.machineNumber.setText(machineNumber + 1 + "");
-        }else{
-            machineNumber = position + room.washers() - 1;
-            holder.machineNumber.setText(machineNumber + 2 + "");
-        }
+        int machineNumber = (isWasher) ? position : position + room.washers() - 1;
+        int numberToShow = (isWasher) ? machineNumber + 1 : machineNumber + 2;
+
+        holder.machineNumber.setText(numberToShow + "");
 
         Machine machine = room.getMachine(machineNumber);
         holder.machineStatus.setText(machine.machineStatus().getDescription());
@@ -104,13 +100,12 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animations.show(machineMenu);
+                showMachineMenu(numberToShow, isWasher ? "washer" : "dryer");
             }
         });
 
         return convertView;
     }
-
 
     public void setupView(ViewHolder holder, Machine machine){
 
@@ -152,6 +147,16 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             holder.timeLeft.setText("");
         }
 
+    }
+
+    void showMachineMenu(int machinePosition, String machineType){
+        TextView pos = machineMenu.findViewById(R.id.txt_machineNumber);
+        TextView type = machineMenu.findViewById(R.id.txt_machineType);
+
+        pos.setText(machinePosition + "");
+        type.setText(machineType);
+
+        Animations.show(machineMenu);
     }
 
     private class ViewHolder{

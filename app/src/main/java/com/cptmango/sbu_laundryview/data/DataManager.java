@@ -66,8 +66,8 @@ public class DataManager {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "An error occured while retrieving data.", Toast.LENGTH_LONG).show();
-                System.out.println("An error has occured retrieving the data. Retrying.");
+                Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
+                System.out.println("An error has occurred retrieving the data. Retrying.");
             }
         });
 
