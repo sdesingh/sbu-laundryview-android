@@ -12,10 +12,16 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -196,6 +202,7 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
+        View refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
         FloatingActionButton settings = (FloatingActionButton) findViewById(R.id.btn_settings);
@@ -214,8 +221,12 @@ public class HomeScreen extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                Animation expand = AnimationUtils.loadAnimation(context, R.anim.expand_item);
+//                expand.setDuration(500);
+//                refreshed.startAnimation(expand);
                 updateData();
-                Toast.makeText(context, "Refreshing data.", Toast.LENGTH_SHORT).show();
+
             }
         });
         settings.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
@@ -267,7 +278,14 @@ public class HomeScreen extends AppCompatActivity {
 
             if(data.getRoomData() != null){
                 washerAdapter.notifyDataSetChanged();
-                Toast.makeText(this, "Refreshed successfully.", Toast.LENGTH_SHORT).show();
+
+                View refreshed = findViewById(R.id.network_status);
+                refreshed.setVisibility(View.VISIBLE);
+                refreshed.animate().translationY(0).setDuration(400).setInterpolator(new LinearInterpolator()).withEndAction(() -> {
+                    refreshed.animate().translationY(-100).setDuration(500).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
+                            .withEndAction(() -> {refreshed.setVisibility(View.GONE);});
+
+                });
             }
 
         });

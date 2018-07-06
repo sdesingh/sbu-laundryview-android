@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/network_status_bg"
         android:layout_width="0dp"
         android:layout_height="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         app:srcCompat="@color/Green" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txt_network_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -26,8 +26,8 @@
         android:text="Refreshed successfully."
         android:textColor="@color/White"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintBottom_toBottomOf="@+id/network_status_bg"
+        app:layout_constraintEnd_toEndOf="@+id/network_status_bg"
+        app:layout_constraintStart_toStartOf="@+id/network_status_bg"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
