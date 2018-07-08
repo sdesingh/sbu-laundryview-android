@@ -117,7 +117,15 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
             holder.timeLeft.setText(machine.timeLeft() + "");
             holder.progressBar.setProgress(0);
-            double progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+
+            double progress;
+            if(machine.isWasher()){
+                progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
+            }else {
+                progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+            }
+
+
             holder.progressBar.setProgressWithAnimation((int) progress, 800);
 
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));

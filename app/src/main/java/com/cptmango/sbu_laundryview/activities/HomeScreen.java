@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -207,6 +208,20 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
+        SwipeRefreshLayout dryerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_dryers);
+        SwipeRefreshLayout washerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_washers);
+        dryerRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateData();
+            }
+        });
+        washerRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateData();
+            }
+        });
         View refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
@@ -245,8 +260,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(paused){
-//            For Debugging
-//            Toast.makeText(this, "We are starting again!", Toast.LENGTH_SHORT).show();
             updateData();
             paused = false;
         }
@@ -282,16 +295,18 @@ public class HomeScreen extends AppCompatActivity {
         data.getQueue().addRequestFinishedListener(response -> {
 
             if(data.getRoomData() != null){
-                washerAdapter.notifyDataSetChanged();
-                dryerAdapter.notifyDataSetChanged();
-
                 View refreshed = findViewById(R.id.network_status);
                 refreshed.setVisibility(View.VISIBLE);
-                refreshed.animate().translationY(0).setDuration(400).setInterpolator(new LinearInterpolator()).withEndAction(() -> {
-                    refreshed.animate().translationY(-100).setDuration(500).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
+                refreshed.animate().translationY(0).setDuration(200).setInterpolator(new LinearInterpolator()).withEndAction(() -> {
+                    refreshed.animate().translationY(-50).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
                             .withEndAction(() -> {refreshed.setVisibility(View.GONE);});
 
                 });
+
+                washerAdapter.notifyDataSetChanged();
+                dryerAdapter.notifyDataSetChanged();
+
+
             }
 
         });
