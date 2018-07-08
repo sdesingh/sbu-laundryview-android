@@ -3,6 +3,7 @@ package com.cptmango.sbu_laundryview.adapters;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cptmango.sbu_laundryview.R;
@@ -43,7 +45,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return isWasher ? room.washers() : room.dryers();
+        return isWasher ? room.totalWashers() : room.totalDryers();
     }
 
     public boolean isEnabled(int position) {
@@ -89,8 +91,8 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
 
-        int machineNumber = (isWasher) ? position : position + room.washers() - 1;
-        int numberToShow = (isWasher) ? machineNumber + 1 : machineNumber + 2;
+        int machineNumber = (isWasher) ? position : position + room.totalWashers();
+        int numberToShow = machineNumber + 1;
 
         holder.machineNumber.setText(numberToShow + "");
 
@@ -103,7 +105,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMachineMenu(numberToShow, isWasher ? "washer" : "dryer", machine);
+                showMachineMenu(numberToShow, machine);
             }
         });
 
@@ -139,6 +141,9 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
             holder.timeLeft.setText("");
         }
+        else if(machine.machineStatus() == MachineStatus.OUT_OF_ORDER) {
+
+        }
         else{
             holder.progressBar.setProgress(100);
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
@@ -152,7 +157,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
     }
 
-    private void showMachineMenu(int machinePosition, String machineType, Machine machine){
+    private void showMachineMenu(int machinePosition, Machine machine){
 
         // Finding all the views.
         TextView pos = machineMenu.findViewById(R.id.txt_machineNumber);
@@ -161,19 +166,26 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         ImageView topBar = machineMenu.findViewById(R.id.img_topBar);
         TextView timeLeft = machineMenu.findViewById(R.id.txt_timeLeft);
         TextView timeExtraText = machineMenu.findViewById(R.id.txt_timeExtraText);
+        ProgressBar progressBar = (ProgressBar) machineMenu.findViewById(R.id.progressBar);
+//        CircularProgressBar cpb = (CircularProgressBar) machineMenu.findViewById(R.id.progressBar);
+//        cpb.enableIndeterminateMode(false);
 
         // Retrieving quad colors.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String quadColor = prefs.getString("quadColor", "000000");
 
         pos.setText(machinePosition + "");
-        type.setText(machineType);
+        type.setText(machine.isWasher() ? "washer" : "dryer");
 
 
         switch(machine.machineStatus()){
 
             case AVAILABLE:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.GONE);
+
+                progressBar.setProgress(100);
+                progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Green), PorterDuff.Mode.SRC_IN);
+//                cpb.enableIndeterminateMode(false);
 
                 timeLeft.setText("Available.");
                 timeLeft.setPadding(0, 25, 0, 0);
@@ -184,21 +196,35 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             case IN_PROGRESS:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
 
+                double progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+
+                progressBar.setProgress((int) progress);
+                progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Red), PorterDuff.Mode.SRC_IN);
+
+//                cpb.enableIndeterminateMode(true);
+
                 timeLeft.setText(machine.timeLeft() + "");
+                timeLeft.setPadding(0, 0, 0, 0);
+                timeLeft.setTextSize(55f);
                 timeExtraText.setText("minutes.");
             break;
 
             case DONE_DOOR_CLOSED:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
 
+                progressBar.setProgress(100);
+                progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Yellow), PorterDuff.Mode.SRC_IN);
+//                cpb.enableIndeterminateMode(false);
+
                 timeLeft.setText("Done. Door closed.");
                 timeLeft.setPadding(0, 25, 0, 0);
-                timeLeft.setTextSize(35f);
+                timeLeft.setTextSize(30f);
                 timeExtraText.setText("");
             break;
 
+            case OUT_OF_ORDER:
+                break;
         }
-
 
         // Change color to quad/theme color.
         cardNumberContainer.setCardBackgroundColor(Color.parseColor(quadColor));

@@ -23,7 +23,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_washerAvailable"
+                android:id="@+id/txt_washerAvailable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -95,7 +95,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_dryerAvailable"
+                android:id="@+id/txt_dryerAvailable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -208,7 +208,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="No machines selected."
+        android:text="No machines being tracked."
         android:textColor="@color/Grey"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"

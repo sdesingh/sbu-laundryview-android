@@ -5,17 +5,19 @@ public class Room {
     private Machine[] machines;
     private String roomName;
     private String quadName;
-    private int washers;
-    private int dryers;
+    private int totalWashers;
+    private int washers_available;
+    private int totalDryers;
+    private int dryers_available;
     private int totalMachines;
 
-    public Room(String quadName, String roomName, int washers, int dryers){
+    public Room(String quadName, String roomName, int totalWashers, int dryers){
 
         this.roomName = roomName;
         this.quadName = quadName;
-        this.washers = washers;
-        this.dryers = dryers;
-        this.totalMachines = washers + dryers;
+        this.totalWashers = totalWashers;
+        this.totalDryers = dryers;
+        this.totalMachines = totalWashers + dryers;
 
     }
 
@@ -29,11 +31,17 @@ public class Room {
     public String buildingName(){ return quadName; }
     public void setBuildingName(String name){ this.quadName = name; }
 
-    public int washers(){ return washers; }
-    public void setWashers(int washers){ this.washers = washers; }
+    public int totalWashers(){ return totalWashers; }
+    public void setTotalWashers(int totalWashers){ this.totalWashers = totalWashers; }
 
-    public int dryers(){ return dryers; }
-    public void setDryers(int dryers){ this.dryers = dryers; }
+    public int dryers_available(){ return dryers_available;}
+    public void setDryers_available(int dryers_available) { this.dryers_available = dryers_available; }
+
+    public int washers_available(){ return washers_available; }
+    public void setWashers_available(int washers_available){ this.washers_available = washers_available; }
+
+    public int totalDryers(){ return totalDryers; }
+    public void setTotalDryers(int totalDryers){ this.totalDryers = totalDryers; }
 
     public int totalMachines(){ return totalMachines; }
 

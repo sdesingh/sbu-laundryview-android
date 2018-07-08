@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,9 @@ import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
+import com.cptmango.sbu_laundryview.data.model.Machine;
+import com.cptmango.sbu_laundryview.data.model.MachineStatus;
+import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
 import com.cptmango.sbu_laundryview.ui.GeneralUI;
 
@@ -134,6 +138,7 @@ public class HomeScreen extends AppCompatActivity {
         pager.setOffscreenPageLimit(3);
         showWasherData();
         showDryerData();
+        showSummaryPage();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_summary);
@@ -293,11 +298,44 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    void showSummaryPage(){
+        TextView summary_washerAvailable = (TextView) findViewById(R.id.txt_washerAvailable);
+        TextView summary_dryerAvailable = (TextView) findViewById(R.id.txt_dryerAvailable);
+        ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
+        ImageView dryerIcon = (ImageView) findViewById(R.id.img_dryerStatus);
+
+
+        Room roomData = data.getRoomData();
+        String[] numbers = context.getResources().getStringArray(R.array.machine_status_numbers);
+        boolean dryers_available = roomData.dryers_available() != 0;
+        boolean washers_available = roomData.washers_available() != 0;
+
+        if(dryers_available){
+            summary_dryerAvailable.setText(numbers[roomData.dryers_available()] + " available.");
+            dryerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+        }else {
+            summary_dryerAvailable.setText(numbers[roomData.dryers_available()] + "");
+            dryerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
+        }
+
+        if(washers_available){
+            summary_washerAvailable.setText(numbers[roomData.washers_available()] +  " available.");
+            washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+        }else {
+            summary_washerAvailable.setText(numbers[roomData.washers_available()] + "");
+            washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
+        }
+
+
+
+
+
+
+    }
+
     void showDryerData(){
 
         dryerGrid = (GridView) pager.findViewById(R.id.grid_dryers);
-
-//        dryerGrid.setEnabled(false);
 
         // Setting up the dryerGrid view.
 

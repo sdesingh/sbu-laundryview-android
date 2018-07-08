@@ -98,6 +98,10 @@ public class DataManager {
 
             Machine[] newMachineData = new Machine[room.totalMachines()];
 
+            // Going through the JSON array to parse the data and pass the data into the Room object.
+            int washers_available = 0;
+            int dryers_available = 0;
+
             for(int i = 0; i < room.totalMachines(); i++){
 
                 String machineStatusSummary = machines.getJSONObject(i).getString("status");
@@ -105,9 +109,13 @@ public class DataManager {
                 MachineStatus statusCode;
                 int machineTimeLeft;
 
+                boolean isWasher = i <= room.totalWashers() - 1;
+
+                // Setting machine status.
                 switch(machines.getJSONObject(i).getInt("statusCode")){
 
                     case 0: statusCode = MachineStatus.AVAILABLE;
+                            if(isWasher) washers_available++; else dryers_available++;
                     break;
 
                     case 1: statusCode = MachineStatus.IN_PROGRESS;
@@ -131,24 +139,16 @@ public class DataManager {
                 }
                 else { machineTimeLeft = -1; }
 
-                newMachineData[i] = new Machine(i+1, machineTimeLeft, statusCode);
+                newMachineData[i] = new Machine(i+1, machineTimeLeft, statusCode, isWasher);
 
             }
 
 
             room.updateMachineData(newMachineData);
+            room.setDryers_available(dryers_available);
+            room.setWashers_available(washers_available);
 
-            for(Machine m : room.getMachines()){
-
-                if(m.machineStatus() == MachineStatus.IN_PROGRESS){
-                    System.out.println(m.machineNumber() + ": Time remaining " + m.timeLeft());
-                }else{
-                    System.out.println(m.machineNumber() + ": " + m.machineStatus().getDescription());
-                }
-
-            }
-
-            // Reset timeout.
+            // Reset timeout. Retrieval and parse was successful.
             timeout = 0;
             return true;
 

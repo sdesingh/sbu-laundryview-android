@@ -38,7 +38,7 @@ public class MachineListStatusAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return isWasher ? room.washers() : room.dryers();
+        return isWasher ? room.totalWashers() : room.totalDryers();
     }
 
     @Override
