@@ -214,7 +214,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
                 timeLeft.setText(machine.timeLeft() + "");
                 timeLeft.setPadding(0, 0, 0, 0);
                 timeLeft.setTextSize(55f);
-                timeExtraText.setText("minutes.");
+                timeExtraText.setText("minutes remaining.");
             break;
 
             case DONE_DOOR_CLOSED:

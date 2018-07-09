@@ -23,7 +23,7 @@ public class Room {
 
     public Machine getMachine(int machineNumber){ return machines[machineNumber]; }
     public Machine[] getMachines(){ return machines; }
-    public void updateMachineData(Machine[] machines){ this.machines = machines; }
+    public void setMachineData(Machine[] machines){ this.machines = machines; }
 
     public String roomName(){ return roomName; }
     public void setRoomName(String name) { this.roomName = name; }

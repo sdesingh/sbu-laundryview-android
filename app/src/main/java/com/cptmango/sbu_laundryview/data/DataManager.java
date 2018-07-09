@@ -144,7 +144,7 @@ public class DataManager {
             }
 
 
-            room.updateMachineData(newMachineData);
+            room.setMachineData(newMachineData);
             room.setDryers_available(dryers_available);
             room.setWashers_available(washers_available);
 

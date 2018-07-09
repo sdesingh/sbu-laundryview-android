@@ -44,9 +44,12 @@ public class HomeScreen extends AppCompatActivity {
     DataManager data;
     GridView washerGrid;
     GridView dryerGrid;
+    GridView favoriteGrid;
     ViewPager pager;
+    View refreshed;
     MachineGridStatusAdapter washerAdapter;
     MachineGridStatusAdapter dryerAdapter;
+    MachineGridStatusAdapter favoriteAdapter;
     HomeScreenFragmentPagerAdapter pagerAdapter;
 
     BottomNavigationView bottomNavigationView;
@@ -137,9 +140,11 @@ public class HomeScreen extends AppCompatActivity {
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);
         pager.setOffscreenPageLimit(3);
+
         showWasherData();
         showDryerData();
         showSummaryPage();
+        showFavoriteData();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_summary);
@@ -208,21 +213,17 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
+
+        SwipeRefreshLayout.OnRefreshListener listener = () -> updateData();
         SwipeRefreshLayout dryerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_dryers);
         SwipeRefreshLayout washerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_washers);
-        dryerRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateData();
-            }
-        });
-        washerRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateData();
-            }
-        });
-        View refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
+        SwipeRefreshLayout summaryRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_summary);
+        dryerRefresh.setOnRefreshListener(listener);
+        washerRefresh.setOnRefreshListener(listener);
+        summaryRefresh.setOnRefreshListener(listener);
+
+
+        refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
         FloatingActionButton settings = (FloatingActionButton) findViewById(R.id.btn_settings);
@@ -295,16 +296,17 @@ public class HomeScreen extends AppCompatActivity {
         data.getQueue().addRequestFinishedListener(response -> {
 
             if(data.getRoomData() != null){
-                View refreshed = findViewById(R.id.network_status);
                 refreshed.setVisibility(View.VISIBLE);
                 refreshed.animate().translationY(0).setDuration(200).setInterpolator(new LinearInterpolator()).withEndAction(() -> {
-                    refreshed.animate().translationY(-50).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
+                    refreshed.animate().translationY(-100).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
                             .withEndAction(() -> {refreshed.setVisibility(View.GONE);});
 
                 });
 
                 washerAdapter.notifyDataSetChanged();
                 dryerAdapter.notifyDataSetChanged();
+                favoriteAdapter.notifyDataSetChanged();
+                showSummaryPage();
 
 
             }
@@ -359,6 +361,20 @@ public class HomeScreen extends AppCompatActivity {
         dryerGrid.setColumnWidth(GridView.AUTO_FIT);
         dryerGrid.setNumColumns(GridView.AUTO_FIT);
 
+    }
+
+    void showFavoriteData(){
+        favoriteGrid = (GridView) pager.findViewById(R.id.grid_favoriteMachines);
+
+        // Setting up the dryerGrid view.
+        int numberOfMachines = data.getRoomData().totalDryers() / 2;
+        numberOfMachines += ((data.getRoomData().totalDryers() % 2 == 0) ? 0 : 1);
+
+        favoriteAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), false);
+        favoriteGrid.setAdapter(dryerAdapter);
+        GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+        favoriteGrid.setColumnWidth(GridView.AUTO_FIT);
+        favoriteGrid.setNumColumns(GridView.AUTO_FIT);
     }
 
     void showWasherData(){

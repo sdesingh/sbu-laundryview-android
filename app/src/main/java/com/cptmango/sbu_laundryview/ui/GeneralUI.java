@@ -1,8 +1,13 @@
 package com.cptmango.sbu_laundryview.ui;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.GridView;
 
 public class GeneralUI {
 
@@ -20,6 +25,19 @@ public class GeneralUI {
 
     }
 
+    public static int convertDpToPixels(float dp, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                resources.getDisplayMetrics()
+        );
+    }
 
+    public static void resizeGridViewHeight(GridView grid, float height, Context context){
+        ViewGroup.LayoutParams layoutParams = grid.getLayoutParams();
+        layoutParams.height = convertDpToPixels(height, context);
+        grid.setLayoutParams(layoutParams);
+    }
 
 }
