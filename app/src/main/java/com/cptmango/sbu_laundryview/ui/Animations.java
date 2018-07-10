@@ -14,6 +14,15 @@ public class Animations {
 
     }
 
+    public static void hideDown(View view){
+
+        view.animate()
+                .alpha(0f)
+                .setDuration(300)
+                .translationY(100)
+                .withEndAction(() ->  view.setVisibility(View.GONE));
+    }
+
     public static void show(View view){
 
         view.setVisibility(View.VISIBLE);
@@ -34,6 +43,15 @@ public class Animations {
 
     }
 
+    public static void showUp(View view){
+
+        view.setVisibility(View.VISIBLE);
+
+        view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(300);
+    }
 
 
 }

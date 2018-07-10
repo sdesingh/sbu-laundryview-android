@@ -221,17 +221,14 @@ public class HomeScreen extends AppCompatActivity {
                 if(position == 0){
                     //showWasherData();
                     bottomNavigationView.setSelectedItemId(R.id.nav_washers);
-                    currentPage = 0;
                 }
                 // Selected Dryers
                 else if(position == 2){
                     //showDryerData();
                     bottomNavigationView.setSelectedItemId(R.id.nav_dryers);
-                    currentPage = 2;
                 }
                 else{
                     bottomNavigationView.setSelectedItemId(R.id.nav_summary);
-                    currentPage = 1;
                 }
 
             }
@@ -244,6 +241,7 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
+        View machineMenu = findViewById(R.id.machine_menu); machineMenu.setTranslationY(100);
 
         SwipeRefreshLayout.OnRefreshListener listener = this::updateData;
         SwipeRefreshLayout dryerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_dryers);
@@ -253,8 +251,8 @@ public class HomeScreen extends AppCompatActivity {
         washerRefresh.setOnRefreshListener(listener);
         summaryRefresh.setOnRefreshListener(listener);
 
-
         refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
+
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
 
@@ -385,7 +383,8 @@ public class HomeScreen extends AppCompatActivity {
 
             case R.id.bg:
                 View machineMenu = findViewById(R.id.machine_menu);
-                Animations.hide(machineMenu);
+                Animations.hideDown(machineMenu);
+                Animations.hide(findViewById(R.id.bg));
             default: return;
         }
 

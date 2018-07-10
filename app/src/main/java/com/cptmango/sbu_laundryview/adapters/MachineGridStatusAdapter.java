@@ -41,6 +41,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         this.machineMenu = context.findViewById(R.id.machine_menu);
         machineMenu.setAlpha(0f);
 
+
     }
 
     @Override
@@ -240,7 +241,9 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
 
         // Show the machine menu.
-        Animations.show(machineMenu);
+        Animations.show(context.findViewById(R.id.bg), 0.6f);
+        Animations.showUp(machineMenu);
+
     }
 
     private class ViewHolder{
