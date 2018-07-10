@@ -8,12 +8,6 @@
     android:elevation="10dp">
 
 
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/menuContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <!--Spacer-->
         <Space
             android:id="@+id/space4"
@@ -77,11 +71,11 @@
 
         </android.support.v7.widget.CardView>
 
+        <!--Button Containers-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:onClick="onClick"
             android:gravity="right"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/cardView"
@@ -114,10 +108,12 @@
 
             <!--Favorite Button-->
             <android.support.v7.widget.CardView
+                android:foreground="@drawable/ripple_effect"
                 android:id="@+id/btn_favorite"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="10dp"
+                android:onClick="onClick"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp">
 
@@ -212,10 +208,6 @@
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
-
-
-    </android.support.constraint.ConstraintLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>

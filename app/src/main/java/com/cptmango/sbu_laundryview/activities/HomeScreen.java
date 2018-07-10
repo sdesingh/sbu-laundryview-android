@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
+import com.cptmango.sbu_laundryview.adapters.FavoriteGridStatusAdapter;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.data.DataManager;
@@ -49,7 +50,7 @@ public class HomeScreen extends AppCompatActivity {
     View refreshed;
     MachineGridStatusAdapter washerAdapter;
     MachineGridStatusAdapter dryerAdapter;
-    MachineGridStatusAdapter favoriteAdapter;
+    FavoriteGridStatusAdapter favoriteAdapter;
     HomeScreenFragmentPagerAdapter pagerAdapter;
 
     BottomNavigationView bottomNavigationView;
@@ -294,8 +295,6 @@ public class HomeScreen extends AppCompatActivity {
                 dryerAdapter.notifyDataSetChanged();
                 favoriteAdapter.notifyDataSetChanged();
                 showSummaryPage();
-
-
             }
 
         });
@@ -330,11 +329,6 @@ public class HomeScreen extends AppCompatActivity {
             washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
         }
 
-
-
-
-
-
     }
 
     void showDryerData(){
@@ -351,15 +345,21 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     void showFavoriteData(){
-        favoriteGrid = (GridView) pager.findViewById(R.id.grid_favoriteMachines);
+        favoriteGrid = pager.findViewById(R.id.grid_favoriteMachines);
 
-        // Setting up the dryerGrid view.
-        int numberOfMachines = data.getRoomData().totalDryers() / 2;
-        numberOfMachines += ((data.getRoomData().totalDryers() % 2 == 0) ? 0 : 1);
+        favoriteAdapter = new FavoriteGridStatusAdapter(context, data.getFavorites());
+        favoriteGrid.setAdapter(favoriteAdapter);
 
-        favoriteAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), false);
-        favoriteGrid.setAdapter(dryerAdapter);
+        if(data.getFavorites().size() == 0)
+            findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
+        else
+            favoriteGrid.setVisibility(View.VISIBLE);
+
+        // Resizing grid.
+        int numberOfMachines = data.getFavorites().size() / 2;
+        numberOfMachines += ((data.getFavorites().size() % 2 == 0) ? 0 : 1);
         GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+
         favoriteGrid.setColumnWidth(GridView.AUTO_FIT);
         favoriteGrid.setNumColumns(GridView.AUTO_FIT);
     }
@@ -385,6 +385,35 @@ public class HomeScreen extends AppCompatActivity {
                 View machineMenu = findViewById(R.id.machine_menu);
                 Animations.hideDown(machineMenu);
                 Animations.hide(findViewById(R.id.bg));
+            break;
+
+            case R.id.btn_favorite:
+
+                TextView number = findViewById(R.id.txt_machineNumber);
+                int machineIndex = Integer.parseInt(number.getText().toString());
+                data.addMachineToFavorites(machineIndex);
+
+                // Showing not found icon.
+                if(data.getFavorites().size() == 0){
+                    favoriteGrid.setVisibility(View.GONE);
+                    findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
+                }else{
+                    findViewById(R.id.img_notFound).setVisibility(View.GONE);
+                    favoriteGrid.setVisibility(View.VISIBLE);
+                }
+
+                // Resizing grid.
+                int numberOfMachines = data.getFavorites().size() / 2;
+                numberOfMachines += ((data.getFavorites().size() % 2 == 0) ? 0 : 1);
+                GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+
+                favoriteAdapter.notifyDataSetChanged();
+                Toast.makeText(context, "Added Machine to Favorites.", Toast.LENGTH_SHORT).show();
+
+
+                break;
+
+
             default: return;
         }
 

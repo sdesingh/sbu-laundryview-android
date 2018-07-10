@@ -18,34 +18,27 @@ import android.widget.TextView;
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.MachineStatus;
-import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
-/**
- * Created by mango on 4/18/18.
- */
+import java.util.ArrayList;
 
-public class MachineGridStatusAdapter extends BaseAdapter {
+public class FavoriteGridStatusAdapter extends BaseAdapter {
 
-    private Room room;
     private Activity context;
-    private boolean isWasher;
+    private ArrayList<Machine> favorites;
     private View machineMenu;
 
-    public MachineGridStatusAdapter(Activity context, Room roomData, boolean isWasher){
 
+    public FavoriteGridStatusAdapter(Activity context, ArrayList<Machine> favorites){
         this.context = context;
-        this.room = roomData;
-        this.isWasher = isWasher;
-        this.machineMenu = context.findViewById(R.id.machine_menu);
-        machineMenu.setAlpha(0f);
-
+        this.favorites = favorites;
+        machineMenu = context.findViewById(R.id.machine_menu); machineMenu.setAlpha(0f);
     }
 
     @Override
     public int getCount() {
-        return isWasher ? room.totalWashers() : room.totalDryers();
+        return favorites.size();
     }
 
     @Override
@@ -60,7 +53,6 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         ViewHolder holder;
 
         if(convertView == null){
@@ -87,28 +79,26 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
 
-        int machineNumber = (isWasher) ? position : position + room.totalWashers();
-        int numberToShow = machineNumber + 1;
-
-        holder.machineNumber.setText(numberToShow + "");
-
-        Machine machine = room.getMachine(machineNumber);
-        holder.machineStatus.setText(machine.machineStatus().getDescription());
+        Machine machine = favorites.get(position);
 
         //Setup All of the Views
         setupView(holder, machine);
 
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMachineMenu(numberToShow, machine);
-            }
-        });
+        // Setting Up Listeners
+
 
         return convertView;
     }
 
     protected void setupView(ViewHolder holder, Machine machine){
+
+        int machineNumber = machine.machineNumber();
+
+        holder.machineNumber.setText(machineNumber + "");
+        holder.machineStatus.setText(machine.machineStatus().getDescription());
+
+        // Setting up listener.
+        holder.container.setOnClickListener(v -> showMachineMenu(machine));
 
         if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
             holder.timeLeft.setText(machine.timeLeft() + "");
@@ -161,7 +151,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
     }
 
-    protected void showMachineMenu(int machinePosition, Machine machine){
+    protected void showMachineMenu(Machine machine){
 
         // Finding all the views.
         TextView pos = machineMenu.findViewById(R.id.txt_machineNumber);
@@ -178,7 +168,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String quadColor = prefs.getString("quadColor", "000000");
 
-        pos.setText(machinePosition + "");
+        pos.setText(machine.machineNumber() + "");
         type.setText(machine.isWasher() ? "washer" : "dryer");
 
 
@@ -195,7 +185,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
                 timeLeft.setPadding(0, 25, 0, 0);
                 timeLeft.setTextSize(45f);
                 timeExtraText.setText("");
-            break;
+                break;
 
             case IN_PROGRESS:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
@@ -211,7 +201,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
                 timeLeft.setPadding(0, 0, 0, 0);
                 timeLeft.setTextSize(55f);
                 timeExtraText.setText("minutes remaining.");
-            break;
+                break;
 
             case DONE_DOOR_CLOSED:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
@@ -224,7 +214,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
                 timeLeft.setPadding(0, 25, 0, 0);
                 timeLeft.setTextSize(30f);
                 timeExtraText.setText("");
-            break;
+                break;
 
             case OUT_OF_ORDER:
                 break;
@@ -253,5 +243,4 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         CircularProgressBar progressBar;
 
     }
-
 }

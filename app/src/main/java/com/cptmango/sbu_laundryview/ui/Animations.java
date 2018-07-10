@@ -18,7 +18,7 @@ public class Animations {
 
         view.animate()
                 .alpha(0f)
-                .setDuration(300)
+                .setDuration(250)
                 .translationY(100)
                 .withEndAction(() ->  view.setVisibility(View.GONE));
     }
@@ -50,7 +50,7 @@ public class Animations {
         view.animate()
                 .alpha(1f)
                 .translationY(0f)
-                .setDuration(300);
+                .setDuration(250);
     }
 
 

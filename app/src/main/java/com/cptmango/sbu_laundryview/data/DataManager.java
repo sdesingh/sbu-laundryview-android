@@ -18,6 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import javax.crypto.Mac;
+
 public class DataManager {
 
     private String quad;
@@ -27,13 +31,15 @@ public class DataManager {
 
     Context context;
     Room room;
-    Room favorites;
+    ArrayList<Machine> favorites;
     RequestQueue queue;
 
     public DataManager(Context context, String quad, String building){
         this.quad = quad;
         this.building = building;
         this.context = context;
+
+        favorites = new ArrayList<>();
         queue = Volley.newRequestQueue(context);
 
         String url = context.getResources().getString(R.string.url);
@@ -158,6 +164,12 @@ public class DataManager {
     }
 
     public Room getRoomData(){ return room; }
+
+    public ArrayList<Machine> getFavorites(){ return favorites; }
+
+    public void addMachineToFavorites(int machineNumber){ favorites.add(room.getMachine(machineNumber - 1)); }
+
+    public void removeMachineFromFavorites(int machineIndex){ favorites.remove(machineIndex); }
 
     public RequestQueue getQueue() {
         return queue;
