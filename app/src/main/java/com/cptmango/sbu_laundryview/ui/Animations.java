@@ -19,7 +19,7 @@ public class Animations {
         view.animate()
                 .alpha(0f)
                 .setDuration(250)
-                .translationY(100)
+                .translationY(50)
                 .withEndAction(() ->  view.setVisibility(View.GONE));
     }
 

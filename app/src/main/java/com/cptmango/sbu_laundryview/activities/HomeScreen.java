@@ -26,6 +26,7 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -230,6 +231,8 @@ public class HomeScreen extends AppCompatActivity {
                 }
                 else{
                     bottomNavigationView.setSelectedItemId(R.id.nav_summary);
+                    ScrollView view = (ScrollView) findViewById(R.id.summary_scrollView);
+                    view.smoothScrollTo(0,0);
                 }
 
             }
@@ -242,7 +245,7 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
-        View machineMenu = findViewById(R.id.machine_menu); machineMenu.setTranslationY(100);
+        View machineMenu = findViewById(R.id.machine_menu); machineMenu.setTranslationY(50);
 
         SwipeRefreshLayout.OnRefreshListener listener = this::updateData;
         SwipeRefreshLayout dryerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_dryers);
@@ -307,6 +310,13 @@ public class HomeScreen extends AppCompatActivity {
         ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
         ImageView dryerIcon = (ImageView) findViewById(R.id.img_dryerStatus);
 
+        if(data.getFavorites().size() == 0)
+            findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
+        else{
+            favoriteGrid.setVisibility(View.VISIBLE);
+            findViewById(R.id.img_notFound).setVisibility(View.GONE);
+        }
+
 
         Room roomData = data.getRoomData();
         String[] numbers = context.getResources().getStringArray(R.array.machine_status_numbers);
@@ -349,11 +359,6 @@ public class HomeScreen extends AppCompatActivity {
 
         favoriteAdapter = new FavoriteGridStatusAdapter(context, data.getFavorites());
         favoriteGrid.setAdapter(favoriteAdapter);
-
-        if(data.getFavorites().size() == 0)
-            findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
-        else
-            favoriteGrid.setVisibility(View.VISIBLE);
 
         // Resizing grid.
         int numberOfMachines = data.getFavorites().size() / 2;
