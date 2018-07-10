@@ -112,6 +112,38 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(paused){
+            updateData();
+            paused = false;
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        paused = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        View machineMenu = findViewById(R.id.machine_menu);
+
+        // If the machine info menu is showing, hide it.
+        if(machineMenu.getAlpha() == 1.0){
+            Animations.hide(machineMenu);
+        }
+        // Do regular back button stuff (exit the app/activity).
+        else {
+            super.onBackPressed();
+        }
+
+    }
+
     void connectToAPI() {
 
         Context context = getApplicationContext();
@@ -150,33 +182,29 @@ public class HomeScreen extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.nav_summary);
 
         //Bottom Tab Listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            item.setChecked(true);
 
-                item.setChecked(true);
+            switch(item.getItemId()){
 
-                switch(item.getItemId()){
-
-                    case R.id.nav_washers:
-                        pager.setCurrentItem(0, true);
+                case R.id.nav_washers:
+                    pager.setCurrentItem(0, true);
 //                        showWasherData();
                     break;
 
-                    case R.id.nav_summary:
-                        pager.setCurrentItem(1, true);
+                case R.id.nav_summary:
+                    pager.setCurrentItem(1, true);
                     break;
 
-                    case R.id.nav_dryers:
-                        pager.setCurrentItem(2, true);
+                case R.id.nav_dryers:
+                    pager.setCurrentItem(2, true);
 //                        showDryerData();
                     break;
 
-                }
-
-                return false;
             }
+
+            return false;
         });
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -193,14 +221,17 @@ public class HomeScreen extends AppCompatActivity {
                 if(position == 0){
                     //showWasherData();
                     bottomNavigationView.setSelectedItemId(R.id.nav_washers);
+                    currentPage = 0;
                 }
                 // Selected Dryers
                 else if(position == 2){
                     //showDryerData();
                     bottomNavigationView.setSelectedItemId(R.id.nav_dryers);
+                    currentPage = 2;
                 }
                 else{
                     bottomNavigationView.setSelectedItemId(R.id.nav_summary);
+                    currentPage = 1;
                 }
 
             }
@@ -214,7 +245,7 @@ public class HomeScreen extends AppCompatActivity {
 
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
 
-        SwipeRefreshLayout.OnRefreshListener listener = () -> updateData();
+        SwipeRefreshLayout.OnRefreshListener listener = this::updateData;
         SwipeRefreshLayout dryerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_dryers);
         SwipeRefreshLayout washerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_washers);
         SwipeRefreshLayout summaryRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_summary);
@@ -226,7 +257,7 @@ public class HomeScreen extends AppCompatActivity {
         refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
-        FloatingActionButton settings = (FloatingActionButton) findViewById(R.id.btn_settings);
+
         ImageView colorL = (ImageView) findViewById(R.id.img_highlightL);
         ImageView colorR = (ImageView) findViewById(R.id.img_highlightR);
         ImageView lineL = (ImageView) findViewById(R.id.line_left);
@@ -239,54 +270,13 @@ public class HomeScreen extends AppCompatActivity {
 
         // Changing the color of UI elements to match the quad's color.
         refresh.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        refresh.setOnClickListener(v -> updateData());
+        refresh.setVisibility(View.GONE);
 
-//                Animation expand = AnimationUtils.loadAnimation(context, R.anim.expand_item);
-//                expand.setDuration(500);
-//                refreshed.startAnimation(expand);
-                updateData();
-
-            }
-        });
-        settings.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
         colorL.setColorFilter(Color.parseColor(quadColor));
         colorR.setColorFilter(Color.parseColor(quadColor));
         lineL.setColorFilter(Color.parseColor(quadColor));
         lineR.setColorFilter(Color.parseColor(quadColor));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(paused){
-            updateData();
-            paused = false;
-        }
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        paused = true;
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        View machineMenu = findViewById(R.id.machine_menu);
-
-        // If the machine info menu is showing, hide it.
-        if(machineMenu.getAlpha() == 1.0){
-            Animations.hide(machineMenu);
-        }
-        // Do regular back button stuff (exit the app/activity).
-        else {
-            super.onBackPressed();
-        }
-
     }
 
     void updateData(){
@@ -302,7 +292,6 @@ public class HomeScreen extends AppCompatActivity {
                             .withEndAction(() -> {refreshed.setVisibility(View.GONE);});
 
                 });
-
                 washerAdapter.notifyDataSetChanged();
                 dryerAdapter.notifyDataSetChanged();
                 favoriteAdapter.notifyDataSetChanged();

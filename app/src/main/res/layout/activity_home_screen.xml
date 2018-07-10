@@ -85,6 +85,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         android:clickable="true"
         android:hapticFeedbackEnabled="true"
         app:backgroundTint="@color/Yellow"
@@ -95,19 +96,19 @@
         app:srcCompat="@drawable/icon_refresh" />
 
     <!--Settings Button-->
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/btn_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:tint="@color/Grey"
+        android:src="@drawable/ic_menu_black_24dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:elevation="6dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="8dp"
-        app:backgroundTint="@color/Yellow"
-        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_settings" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--Bottom Bar-->
     <android.support.design.widget.BottomNavigationView

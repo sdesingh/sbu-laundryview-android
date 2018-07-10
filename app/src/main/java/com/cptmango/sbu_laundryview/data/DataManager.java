@@ -27,6 +27,7 @@ public class DataManager {
 
     Context context;
     Room room;
+    Room favorites;
     RequestQueue queue;
 
     public DataManager(Context context, String quad, String building){
@@ -34,9 +35,6 @@ public class DataManager {
         this.building = building;
         this.context = context;
         queue = Volley.newRequestQueue(context);
-
-
-
 
         String url = context.getResources().getString(R.string.url);
         dataURL = url + "/" + getURLName(quad) + "/" + getURLName(building);

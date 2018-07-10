@@ -186,13 +186,13 @@
             <TextView
                 android:id="@+id/txt_timeExtraText"
                 android:text="minutes."
-                android:fontFamily="@font/lato_regular"
+                android:fontFamily="@font/lato_bl"
                 android:textColor="@color/Black"
                 android:textSize="30sp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="6dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_timeLeft"
                 app:layout_constraintLeft_toRightOf="@+id/txt_timeLeft"/>
 
