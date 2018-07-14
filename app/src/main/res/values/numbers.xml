@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="machine_status_numbers">
-        <item>None</item>
+        <item>None.</item>
         <item>One</item>
         <item>Two</item>
         <item>Three</item>

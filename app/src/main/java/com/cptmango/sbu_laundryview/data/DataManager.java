@@ -1,6 +1,11 @@
 package com.cptmango.sbu_laundryview.data;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.crypto.Mac;
 
@@ -27,19 +33,22 @@ public class DataManager {
     private String quad;
     private String building;
     private String dataURL;
+    private boolean saved = false;
     private int timeout = 0;
 
-    Context context;
+    Activity context;
     Room room;
     ArrayList<Machine> favorites;
+    ArrayList<Integer> favoritesList;
     RequestQueue queue;
 
-    public DataManager(Context context, String quad, String building){
+    public DataManager(Activity context, String quad, String building){
         this.quad = quad;
         this.building = building;
         this.context = context;
 
         favorites = new ArrayList<>();
+        favoritesList = new ArrayList<>();
         queue = Volley.newRequestQueue(context);
 
         String url = context.getResources().getString(R.string.url);
@@ -53,26 +62,22 @@ public class DataManager {
             System.out.println("Retrying request " + timeout);
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null,
 
-            @Override
-            public void onResponse(JSONObject response) {
+        response -> {
 
-                if(!parseData(response)){
-                    if(timeout == 3) return;
-                    // Retry request.
-                    timeout++;
-                    getData();
-                }
-
+            if(!parseData(response)){
+                if(timeout == 3) return;
+                // Retry request.
+                timeout++;
+                getData();
             }
 
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
-                System.out.println("An error has occurred retrieving the data. Retrying.");
-            }
+        },
+
+        error -> {
+            Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
+            System.out.println("An error has occurred retrieving the data. Retrying.");
         });
 
         queue.add(request);
@@ -147,10 +152,18 @@ public class DataManager {
 
             }
 
-
             room.setMachineData(newMachineData);
             room.setDryers_available(dryers_available);
             room.setWashers_available(washers_available);
+
+            // Update favorite machines.
+            favorites.clear();
+
+            for(int index : favoritesList){
+                Machine machine = room.getMachine(index - 1);
+                machine.setFavorite(true);
+                favorites.add(machine);
+            }
 
             // Reset timeout. Retrieval and parse was successful.
             timeout = 0;
@@ -167,9 +180,80 @@ public class DataManager {
 
     public ArrayList<Machine> getFavorites(){ return favorites; }
 
-    public void addMachineToFavorites(int machineNumber){ favorites.add(room.getMachine(machineNumber - 1)); }
+    public ArrayList<Integer> getFavoritesList() {
+        return favoritesList;
+    }
+
+    public void setFavoritesList(ArrayList<Integer> favoritesList) {
+        this.favoritesList = favoritesList;
+    }
+
+    public void addMachineToFavorites(int machineNumber){
+        Machine machine = room.getMachine(machineNumber - 1);
+
+        if(favoritesList.contains(machineNumber)) {
+
+            // Data Changes
+            favorites.remove(machine);
+            favoritesList.remove((Integer) machineNumber);
+            machine.setFavorite(false);
+
+            // UI Changes
+            ImageView star = context.findViewById(R.id.star);
+            star.setColorFilter(ContextCompat.getColor(context, R.color.Grey));
+            Toast.makeText(context, "Removed Machine from Favorites.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+
+            // Data Changes
+            favorites.add(machine);
+            favoritesList.add(machineNumber);
+            machine.setFavorite(true);
+
+            // UI Changes
+            ImageView star = context.findViewById(R.id.star);
+            star.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
+            Toast.makeText(context, "Added Machine to Favorites.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     public void removeMachineFromFavorites(int machineIndex){ favorites.remove(machineIndex); }
+
+    public void saveFavoritesToPreferences(){
+
+
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        String favorites = "";
+
+        for(int machineNumber : favoritesList){
+            favorites += machineNumber + ",";
+        }
+        System.out.println("FROM THESE " + favoritesList);
+        System.out.println("SAVED THESE " + favorites);
+        editor.putString("favorites", favorites);
+//            editor.remove("favorites");
+        editor.apply();
+
+
+
+    }
+
+    public void loadFavoritesFromPreferences(){
+        // @TODO Load saved favorites.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs.contains("favorites")){
+            String savedFavorites = prefs.getString("favorites", "1,2");
+            System.out.println(savedFavorites);
+            for(String machineNumber : savedFavorites.split(",")){
+                int machineIndex = Integer.parseInt(machineNumber) - 1;
+                favoritesList.add(machineIndex + 1);
+                room.getMachine(machineIndex).setFavorite(true);
+                favorites.add(room.getMachine(machineIndex));
+            }
+
+        }
+    }
 
     public RequestQueue getQueue() {
         return queue;

@@ -29,7 +29,6 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
     private ArrayList<Machine> favorites;
     private View machineMenu;
 
-
     public FavoriteGridStatusAdapter(Activity context, ArrayList<Machine> favorites){
         this.context = context;
         this.favorites = favorites;
@@ -145,6 +144,8 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Green));
             holder.machineIconLittle.setImageResource(R.drawable.icon_check);
             holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+            holder.machineIconLittle.getLayoutParams().height = 50;
+            holder.machineIconLittle.getLayoutParams().width = 50;
 
             holder.timeLeft.setText("");
         }
@@ -190,7 +191,12 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
             case IN_PROGRESS:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
 
-                double progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+                double progress;
+                if(machine.isWasher()){
+                    progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
+                }else {
+                    progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
+                }
 
                 progressBar.setProgress((int) progress);
                 progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Red), PorterDuff.Mode.SRC_IN);
@@ -223,6 +229,15 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
         // Change color to quad/theme color.
         cardNumberContainer.setCardBackgroundColor(Color.parseColor(quadColor));
         topBar.setColorFilter(Color.parseColor(quadColor));
+
+        // Change Icon color if user has favorited the machine.
+        ImageView star = context.findViewById(R.id.star);
+        if(machine.isFavorite()){
+            star.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
+        }
+        else{
+            star.setColorFilter(ContextCompat.getColor(context, R.color.Grey));
+        }
 
 
         // Show the machine menu.

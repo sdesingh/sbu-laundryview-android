@@ -105,8 +105,7 @@ public class SelectRoomAdapter extends BaseAdapter {
 
         convertView.setOnClickListener((view) ->{
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = prefs.edit();
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 
             editor.putString("building", roomNames[position]);
 

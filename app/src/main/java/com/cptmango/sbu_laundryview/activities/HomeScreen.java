@@ -30,6 +30,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.FavoriteGridStatusAdapter;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
@@ -54,6 +56,7 @@ public class HomeScreen extends AppCompatActivity {
     FavoriteGridStatusAdapter favoriteAdapter;
     HomeScreenFragmentPagerAdapter pagerAdapter;
 
+    SwipeRefreshLayout.OnRefreshListener listener;
     BottomNavigationView bottomNavigationView;
 
     boolean paused = false;
@@ -131,6 +134,12 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        data.saveFavoritesToPreferences();
+    }
+
+    @Override
     public void onBackPressed() {
 
         View machineMenu = findViewById(R.id.machine_menu);
@@ -148,7 +157,6 @@ public class HomeScreen extends AppCompatActivity {
 
     void connectToAPI() {
 
-        Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         quadName = prefs.getString("quad", "Mendelsohn");
@@ -158,11 +166,20 @@ public class HomeScreen extends AppCompatActivity {
         data = new DataManager(this, quadName, buildingName);
         data.getData();
 
-        data.getQueue().addRequestFinishedListener(response -> {
+        data.getQueue().addRequestFinishedListener(
+            request -> {
+                if (pager == null) {
+                    data.loadFavoritesFromPreferences();
+                    initializeUI();
 
-            if(data.getRoomData() != null) initializeUI();
 
-        });
+
+
+                } else {
+                    return;
+                }
+            }
+        );
 
     }
 
@@ -175,13 +192,15 @@ public class HomeScreen extends AppCompatActivity {
         pager.setCurrentItem(1);
         pager.setOffscreenPageLimit(3);
 
+        showFavoriteData();
         showWasherData();
         showDryerData();
         showSummaryPage();
-        showFavoriteData();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_summary);
+
+        // SETTING UP LISTENERS
 
         //Bottom Tab Listener
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -208,7 +227,7 @@ public class HomeScreen extends AppCompatActivity {
 
             return false;
         });
-
+        // Pager Listener
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -228,11 +247,15 @@ public class HomeScreen extends AppCompatActivity {
                 else if(position == 2){
                     //showDryerData();
                     bottomNavigationView.setSelectedItemId(R.id.nav_dryers);
+
                 }
-                else{
+                else if(position == 1){
+                    ScrollView view = findViewById(R.id.summary_scrollView);
+                    view.fullScroll(View.FOCUS_UP);
+                    view.scrollTo(0,0);
+
                     bottomNavigationView.setSelectedItemId(R.id.nav_summary);
-                    ScrollView view = (ScrollView) findViewById(R.id.summary_scrollView);
-                    view.smoothScrollTo(0,0);
+
                 }
 
             }
@@ -243,17 +266,47 @@ public class HomeScreen extends AppCompatActivity {
             }
 
         });
-
-        TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
-        View machineMenu = findViewById(R.id.machine_menu); machineMenu.setTranslationY(50);
-
-        SwipeRefreshLayout.OnRefreshListener listener = this::updateData;
-        SwipeRefreshLayout dryerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_dryers);
-        SwipeRefreshLayout washerRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_washers);
-        SwipeRefreshLayout summaryRefresh = (SwipeRefreshLayout) findViewById(R.id.tab_summary);
+        // Swipe Refresh Listener
+        listener = this::updateData;
+        SwipeRefreshLayout dryerRefresh = findViewById(R.id.tab_dryers);
+        SwipeRefreshLayout washerRefresh = findViewById(R.id.tab_washers);
+        SwipeRefreshLayout summaryRefresh = findViewById(R.id.tab_summary);
         dryerRefresh.setOnRefreshListener(listener);
         washerRefresh.setOnRefreshListener(listener);
         summaryRefresh.setOnRefreshListener(listener);
+        // Data Refresh Listener
+        data.getQueue().addRequestFinishedListener(response -> {
+
+            // Stop Refreshing
+            dryerRefresh.setRefreshing(false);
+            washerRefresh.setRefreshing(false);
+            summaryRefresh.setRefreshing(false);
+
+            if(data.getRoomData() != null){
+                refreshed.setVisibility(View.VISIBLE);
+                refreshed
+                        .animate()
+                        .translationY(0)
+                        .setDuration(200)
+                        .setInterpolator(new LinearInterpolator())
+                        .withEndAction(() -> {
+                            refreshed.animate().translationY(-100).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
+                                    .withEndAction(() -> {
+                                        refreshed.setVisibility(View.GONE);
+                                    });
+
+                        });
+
+                updateSummaryPage();
+                washerAdapter.notifyDataSetChanged();
+                dryerAdapter.notifyDataSetChanged();
+
+            }
+
+        });
+
+        TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
+        View machineMenu = findViewById(R.id.machine_menu); machineMenu.setTranslationY(50);
 
         refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
 
@@ -285,26 +338,18 @@ public class HomeScreen extends AppCompatActivity {
 
         data.getData();
 
-        data.getQueue().addRequestFinishedListener(response -> {
-
-            if(data.getRoomData() != null){
-                refreshed.setVisibility(View.VISIBLE);
-                refreshed.animate().translationY(0).setDuration(200).setInterpolator(new LinearInterpolator()).withEndAction(() -> {
-                    refreshed.animate().translationY(-100).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
-                            .withEndAction(() -> {refreshed.setVisibility(View.GONE);});
-
-                });
-                washerAdapter.notifyDataSetChanged();
-                dryerAdapter.notifyDataSetChanged();
-                favoriteAdapter.notifyDataSetChanged();
-                showSummaryPage();
-            }
-
-        });
+        // Show Refreshing
+        SwipeRefreshLayout dryerRefresh = findViewById(R.id.tab_dryers);
+        SwipeRefreshLayout washerRefresh = findViewById(R.id.tab_washers);
+        SwipeRefreshLayout summaryRefresh = findViewById(R.id.tab_summary);
+        dryerRefresh.setRefreshing(true);
+        washerRefresh.setRefreshing(true);
+        summaryRefresh.setRefreshing(true);
 
     }
 
     void showSummaryPage(){
+
         TextView summary_washerAvailable = (TextView) findViewById(R.id.txt_washerAvailable);
         TextView summary_dryerAvailable = (TextView) findViewById(R.id.txt_dryerAvailable);
         ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
@@ -316,7 +361,6 @@ public class HomeScreen extends AppCompatActivity {
             favoriteGrid.setVisibility(View.VISIBLE);
             findViewById(R.id.img_notFound).setVisibility(View.GONE);
         }
-
 
         Room roomData = data.getRoomData();
         String[] numbers = context.getResources().getStringArray(R.array.machine_status_numbers);
@@ -339,6 +383,36 @@ public class HomeScreen extends AppCompatActivity {
             washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
         }
 
+    }
+
+    void updateSummaryPage(){
+        TextView summary_washerAvailable = (TextView) findViewById(R.id.txt_washerAvailable);
+        TextView summary_dryerAvailable = (TextView) findViewById(R.id.txt_dryerAvailable);
+        ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
+        ImageView dryerIcon = (ImageView) findViewById(R.id.img_dryerStatus);
+
+        Room roomData = data.getRoomData();
+        String[] numbers = context.getResources().getStringArray(R.array.machine_status_numbers);
+        boolean dryers_available = roomData.dryers_available() != 0;
+        boolean washers_available = roomData.washers_available() != 0;
+
+        if(dryers_available){
+            summary_dryerAvailable.setText(numbers[roomData.dryers_available()] + " available.");
+            dryerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+        }else {
+            summary_dryerAvailable.setText(numbers[roomData.dryers_available()] + "");
+            dryerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
+        }
+
+        if(washers_available){
+            summary_washerAvailable.setText(numbers[roomData.washers_available()] +  " available.");
+            washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+        }else {
+            summary_washerAvailable.setText(numbers[roomData.washers_available()] + "");
+            washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
+        }
+
+        favoriteAdapter.notifyDataSetChanged();
     }
 
     void showDryerData(){
@@ -395,8 +469,8 @@ public class HomeScreen extends AppCompatActivity {
             case R.id.btn_favorite:
 
                 TextView number = findViewById(R.id.txt_machineNumber);
-                int machineIndex = Integer.parseInt(number.getText().toString());
-                data.addMachineToFavorites(machineIndex);
+                int machineNumber = Integer.parseInt(number.getText().toString());
+                data.addMachineToFavorites(machineNumber);
 
                 // Showing not found icon.
                 if(data.getFavorites().size() == 0){
@@ -413,9 +487,6 @@ public class HomeScreen extends AppCompatActivity {
                 GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
                 favoriteAdapter.notifyDataSetChanged();
-                Toast.makeText(context, "Added Machine to Favorites.", Toast.LENGTH_SHORT).show();
-
-
                 break;
 
 

@@ -118,6 +118,7 @@
                 app:cardElevation="3dp">
 
                 <ImageView
+                    android:id="@+id/star"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_star_black_24dp"
                     android:layout_margin="10dp"

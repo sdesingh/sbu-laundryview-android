@@ -118,7 +118,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             if(machine.isWasher()){
                 progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
             }else {
-                progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+                progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
             }
 
 
@@ -158,6 +158,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
             holder.timeLeft.setText("");
         }
+
 
     }
 
@@ -200,7 +201,12 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             case IN_PROGRESS:
                 machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
 
-                double progress = (1- (machine.timeLeft() / 60.0)) * 100.0;
+                double progress;
+                if(machine.isWasher()){
+                    progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
+                }else {
+                    progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
+                }
 
                 progressBar.setProgress((int) progress);
                 progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Red), PorterDuff.Mode.SRC_IN);
@@ -233,6 +239,15 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         // Change color to quad/theme color.
         cardNumberContainer.setCardBackgroundColor(Color.parseColor(quadColor));
         topBar.setColorFilter(Color.parseColor(quadColor));
+
+        // Change Icon color if user has favorited the machine.
+        ImageView star = context.findViewById(R.id.star);
+        if(machine.isFavorite()){
+            star.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
+        }
+        else{
+            star.setColorFilter(ContextCompat.getColor(context, R.color.Grey));
+        }
 
 
         // Show the machine menu.
