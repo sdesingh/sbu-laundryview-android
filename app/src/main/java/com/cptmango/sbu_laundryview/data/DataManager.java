@@ -38,6 +38,7 @@ public class DataManager {
     private Room room;
     private ArrayList<Machine> favorites;
     private ArrayList<Integer> favoritesList;
+    private ArrayList<Integer> notificationList;
     private RequestQueue queue;
 
     public DataManager(Activity context, String quad, String building){
@@ -47,6 +48,7 @@ public class DataManager {
 
         favorites = new ArrayList<>();
         favoritesList = new ArrayList<>();
+        notificationList = new ArrayList<>();
         queue = Volley.newRequestQueue(context);
 
         String url = context.getResources().getString(R.string.url);
@@ -182,6 +184,11 @@ public class DataManager {
         return favoritesList;
     }
 
+    public ArrayList<Integer> getNotificationList() {
+        return notificationList;
+    }
+
+
     public void setFavoritesList(ArrayList<Integer> favoritesList) {
         this.favoritesList = favoritesList;
     }
@@ -237,7 +244,6 @@ public class DataManager {
     }
 
     public void loadFavoritesFromPreferences(){
-        // @TODO Load saved favorites.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if(prefs.contains("favorites")){
             String savedFavorites = prefs.getString("favorites", "");

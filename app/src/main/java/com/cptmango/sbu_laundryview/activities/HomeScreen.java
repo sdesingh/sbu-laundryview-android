@@ -497,9 +497,7 @@ public class HomeScreen extends AppCompatActivity {
                 favoriteAdapter.notifyDataSetChanged();
             break;
 
-            case R.id.btn_notify:
-                setReminder();
-                Toast.makeText(this, "Setting reminder.", Toast.LENGTH_SHORT).show();
+            case R.id.btn_notify: setReminder();
             break;
 
 
@@ -511,16 +509,28 @@ public class HomeScreen extends AppCompatActivity {
     void setReminder(){
         TextView number = (TextView) findViewById(R.id.txt_machineNumber);
         int machineNumber = Integer.parseInt(number.getText().toString());
+        // Time is set to the minutes left until the machine is done.
+        long notificationTime = data.getRoomData().getMachine(machineNumber).timeLeft() * 60000;
+        // Two minutes are subtracted from the notification time.
+        notificationTime -= 120000;
+        if(notificationTime < 0){
+            Toast.makeText(context, "The machine will be ready soon. No reminder set.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Intent notificationIntent = new Intent(this, NotifyUser.class);
         notificationIntent.putExtra("machineNumber", machineNumber);
         notificationIntent.putExtra("roomName", buildingName);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, machineNumber, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        long timeInFuture = SystemClock.elapsedRealtime() + 5000;
+
+
+        long timeInFuture = SystemClock.elapsedRealtime() + notificationTime;
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, timeInFuture, pendingIntent);
+
+        Toast.makeText(this, "You'll be notified when the cycle is complete.", Toast.LENGTH_SHORT).show();
     }
 
     private void createNotificationChannel() {
