@@ -463,14 +463,15 @@ public class HomeScreen extends AppCompatActivity {
         washerGrid.setAdapter(washerAdapter);
     }
 
-    void onClick(View view){
+    public void onClick(View view){
 
         switch(view.getId()){
 
             case R.id.bg:
                 View machineMenu = findViewById(R.id.machine_menu);
+                View bg = findViewById(R.id.bg);
                 Animations.hideDown(machineMenu);
-                Animations.hide(findViewById(R.id.bg));
+                Animations.hide(bg);
             break;
 
             case R.id.btn_favorite:

@@ -182,7 +182,7 @@
                 <!--Time Extra Text-->
                 <TextView
                     android:id="@+id/txt_timeExtraText"
-                    android:text="minutes."
+                    android:text="minutes rem."
                     android:fontFamily="@font/lato_bl"
                     android:textColor="@color/Black"
                     android:textSize="30sp"
