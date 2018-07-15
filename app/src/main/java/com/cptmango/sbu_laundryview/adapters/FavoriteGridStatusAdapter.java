@@ -101,22 +101,21 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
 
         if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
             holder.timeLeft.setText(machine.timeLeft() + "");
-            holder.progressBar.setProgress(0);
 
             double progress;
             if(machine.isWasher()){
-                progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
+//                progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
                 holder.machineIconLittle.setImageResource(R.drawable.icon_water);
                 holder.machineIconLittle.getLayoutParams().height = 40;
                 holder.machineIconLittle.getLayoutParams().width = 40;
             }else {
-                progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
+//                progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
                 holder.machineIconLittle.setImageResource(R.drawable.icon_drying);
                 holder.machineIconLittle.getLayoutParams().height = 35;
                 holder.machineIconLittle.getLayoutParams().width = 35;
             }
 
-            holder.progressBar.setProgressWithAnimation((int) progress, 800);
+            holder.progressBar.enableIndeterminateMode(true);
 
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
@@ -126,6 +125,8 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
 
         }
         else if(machine.machineStatus() == MachineStatus.DONE_DOOR_CLOSED){
+            holder.progressBar.enableIndeterminateMode(false);
+
             holder.progressBar.setProgress(100);
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Yellow));
@@ -139,6 +140,7 @@ public class FavoriteGridStatusAdapter extends BaseAdapter {
 
         }
         else{
+            holder.progressBar.enableIndeterminateMode(false);
             holder.progressBar.setProgress(100);
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Green));

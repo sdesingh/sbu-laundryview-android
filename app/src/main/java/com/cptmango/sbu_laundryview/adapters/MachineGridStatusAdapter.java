@@ -112,7 +112,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
             holder.timeLeft.setText(machine.timeLeft() + "");
-            holder.progressBar.setProgress(0);
+            holder.progressBar.enableIndeterminateMode(true);
 
             double progress;
             if(machine.isWasher()){
@@ -128,7 +128,8 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             }
 
 
-            holder.progressBar.setProgressWithAnimation((int) progress, 800);
+//            holder.progressBar.setProgressWithAnimation((int) progress, 800);
+            holder.progressBar.setProgressWithAnimation((int) progress);
 
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
@@ -140,6 +141,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
         else if(machine.machineStatus() == MachineStatus.DONE_DOOR_CLOSED){
+            holder.progressBar.enableIndeterminateMode(false);
             holder.progressBar.setProgress(100);
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Yellow));
@@ -153,12 +155,15 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
         else{
+            holder.progressBar.enableIndeterminateMode(false);
             holder.progressBar.setProgress(100);
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Green));
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Green));
             holder.machineIconLittle.setImageResource(R.drawable.icon_check);
             holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Green));
+            holder.machineIconLittle.getLayoutParams().height = 50;
+            holder.machineIconLittle.getLayoutParams().width = 50;
 
             holder.timeLeft.setText("");
         }

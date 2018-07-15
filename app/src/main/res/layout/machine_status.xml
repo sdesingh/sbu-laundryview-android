@@ -62,6 +62,7 @@
                 app:cpb_background_progressbar_color="#FFCDD2"
                 app:cpb_background_progressbar_width="3dp"
                 app:cpb_progress="25"
+
                 app:cpb_progressbar_color="#F44336"
                 app:cpb_progressbar_width="5dp"
                 app:cpb_indeterminate_mode="false"
