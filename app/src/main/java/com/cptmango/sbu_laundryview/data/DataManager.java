@@ -214,6 +214,8 @@ public class DataManager {
             Toast.makeText(context, "Added Machine to Favorites.", Toast.LENGTH_SHORT).show();
         }
 
+        saveFavoritesToPreferences();
+
     }
 
     public void removeMachineFromFavorites(int machineIndex){ favorites.remove(machineIndex); }
@@ -226,8 +228,6 @@ public class DataManager {
         for(int machineNumber : favoritesList){
             favorites += machineNumber + ",";
         }
-        System.out.println("FROM THESE " + favoritesList);
-        System.out.println("SAVED THESE " + favorites);
         editor.putString("favorites", favorites);
 //            editor.remove("favorites");
         editor.apply();
