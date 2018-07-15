@@ -1,12 +1,18 @@
 package com.cptmango.sbu_laundryview.activities;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.Image;
+import android.os.Build;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -36,6 +42,7 @@ import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.FavoriteGridStatusAdapter;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
+import com.cptmango.sbu_laundryview.background.NotifyUser;
 import com.cptmango.sbu_laundryview.data.DataManager;
 import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.MachineStatus;
@@ -56,7 +63,6 @@ public class HomeScreen extends AppCompatActivity {
     FavoriteGridStatusAdapter favoriteAdapter;
     HomeScreenFragmentPagerAdapter pagerAdapter;
 
-    SwipeRefreshLayout.OnRefreshListener listener;
     BottomNavigationView bottomNavigationView;
 
     boolean paused = false;
@@ -74,6 +80,7 @@ public class HomeScreen extends AppCompatActivity {
 
         context = this;
         initialCheck();
+        createNotificationChannel();
     }
 
     /**
@@ -267,7 +274,7 @@ public class HomeScreen extends AppCompatActivity {
 
         });
         // Swipe Refresh Listener
-        listener = this::updateData;
+        SwipeRefreshLayout.OnRefreshListener listener = this::updateData;
         SwipeRefreshLayout dryerRefresh = findViewById(R.id.tab_dryers);
         SwipeRefreshLayout washerRefresh = findViewById(R.id.tab_washers);
         SwipeRefreshLayout summaryRefresh = findViewById(R.id.tab_summary);
@@ -487,7 +494,12 @@ public class HomeScreen extends AppCompatActivity {
                 GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
                 favoriteAdapter.notifyDataSetChanged();
-                break;
+            break;
+
+            case R.id.btn_notify:
+                setReminder();
+                Toast.makeText(this, "Setting reminder.", Toast.LENGTH_SHORT).show();
+            break;
 
 
             default: return;
@@ -495,5 +507,35 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    void setReminder(){
+        TextView number = (TextView) findViewById(R.id.txt_machineNumber);
+        int machineNumber = Integer.parseInt(number.getText().toString());
+
+        Intent notificationIntent = new Intent(this, NotifyUser.class);
+        notificationIntent.putExtra("machineNumber", machineNumber);
+        notificationIntent.putExtra("roomName", buildingName);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, machineNumber, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        long timeInFuture = SystemClock.elapsedRealtime() + 5000;
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, timeInFuture, pendingIntent);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "LaundryView";
+            String description = "Get reminded when your laundry is done.";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("main", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 }

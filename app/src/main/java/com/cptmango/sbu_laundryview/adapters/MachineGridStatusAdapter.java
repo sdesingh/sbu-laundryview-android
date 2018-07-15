@@ -117,8 +117,14 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             double progress;
             if(machine.isWasher()){
                 progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
+                holder.machineIconLittle.setImageResource(R.drawable.icon_water);
+                holder.machineIconLittle.getLayoutParams().height = 40;
+                holder.machineIconLittle.getLayoutParams().width = 40;
             }else {
                 progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
+                holder.machineIconLittle.setImageResource(R.drawable.icon_drying);
+                holder.machineIconLittle.getLayoutParams().height = 35;
+                holder.machineIconLittle.getLayoutParams().width = 35;
             }
 
 
@@ -127,11 +133,9 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
             holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
             holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Red));
-            holder.machineIconLittle.setImageResource(R.drawable.icon_drying);
             holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Red));
             holder.machineIconLittle.requestLayout();
-            holder.machineIconLittle.getLayoutParams().height = 30;
-            holder.machineIconLittle.getLayoutParams().width = 30;
+
 
 
         }

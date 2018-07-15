@@ -30,17 +30,15 @@ import javax.crypto.Mac;
 
 public class DataManager {
 
-    private String quad;
-    private String building;
-    private String dataURL;
+    private String quad, building, dataURL;
     private boolean saved = false;
     private int timeout = 0;
 
-    Activity context;
-    Room room;
-    ArrayList<Machine> favorites;
-    ArrayList<Integer> favoritesList;
-    RequestQueue queue;
+    private Activity context;
+    private Room room;
+    private ArrayList<Machine> favorites;
+    private ArrayList<Integer> favoritesList;
+    private RequestQueue queue;
 
     public DataManager(Activity context, String quad, String building){
         this.quad = quad;
@@ -222,7 +220,6 @@ public class DataManager {
 
     public void saveFavoritesToPreferences(){
 
-
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         String favorites = "";
 
@@ -243,7 +240,10 @@ public class DataManager {
         // @TODO Load saved favorites.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if(prefs.contains("favorites")){
-            String savedFavorites = prefs.getString("favorites", "1,2");
+            String savedFavorites = prefs.getString("favorites", "");
+
+            if(savedFavorites.isEmpty()) return;
+
             System.out.println(savedFavorites);
             for(String machineNumber : savedFavorites.split(",")){
                 int machineIndex = Integer.parseInt(machineNumber) - 1;
