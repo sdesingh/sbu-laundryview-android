@@ -29,6 +29,10 @@
             android:name=".activities.SelectRoom"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".activities.Settings"
+            android:screenOrientation="portrait"/>
+
         <receiver android:name=".background.NotifyUser"/>
     </application>
 

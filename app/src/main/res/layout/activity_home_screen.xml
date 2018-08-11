@@ -99,14 +99,15 @@
     <!--Settings Button-->
     <ImageView
         android:id="@+id/btn_settings"
-        android:tint="@color/Grey"
-        android:src="@drawable/ic_menu_black_24dp"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:elevation="6dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="18dp"
         android:layout_marginTop="8dp"
+        android:elevation="6dp"
+        android:onClick="onClick"
+        android:src="@drawable/icon_settings"
+        android:tint="@color/Grey"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent" />

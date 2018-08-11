@@ -10,25 +10,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -36,16 +28,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.FavoriteGridStatusAdapter;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.background.NotifyUser;
 import com.cptmango.sbu_laundryview.data.DataManager;
-import com.cptmango.sbu_laundryview.data.model.Machine;
-import com.cptmango.sbu_laundryview.data.model.MachineStatus;
 import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
 import com.cptmango.sbu_laundryview.ui.GeneralUI;
@@ -495,6 +483,11 @@ public class HomeScreen extends AppCompatActivity {
             break;
 
             case R.id.btn_notify: setReminder();
+            break;
+
+            case R.id.btn_settings:
+                Intent intent = new Intent(this, Settings.class);
+                startActivity(intent);
             break;
 
 
