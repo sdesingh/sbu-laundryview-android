@@ -175,12 +175,9 @@ public class HomeScreen extends AppCompatActivity {
 
         data.getQueue().addRequestFinishedListener(
             request -> {
-                if (pager == null) {
+                if (pager == null && data.getRoomData() != null) {
                     data.loadFavoritesFromPreferences();
                     initializeUI();
-
-
-
 
                 } else {
                     return;

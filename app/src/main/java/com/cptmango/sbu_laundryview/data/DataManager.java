@@ -107,30 +107,25 @@ public class DataManager {
 
             Machine[] newMachineData = new Machine[room.totalMachines()];
 
-            // Going through the JSON array to parse the data and pass the data into the Room object.
-            int washers_available = 0;
-            int dryers_available = 0;
-
             for(int i = 0; i < room.totalMachines(); i++){
 
-                String machineStatusSummary = machines.getJSONObject(i).getString("status");
+                JSONObject machine = machines.getJSONObject(i);
 
+                String machineStatusSummary = machine.getString("status");
                 MachineStatus statusCode;
                 int machineTimeLeft;
-
-                boolean isWasher = i <= room.totalWashers() - 1;
+                boolean isWasher = machine.getString("machineType").equals("W");
 
                 // Setting machine status.
-                switch(machines.getJSONObject(i).getInt("statusCode")){
+                switch(machine.getInt("statusCode")){
 
                     case 0: statusCode = MachineStatus.AVAILABLE;
-                            if(isWasher) washers_available++; else dryers_available++;
                     break;
 
-                    case 1: statusCode = MachineStatus.IN_PROGRESS;
+                    case 2: statusCode = MachineStatus.IN_PROGRESS;
                     break;
 
-                    case 2: statusCode = MachineStatus.DONE_DOOR_CLOSED;
+                    case 1: statusCode = MachineStatus.DONE_DOOR_CLOSED;
                     break;
 
                     case -1: statusCode = MachineStatus.OUT_OF_ORDER;
@@ -141,10 +136,9 @@ public class DataManager {
                 }
 
                 if(statusCode == MachineStatus.IN_PROGRESS) {
-
-                    machineStatusSummary = machineStatusSummary.substring(machineStatusSummary.indexOf("remaining ") + 10);
-                    machineTimeLeft = Integer.parseInt(machineStatusSummary.substring(0, machineStatusSummary.indexOf(" ")));
-
+                    double timeLeft = 1 - (machine.getInt("completionPercentage") / 100);
+                    timeLeft *= machine.getInt("cycleCompletionTime");
+                    machineTimeLeft = (int) timeLeft;
                 }
                 else { machineTimeLeft = -1; }
 
@@ -153,8 +147,8 @@ public class DataManager {
             }
 
             room.setMachineData(newMachineData);
-            room.setDryers_available(dryers_available);
-            room.setWashers_available(washers_available);
+            room.setWashers_available(data.getInt("totalWashers"));
+            room.setDryers_available(data.getInt("totalDryers"));
 
             // Update favorite machines.
             favorites.clear();

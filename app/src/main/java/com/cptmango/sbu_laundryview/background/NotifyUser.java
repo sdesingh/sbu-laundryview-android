@@ -29,7 +29,6 @@ public class NotifyUser extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, HomeScreen.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "main");
         builder.setContentTitle("Machine " + machineNumber + " will be ready soon!");
