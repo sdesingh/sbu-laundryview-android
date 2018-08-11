@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.cptmango.sbu_laundryview.R;
+import com.cptmango.sbu_laundryview.data.DataManager;
 
 public class Settings extends AppCompatActivity {
 
@@ -30,8 +31,8 @@ public class Settings extends AppCompatActivity {
     }
 
     public void changeRoom(){
+        DataManager.clearUserFavorites(this);
         setResult(RESULT_OK);
-
         Intent intent = new Intent(this, SelectRoom.class);
         startActivityForResult(intent, 1);
 

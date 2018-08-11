@@ -230,15 +230,31 @@ public class DataManager {
             favorites += machineNumber + ",";
         }
         editor.putString("favorites", favorites);
-//            editor.remove("favorites");
         editor.apply();
 
 
 
     }
 
-    public void loadFavoritesFromPreferences(){
+    public static void clearUserFavorites(Context context){
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+//        System.out.println("Clearing favorites... " + prefs.getString("favorites", "none"));
+
+        editor.remove("favorites");
+        editor.commit();
+
+//        System.out.println("Cleared. Current favorites... " + prefs.getString("favorites", "none"));
+
+    }
+
+    public void loadFavoritesFromPreferences(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        favoritesList = new ArrayList<>();
+        favorites = new ArrayList<>();
+
         if(prefs.contains("favorites")){
             String savedFavorites = prefs.getString("favorites", "");
 

@@ -114,6 +114,8 @@ public class HomeScreen extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 this.recreate();
+                data.loadFavoritesFromPreferences(context);
+                favoriteAdapter = new FavoriteGridStatusAdapter(this, data.getFavorites());
             }
 
         }
@@ -172,7 +174,7 @@ public class HomeScreen extends AppCompatActivity {
         data.getQueue().addRequestFinishedListener(
             request -> {
                 if (pager == null && data.getRoomData() != null) {
-                    data.loadFavoritesFromPreferences();
+                    data.loadFavoritesFromPreferences(context);
                     initializeUI();
 
                 } else {
@@ -274,6 +276,7 @@ public class HomeScreen extends AppCompatActivity {
         dryerRefresh.setOnRefreshListener(listener);
         washerRefresh.setOnRefreshListener(listener);
         summaryRefresh.setOnRefreshListener(listener);
+
         // Data Refresh Listener
         data.getQueue().addRequestFinishedListener(response -> {
 
@@ -310,18 +313,18 @@ public class HomeScreen extends AppCompatActivity {
 
         refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
 
+        // Setting up title bar.
+        GeneralUI.changeStatusBarColor(getWindow(), quadColor);
+
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
+        quadNameText.setText(quadName.toUpperCase());
+        buildingNameText.setText(buildingName);
 
         ImageView colorL = (ImageView) findViewById(R.id.img_highlightL);
         ImageView colorR = (ImageView) findViewById(R.id.img_highlightR);
         ImageView lineL = (ImageView) findViewById(R.id.line_left);
         ImageView lineR = (ImageView) findViewById(R.id.line_right);
-
-        GeneralUI.changeStatusBarColor(getWindow(), quadColor);
-
-        quadNameText.setText(quadName.toUpperCase());
-        buildingNameText.setText(buildingName);
 
         // Changing the color of UI elements to match the quad's color.
         refresh.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
@@ -337,7 +340,6 @@ public class HomeScreen extends AppCompatActivity {
     void updateData(){
 
         data.getData();
-
         // Show Refreshing
         SwipeRefreshLayout dryerRefresh = findViewById(R.id.tab_dryers);
         SwipeRefreshLayout washerRefresh = findViewById(R.id.tab_washers);

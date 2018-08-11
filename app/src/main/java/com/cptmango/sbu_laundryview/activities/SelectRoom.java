@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
+import com.cptmango.sbu_laundryview.data.DataManager;
 import com.cptmango.sbu_laundryview.ui.Animations;
 
 /**
@@ -31,7 +32,7 @@ public class SelectRoom extends AppCompatActivity{
     /**
      * Initial setup of the UI.
      */
-    void initializeUI(){
+    private void initializeUI(){
 
         roomSelectMenu = findViewById(R.id.menu_roomSelect);
         quadList = (ListView) findViewById(R.id.list_quadList);
@@ -41,10 +42,9 @@ public class SelectRoom extends AppCompatActivity{
 
     }
 
-    public void onButtonClick(View view){
+    void onButtonClick(View view){
 
         switch(view.getId()){
-
 
             case R.id.btn_closeRoomMenu: closeRoomMenu();
             break;
@@ -53,7 +53,10 @@ public class SelectRoom extends AppCompatActivity{
             case R.id.img_darkMenu: closeRoomMenu();
             break;
 
-            case R.id.btn_selectRoom: setResult(RESULT_OK); finish();
+            case R.id.btn_selectRoom:
+                setResult(RESULT_OK);
+                finish();
+
             break;
 
         }
@@ -61,7 +64,7 @@ public class SelectRoom extends AppCompatActivity{
 
     }
 
-    public void closeRoomMenu(){
+    private void closeRoomMenu(){
 
         View roomMenu = findViewById(R.id.menu_roomSelect);
         View menuDark = findViewById(R.id.img_darkMenu);
@@ -69,5 +72,6 @@ public class SelectRoom extends AppCompatActivity{
         Animations.hide(menuDark);
 
     }
+
 
 }
