@@ -81,10 +81,10 @@ public class HomeScreen extends AppCompatActivity {
         Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        Intent intent = new Intent(this, SelectRoom.class);
-        startActivityForResult(intent, 1);
+//        Intent intent = new Intent(this, SelectRoom.class);
+//        startActivityForResult(intent, 1);
 
-        /* ENABLE THIS ONCE TESTING DONE
+//        ENABLE THIS ONCE TESTING DONE
         if(!prefs.contains("quad")){
 
             // Start activity to select a room.
@@ -93,21 +93,29 @@ public class HomeScreen extends AppCompatActivity {
 
         }
         // The user has already previously selected a room.
-        else return;
+        else connectToAPI();
 
-        */
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intentData) {
 
+        // Selected Room
         if(requestCode == 1){
 
             if(resultCode == RESULT_OK){
                 connectToAPI();
                 paused = false;
             }
+        }
+        // Changed Room
+        else if (requestCode == 2){
+
+            if(resultCode == RESULT_OK){
+                this.recreate();
+            }
+
         }
 
     }
@@ -487,7 +495,7 @@ public class HomeScreen extends AppCompatActivity {
 
             case R.id.btn_settings:
                 Intent intent = new Intent(this, Settings.class);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             break;
 
 

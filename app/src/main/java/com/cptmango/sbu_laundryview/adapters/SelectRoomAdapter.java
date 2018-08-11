@@ -111,7 +111,7 @@ public class SelectRoomAdapter extends BaseAdapter {
 
             Toast.makeText(context, roomNames[position] + " selected.", Toast.LENGTH_SHORT).show();
 
-            editor.commit();
+            editor.apply();
 
         });
 

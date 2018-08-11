@@ -93,7 +93,7 @@ public class SelectQuadAdapter extends BaseAdapter {
 
             editor.putString("quad", quadNames[position]);
             editor.putString("quadColor", quadColors[position]);
-            editor.commit();
+            editor.apply();
 
             showRoomMenu(position);
         });

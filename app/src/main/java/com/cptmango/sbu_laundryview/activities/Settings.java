@@ -1,10 +1,10 @@
 package com.cptmango.sbu_laundryview.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
 
@@ -19,9 +19,21 @@ public class Settings extends AppCompatActivity {
     public void onClick(View view){
 
         switch(view.getId()){
-            case R.id.btn_back: finish();
+            case R.id.btn_back: setResult(RESULT_CANCELED); finish();
+            break;
+
+            case R.id.setting_changeRoom:
+                changeRoom();
             break;
         }
+
+    }
+
+    public void changeRoom(){
+        setResult(RESULT_OK);
+
+        Intent intent = new Intent(this, SelectRoom.class);
+        startActivityForResult(intent, 1);
 
     }
 }

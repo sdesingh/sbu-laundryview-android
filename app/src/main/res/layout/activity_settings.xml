@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--Toobar-->
+                                <!--Toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="0dp"
@@ -55,16 +55,17 @@
         app:srcCompat="@drawable/card_shadow"
         tools:layout_editor_absoluteY="75dp" />
 
+                                <!--Settings-->
     <!--Category - Room -->
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
         android:text="Room"
-        app:layout_constraintTop_toBottomOf="@id/toolbar3"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="35dp" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar3" />
     <!--Setting - Change Room-->
     <android.support.v7.widget.CardView
         android:id="@+id/setting_changeRoom"
@@ -73,27 +74,31 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
+        android:clickable="true"
         android:elevation="0dp"
+        android:foreground="@drawable/ripple_effect"
+        android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clickable="false">
 
             <!--Setting Name-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Change Room"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="25dp"
-                android:fontFamily="@font/lato_bl"
-                android:textColor="@color/Black"
-                android:text="Change Room"
-                android:textSize="25dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -105,13 +110,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
         android:text="Appearance"
-        app:layout_constraintTop_toBottomOf="@id/setting_changeRoom"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="35dp" />
-    <!--Setting - App Theme-->
+        app:layout_constraintTop_toBottomOf="@id/setting_changeRoom" />
+    <!--Setting - Dark Mode-->
     <android.support.v7.widget.CardView
-        android:id="@+id/setting_changeTheme"
+        android:id="@+id/setting_darkMode"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
@@ -124,20 +129,121 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clickable="false">
 
             <!--Setting Name-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Dark Mode"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/switch_darkMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+    <!--Setting - Accent Color-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/setting_accentColor"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_darkMode">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:foreground="@drawable/ripple_effect">
+
+            <!--Setting Name-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:fontFamily="@font/lato_bl"
+                android:fontFamily="@font/lato_bold"
+                android:text="Accent Color"
                 android:textColor="@color/Black"
-                android:text="App Theme"
-                android:textSize="25dp"/>
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!--Category - Notifications -->
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:text="Notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setting_accentColor" />
+    <!--Setting - Remind Time-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/settings_remindTime"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false">
+
+            <!--Setting Name-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Remind Before"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
