@@ -19,7 +19,7 @@ public class Settings extends AppCompatActivity {
     public void onClick(View view){
 
         switch(view.getId()){
-            case R.id.btn_back: setResult(RESULT_CANCELED); finish();
+            case R.id.btn_back: finish();
             break;
 
             case R.id.setting_changeRoom:
