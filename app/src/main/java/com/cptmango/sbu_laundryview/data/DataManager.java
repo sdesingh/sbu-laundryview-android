@@ -53,6 +53,7 @@ public class DataManager {
 
         String url = context.getResources().getString(R.string.url);
         dataURL = url + "/" + getURLName(quad) + "/" + getURLName(building);
+        System.out.println(dataURL);
     }
 
     public void getData(){
@@ -78,6 +79,7 @@ public class DataManager {
         error -> {
             Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
             System.out.println("An error has occurred retrieving the data. Retrying.");
+            System.out.println(error.toString());
         });
 
         queue.add(request);

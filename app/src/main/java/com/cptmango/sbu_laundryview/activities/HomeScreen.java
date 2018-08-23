@@ -40,7 +40,7 @@ import com.cptmango.sbu_laundryview.ui.GeneralUI;
 
 public class HomeScreen extends AppCompatActivity {
 
-    DataManager data;
+    DataManager dataManager;
     GridView washerGrid;
     GridView dryerGrid;
     GridView favoriteGrid;
@@ -53,7 +53,7 @@ public class HomeScreen extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
 
-    boolean paused = false;
+    boolean appPaused = false;
 
     String quadName;
     String buildingName;
@@ -81,15 +81,17 @@ public class HomeScreen extends AppCompatActivity {
         Context context = getApplicationContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-//        Intent intent = new Intent(this, SelectRoom.class);
-//        startActivityForResult(intent, 1);
-
 //        ENABLE THIS ONCE TESTING DONE
         if(!prefs.contains("quad")){
 
+            // Setup User Defaults
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            editor.putInt("reminder", 5);
+
             // Start activity to select a room.
             Intent intent = new Intent(this, SelectRoom.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
+
 
         }
         // The user has already previously selected a room.
@@ -106,7 +108,7 @@ public class HomeScreen extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 connectToAPI();
-                paused = false;
+                appPaused = false;
             }
         }
         // Changed Room
@@ -114,8 +116,8 @@ public class HomeScreen extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 this.recreate();
-                data.loadFavoritesFromPreferences(context);
-                favoriteAdapter = new FavoriteGridStatusAdapter(this, data.getFavorites());
+                dataManager.loadFavoritesFromPreferences(context);
+                favoriteAdapter = new FavoriteGridStatusAdapter(this, dataManager.getFavorites());
             }
 
         }
@@ -125,9 +127,9 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(paused){
+        if(appPaused){
             updateData();
-            paused = false;
+            appPaused = false;
         }
 
     }
@@ -135,13 +137,13 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        paused = true;
+        appPaused = true;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        data.saveFavoritesToPreferences();
+        dataManager.saveFavoritesToPreferences();
     }
 
     @Override
@@ -168,13 +170,13 @@ public class HomeScreen extends AppCompatActivity {
         buildingName = prefs.getString("building", "Irving");
         quadColor = prefs.getString("quadColor", "000000");
 
-        data = new DataManager(this, quadName, buildingName);
-        data.getData();
+        dataManager = new DataManager(this, quadName, buildingName);
+        dataManager.getData();
 
-        data.getQueue().addRequestFinishedListener(
+        dataManager.getQueue().addRequestFinishedListener(
             request -> {
-                if (pager == null && data.getRoomData() != null) {
-                    data.loadFavoritesFromPreferences(context);
+                if (pager == null && dataManager.getRoomData() != null) {
+                    dataManager.loadFavoritesFromPreferences(context);
                     initializeUI();
 
                 } else {
@@ -278,14 +280,14 @@ public class HomeScreen extends AppCompatActivity {
         summaryRefresh.setOnRefreshListener(listener);
 
         // Data Refresh Listener
-        data.getQueue().addRequestFinishedListener(response -> {
+        dataManager.getQueue().addRequestFinishedListener(response -> {
 
             // Stop Refreshing
             dryerRefresh.setRefreshing(false);
             washerRefresh.setRefreshing(false);
             summaryRefresh.setRefreshing(false);
 
-            if(data.getRoomData() != null){
+            if(dataManager.getRoomData() != null){
                 refreshed.setVisibility(View.VISIBLE);
                 refreshed
                         .animate()
@@ -339,7 +341,7 @@ public class HomeScreen extends AppCompatActivity {
 
     void updateData(){
 
-        data.getData();
+        dataManager.getData();
         // Show Refreshing
         SwipeRefreshLayout dryerRefresh = findViewById(R.id.tab_dryers);
         SwipeRefreshLayout washerRefresh = findViewById(R.id.tab_washers);
@@ -357,14 +359,14 @@ public class HomeScreen extends AppCompatActivity {
         ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
         ImageView dryerIcon = (ImageView) findViewById(R.id.img_dryerStatus);
 
-        if(data.getFavorites().size() == 0)
+        if(dataManager.getFavorites().size() == 0)
             findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
         else{
             favoriteGrid.setVisibility(View.VISIBLE);
             findViewById(R.id.img_notFound).setVisibility(View.GONE);
         }
 
-        Room roomData = data.getRoomData();
+        Room roomData = dataManager.getRoomData();
         String[] numbers = context.getResources().getStringArray(R.array.machine_status_numbers);
         boolean dryers_available = roomData.dryers_available() != 0;
         boolean washers_available = roomData.washers_available() != 0;
@@ -393,7 +395,7 @@ public class HomeScreen extends AppCompatActivity {
         ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
         ImageView dryerIcon = (ImageView) findViewById(R.id.img_dryerStatus);
 
-        Room roomData = data.getRoomData();
+        Room roomData = dataManager.getRoomData();
         String[] numbers = context.getResources().getStringArray(R.array.machine_status_numbers);
         boolean dryers_available = roomData.dryers_available() != 0;
         boolean washers_available = roomData.washers_available() != 0;
@@ -423,7 +425,7 @@ public class HomeScreen extends AppCompatActivity {
 
         // Setting up the dryerGrid view.
 
-        dryerAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), false);
+        dryerAdapter = new MachineGridStatusAdapter(context, dataManager.getRoomData(), false);
         dryerGrid.setAdapter(dryerAdapter);
         dryerGrid.setColumnWidth(GridView.AUTO_FIT);
         dryerGrid.setNumColumns(GridView.AUTO_FIT);
@@ -433,12 +435,12 @@ public class HomeScreen extends AppCompatActivity {
     void showFavoriteData(){
         favoriteGrid = pager.findViewById(R.id.grid_favoriteMachines);
 
-        favoriteAdapter = new FavoriteGridStatusAdapter(context, data.getFavorites());
+        favoriteAdapter = new FavoriteGridStatusAdapter(context, dataManager.getFavorites());
         favoriteGrid.setAdapter(favoriteAdapter);
 
         // Resizing grid.
-        int numberOfMachines = data.getFavorites().size() / 2;
-        numberOfMachines += ((data.getFavorites().size() % 2 == 0) ? 0 : 1);
+        int numberOfMachines = dataManager.getFavorites().size() / 2;
+        numberOfMachines += ((dataManager.getFavorites().size() % 2 == 0) ? 0 : 1);
         GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
         favoriteGrid.setColumnWidth(GridView.AUTO_FIT);
@@ -452,7 +454,7 @@ public class HomeScreen extends AppCompatActivity {
 //        washerGrid.setEnabled(false);
 
         // Setting up washer washerGrid view.
-        washerAdapter = new MachineGridStatusAdapter(context, data.getRoomData(), true);
+        washerAdapter = new MachineGridStatusAdapter(context, dataManager.getRoomData(), true);
         washerGrid.setColumnWidth(GridView.AUTO_FIT);
         washerGrid.setNumColumns(GridView.AUTO_FIT);
         washerGrid.setAdapter(washerAdapter);
@@ -473,10 +475,10 @@ public class HomeScreen extends AppCompatActivity {
 
                 TextView number = findViewById(R.id.txt_machineNumber);
                 int machineNumber = Integer.parseInt(number.getText().toString());
-                data.addMachineToFavorites(machineNumber);
+                dataManager.addMachineToFavorites(machineNumber);
 
                 // Showing not found icon.
-                if(data.getFavorites().size() == 0){
+                if(dataManager.getFavorites().size() == 0){
                     favoriteGrid.setVisibility(View.GONE);
                     findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
                 }else{
@@ -485,8 +487,8 @@ public class HomeScreen extends AppCompatActivity {
                 }
 
                 // Resizing grid.
-                int numberOfMachines = data.getFavorites().size() / 2;
-                numberOfMachines += ((data.getFavorites().size() % 2 == 0) ? 0 : 1);
+                int numberOfMachines = dataManager.getFavorites().size() / 2;
+                numberOfMachines += ((dataManager.getFavorites().size() % 2 == 0) ? 0 : 1);
                 GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
                 favoriteAdapter.notifyDataSetChanged();
@@ -510,7 +512,7 @@ public class HomeScreen extends AppCompatActivity {
         TextView number = (TextView) findViewById(R.id.txt_machineNumber);
         int machineNumber = Integer.parseInt(number.getText().toString());
         // Time is set to the minutes left until the machine is done.
-        long notificationTime = data.getRoomData().getMachine(machineNumber).timeLeft() * 60000;
+        long notificationTime = dataManager.getRoomData().getMachine(machineNumber).timeLeft() * 60000;
         // Two minutes are subtracted from the notification time.
         notificationTime -= 120000;
         if(notificationTime < 0){
