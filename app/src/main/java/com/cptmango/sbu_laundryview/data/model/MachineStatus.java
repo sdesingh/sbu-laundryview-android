@@ -9,7 +9,8 @@ public enum MachineStatus {
     IN_PROGRESS("mins remaining."),
     AVAILABLE("Available"),
     DONE_DOOR_CLOSED("Done. Door Closed."),
-    OUT_OF_ORDER("Machine broken.");
+    OUT_OF_ORDER("Machine broken."),
+    UNKNOWN("Status unknown.");
 
     private final String description;
 

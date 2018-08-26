@@ -79,7 +79,7 @@ public class DataManager {
         error -> {
             Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
             System.out.println("An error has occurred retrieving the data. Retrying.");
-            System.out.println(error.toString());
+            System.out.println("ERROR" + error.toString());
         });
 
         queue.add(request);
@@ -130,10 +130,14 @@ public class DataManager {
                     case 1: statusCode = MachineStatus.DONE_DOOR_CLOSED;
                     break;
 
-                    case -1: statusCode = MachineStatus.OUT_OF_ORDER;
+                    case 3: statusCode = MachineStatus.OUT_OF_ORDER;
+
+                    case 4: statusCode = MachineStatus.OUT_OF_ORDER;
                     break;
 
-                    default: return false;
+                    default:
+                        System.out.println("Unknown status code: " + machine.getInt("statusCode"));
+                        statusCode = MachineStatus.UNKNOWN;
 
                 }
 
@@ -167,6 +171,7 @@ public class DataManager {
 
         } catch (JSONException e){
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            System.out.println("JSON EXCEPTION: " + e.toString() );
             return false;
         }
 
