@@ -36,7 +36,7 @@ import com.cptmango.sbu_laundryview.background.NotifyUser;
 import com.cptmango.sbu_laundryview.data.DataManager;
 import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
-import com.cptmango.sbu_laundryview.ui.GeneralUI;
+import com.cptmango.sbu_laundryview.ui.UI_Utilities;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -316,7 +316,7 @@ public class HomeScreen extends AppCompatActivity {
         refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
 
         // Setting up title bar.
-        GeneralUI.changeStatusBarColor(getWindow(), quadColor);
+        UI_Utilities.changeStatusBarColor(getWindow(), quadColor);
 
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
@@ -441,7 +441,7 @@ public class HomeScreen extends AppCompatActivity {
         // Resizing grid.
         int numberOfMachines = dataManager.getFavorites().size() / 2;
         numberOfMachines += ((dataManager.getFavorites().size() % 2 == 0) ? 0 : 1);
-        GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+        UI_Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
         favoriteGrid.setColumnWidth(GridView.AUTO_FIT);
         favoriteGrid.setNumColumns(GridView.AUTO_FIT);
@@ -489,7 +489,7 @@ public class HomeScreen extends AppCompatActivity {
                 // Resizing grid.
                 int numberOfMachines = dataManager.getFavorites().size() / 2;
                 numberOfMachines += ((dataManager.getFavorites().size() % 2 == 0) ? 0 : 1);
-                GeneralUI.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+                UI_Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
                 favoriteAdapter.notifyDataSetChanged();
             break;

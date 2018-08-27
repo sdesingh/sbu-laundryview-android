@@ -19,5 +19,6 @@ public enum MachineStatus {
     }
 
     public String getDescription(){ return description; }
-
 }
+
+

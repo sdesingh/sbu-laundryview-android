@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -20,7 +21,10 @@ import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.MachineStatus;
 import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
+import com.cptmango.sbu_laundryview.ui.UI_Utilities;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
+import java.util.ArrayList;
 
 /**
  * Created by mango on 4/18/18.
@@ -28,24 +32,26 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 public class MachineGridStatusAdapter extends BaseAdapter {
 
-    private Room room;
+    private ArrayList<Machine> machines;
     private Activity context;
-    private boolean isWasher;
     private View machineMenu;
+    private AdapterType type;
 
-    public MachineGridStatusAdapter(Activity context, Room roomData, boolean isWasher){
+    public MachineGridStatusAdapter(Activity context, AdapterType type, ArrayList<Machine> machines){
 
         this.context = context;
-        this.room = roomData;
-        this.isWasher = isWasher;
         this.machineMenu = context.findViewById(R.id.machine_menu);
+        this.machines = machines;
+        this.type = type;
         machineMenu.setAlpha(0f);
 
     }
 
     @Override
     public int getCount() {
-        return isWasher ? room.totalWashers() : room.totalDryers();
+
+        return machines.size();
+
     }
 
     @Override
@@ -87,91 +93,61 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         }
 
-        int machineNumber = (isWasher) ? position : position + room.totalWashers();
-        int numberToShow = machineNumber + 1;
+        //Setup View
+        setupView(holder, machines.get(position));
 
-        holder.machineNumber.setText(numberToShow + "");
-
-        Machine machine = room.getMachine(machineNumber);
-        holder.machineStatus.setText(machine.machineStatus().getDescription());
-
-        //Setup All of the Views
-        setupView(holder, machine);
-
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMachineMenu(numberToShow, machine);
-            }
-        });
 
         return convertView;
     }
 
-    protected void setupView(ViewHolder holder, Machine machine){
+    private void setupView(ViewHolder holder, Machine machine){
 
-        if(machine.machineStatus() == MachineStatus.IN_PROGRESS){
-            holder.timeLeft.setText(machine.timeLeft() + "");
-            holder.progressBar.enableIndeterminateMode(true);
+        int statusColor;
+        int statusIcon;
+        String timeLeft = "";
+        boolean inProgress = false;
 
-            double progress;
-            if(machine.isWasher()){
-                progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
-                holder.machineIconLittle.setImageResource(R.drawable.icon_water);
-                holder.machineIconLittle.getLayoutParams().height = 40;
-                holder.machineIconLittle.getLayoutParams().width = 40;
-            }else {
-                progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
-                holder.machineIconLittle.setImageResource(R.drawable.icon_drying);
-                holder.machineIconLittle.getLayoutParams().height = 35;
-                holder.machineIconLittle.getLayoutParams().width = 35;
-            }
+        switch(machine.status()){
 
+            case AVAILABLE:
+                statusColor = ContextCompat.getColor(context, R.color.Green);
+                statusIcon = R.drawable.icon_check;
+            break;
 
-//            holder.progressBar.setProgressWithAnimation((int) progress, 800);
-            holder.progressBar.setProgressWithAnimation((int) progress);
+            case IN_PROGRESS:
+                statusColor = ContextCompat.getColor(context, R.color.Red);
+                timeLeft = Integer.toString(machine.timeLeft());
+                statusIcon = (machine.getType() == Machine.Type.WASHER) ? R.drawable.icon_water : R.drawable.icon_drying;
+                inProgress = true;
 
-            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
-            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Red));
-            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Red));
-            holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Red));
-            holder.machineIconLittle.requestLayout();
+            break;
 
+            case DONE_DOOR_CLOSED:
+                statusColor = ContextCompat.getColor(context, R.color.Yellow);
+                statusIcon = R.drawable.icon_waiting;
+            break;
 
-
-        }
-        else if(machine.machineStatus() == MachineStatus.DONE_DOOR_CLOSED){
-            holder.progressBar.enableIndeterminateMode(false);
-            holder.progressBar.setProgress(100);
-            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
-            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Yellow));
-            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Yellow));
-            holder.machineIconLittle.setImageResource(R.drawable.icon_waiting);
-            holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
-
-            holder.timeLeft.setText("");
-        }
-        else if(machine.machineStatus() == MachineStatus.OUT_OF_ORDER) {
+            default:
+                statusColor = ContextCompat.getColor(context, R.color.Grey);
+                statusIcon = R.drawable.icon_close;
+            break;
 
         }
-        else{
-            holder.progressBar.enableIndeterminateMode(false);
-            holder.progressBar.setProgress(100);
-            holder.machineIcon.setColorFilter(ContextCompat.getColor(context, R.color.Green));
-            holder.progressBar.setColor(ContextCompat.getColor(context, R.color.Green));
-            holder.statusIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.Green));
-            holder.machineIconLittle.setImageResource(R.drawable.icon_check);
-            holder.machineIconLittle.setColorFilter(ContextCompat.getColor(context, R.color.Green));
-            holder.machineIconLittle.getLayoutParams().height = 50;
-            holder.machineIconLittle.getLayoutParams().width = 50;
 
-            holder.timeLeft.setText("");
-        }
+        holder.machineNumber.setText(machine.machineNumber() + "");
+        holder.machineStatus.setText(machine.status().description());
+        holder.progressBar.enableIndeterminateMode(inProgress);
+        holder.machineIconLittle.setImageResource(statusIcon);
+        holder.machineIcon.setColorFilter(statusColor);
+        holder.progressBar.setColor(statusColor);
+        holder.progressBar.setProgress(100);
+        holder.statusIcon.setCardBackgroundColor(statusColor);
 
+        holder.container.setOnClickListener(v -> showMachineMenu(machine));
 
     }
 
-    protected void showMachineMenu(int machinePosition, Machine machine){
+    private void showMachineMenu(Machine machine){
 
         // Finding all the views.
         TextView pos = machineMenu.findViewById(R.id.txt_machineNumber);
@@ -181,69 +157,55 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         TextView timeLeft = machineMenu.findViewById(R.id.txt_timeLeft);
         TextView timeExtraText = machineMenu.findViewById(R.id.txt_timeExtraText);
         ProgressBar progressBar = (ProgressBar) machineMenu.findViewById(R.id.progressBar);
-//        CircularProgressBar cpb = (CircularProgressBar) machineMenu.findViewById(R.id.progressBar);
-//        cpb.enableIndeterminateMode(false);
 
         // Retrieving quad colors.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String quadColor = prefs.getString("quadColor", "000000");
 
-        pos.setText(machinePosition + "");
-        type.setText(machine.isWasher() ? "washer" : "dryer");
+        boolean showNotifyBtn = false;
+        int progress = 100;
+        String statusExtraText = "";
+        float textSize;
+        int statusColor;
 
+        pos.setText(Integer.toString(machine.machineNumber()));
+        type.setText(machine.getType().getDescription());
+        timeLeft.setPadding(0,25, 0, 0);
 
-        switch(machine.machineStatus()){
+        switch(machine.status()){
 
             case AVAILABLE:
-                machineMenu.findViewById(R.id.btn_notify).setVisibility(View.GONE);
-
-                progressBar.setProgress(100);
-                progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Green), PorterDuff.Mode.SRC_IN);
-//                cpb.enableIndeterminateMode(false);
-
-                timeLeft.setText("Available.");
-                timeLeft.setPadding(0, 25, 0, 0);
-                timeLeft.setTextSize(45f);
-                timeExtraText.setText("");
+                statusColor = R.color.Green;
+                textSize = 45;
             break;
 
             case IN_PROGRESS:
-                machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
-
-                double progress;
-                if(machine.isWasher()){
-                    progress = (1- (machine.timeLeft() / 35.0)) * 100.0;
-                }else {
-                    progress = (1- (machine.timeLeft() / 63.0)) * 100.0;
-                }
-
-                progressBar.setProgress((int) progress);
-                progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Red), PorterDuff.Mode.SRC_IN);
-
-//                cpb.enableIndeterminateMode(true);
-
-                timeLeft.setText(machine.timeLeft() + "");
+                showNotifyBtn = true;
+                statusColor = R.color.Red;
+                textSize = 30;
+                statusExtraText = "minutes remaining";
                 timeLeft.setPadding(0, 0, 0, 0);
-                timeLeft.setTextSize(55f);
-                timeExtraText.setText("minutes remaining.");
             break;
 
             case DONE_DOOR_CLOSED:
-                machineMenu.findViewById(R.id.btn_notify).setVisibility(View.VISIBLE);
-
-                progressBar.setProgress(100);
-                progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, R.color.Yellow), PorterDuff.Mode.SRC_IN);
-//                cpb.enableIndeterminateMode(false);
-
-                timeLeft.setText("Done. Door closed.");
-                timeLeft.setPadding(0, 25, 0, 0);
-                timeLeft.setTextSize(30f);
-                timeExtraText.setText("");
+                showNotifyBtn = true;
+                statusColor = R.color.Yellow;
+                textSize = 30;
             break;
 
-            case OUT_OF_ORDER:
-                break;
+            default:
+                statusColor = R.color.Grey;
+                textSize = 30;
+            break;
+
         }
+
+        progressBar.setProgress(progress);
+        progressBar.getProgressDrawable().setColorFilter(statusColor, PorterDuff.Mode.SRC_IN);
+        machineMenu.findViewById(R.id.btn_notify).setVisibility( (showNotifyBtn) ? View.VISIBLE : View.GONE );
+        timeLeft.setText(machine.status().description());
+        timeLeft.setTextSize(textSize);
+        timeExtraText.setText(statusExtraText);
 
         // Change color to quad/theme color.
         cardNumberContainer.setCardBackgroundColor(Color.parseColor(quadColor));
@@ -276,6 +238,13 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         ImageView machineIconLittle;
         CircularProgressBar progressBar;
 
+    }
+
+    public enum AdapterType {
+        WASHER_ADAPTER,
+        DRYER_ADAPTER,
+        FAVORITES_ADAPTER,
+        DEBUG
     }
 
 }

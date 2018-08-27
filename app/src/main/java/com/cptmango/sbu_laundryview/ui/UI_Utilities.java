@@ -4,12 +4,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 
-public class GeneralUI {
+public class UI_Utilities {
 
     public static void changeStatusBarColor(Window window, String color){
 
@@ -38,6 +39,13 @@ public class GeneralUI {
         ViewGroup.LayoutParams layoutParams = grid.getLayoutParams();
         layoutParams.height = convertDpToPixels(height, context);
         grid.setLayoutParams(layoutParams);
+    }
+
+    public static void resizeView(View view, int width, int height){
+
+        view.getLayoutParams().width = width;
+        view.getLayoutParams().height = height;
+
     }
 
 }

@@ -1,5 +1,7 @@
 package com.cptmango.sbu_laundryview.data.model;
 
+import java.util.ArrayList;
+
 public class Room {
 
     private Machine[] machines;
@@ -25,6 +27,32 @@ public class Room {
     public Machine[] getMachines(){ return machines; }
     public void setMachineData(Machine[] machines){ this.machines = machines; }
 
+    public ArrayList<Machine> getMachinesOfType(Machine.Type type) {
+
+        ArrayList<Machine> machinesOfType = new ArrayList<>();
+
+        for(Machine machine : machines){
+
+            if(machine.getType() == type){
+                machinesOfType.add(machine);
+            }
+        }
+
+        return machinesOfType;
+    }
+
+    public ArrayList<Machine> getFavorites(){
+        ArrayList<Machine> favorites = new ArrayList<>();
+
+        for(Machine machine : machines){
+            if(machine.isFavorite()){
+                favorites.add(machine);
+            }
+        }
+
+        return favorites;
+    }
+
     public String roomName(){ return roomName; }
     public void setRoomName(String name) { this.roomName = name; }
 
@@ -44,6 +72,18 @@ public class Room {
     public void setTotalDryers(int totalDryers){ this.totalDryers = totalDryers; }
 
     public int totalMachines(){ return totalMachines; }
+
+    public int totalFavorites() {
+
+        int favorites = 0;
+
+        for (Machine machine : machines){
+
+            favorites += machine.isFavorite() ? 1 : 0;
+        }
+
+        return favorites;
+    }
 
 
 }
