@@ -29,11 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
-import com.cptmango.sbu_laundryview.adapters.FavoriteGridStatusAdapter;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
 import com.cptmango.sbu_laundryview.background.NotifyUser;
 import com.cptmango.sbu_laundryview.data.DataManager;
+import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
 import com.cptmango.sbu_laundryview.ui.UI_Utilities;
@@ -48,7 +48,7 @@ public class HomeScreen extends AppCompatActivity {
     View refreshed;
     MachineGridStatusAdapter washerAdapter;
     MachineGridStatusAdapter dryerAdapter;
-    FavoriteGridStatusAdapter favoriteAdapter;
+    MachineGridStatusAdapter favoriteAdapter;
     HomeScreenFragmentPagerAdapter pagerAdapter;
 
     BottomNavigationView bottomNavigationView;
@@ -117,7 +117,7 @@ public class HomeScreen extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 this.recreate();
                 dataManager.loadFavoritesFromPreferences(context);
-                favoriteAdapter = new FavoriteGridStatusAdapter(this, dataManager.getFavorites());
+                favoriteAdapter = new MachineGridStatusAdapter(this, MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER, dataManager.getRoomData().getFavorites());
             }
 
         }
@@ -425,7 +425,12 @@ public class HomeScreen extends AppCompatActivity {
 
         // Setting up the dryerGrid view.
 
-        dryerAdapter = new MachineGridStatusAdapter(context, dataManager.getRoomData(), false);
+        dryerAdapter = new MachineGridStatusAdapter(
+                context,
+                MachineGridStatusAdapter.AdapterType.DRYER_ADAPTER,
+                dataManager.getRoomData().getMachinesOfType(Machine.Type.DRYER)
+        );
+
         dryerGrid.setAdapter(dryerAdapter);
         dryerGrid.setColumnWidth(GridView.AUTO_FIT);
         dryerGrid.setNumColumns(GridView.AUTO_FIT);
@@ -435,7 +440,7 @@ public class HomeScreen extends AppCompatActivity {
     void showFavoriteData(){
         favoriteGrid = pager.findViewById(R.id.grid_favoriteMachines);
 
-        favoriteAdapter = new FavoriteGridStatusAdapter(context, dataManager.getFavorites());
+        favoriteAdapter = new MachineGridStatusAdapter(this, MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER, dataManager.getRoomData().getFavorites());
         favoriteGrid.setAdapter(favoriteAdapter);
 
         // Resizing grid.
@@ -454,7 +459,12 @@ public class HomeScreen extends AppCompatActivity {
 //        washerGrid.setEnabled(false);
 
         // Setting up washer washerGrid view.
-        washerAdapter = new MachineGridStatusAdapter(context, dataManager.getRoomData(), true);
+        washerAdapter = new MachineGridStatusAdapter(
+                context,
+                MachineGridStatusAdapter.AdapterType.WASHER_ADAPTER,
+                dataManager.getRoomData().getMachinesOfType(Machine.Type.WASHER)
+        );
+
         washerGrid.setColumnWidth(GridView.AUTO_FIT);
         washerGrid.setNumColumns(GridView.AUTO_FIT);
         washerGrid.setAdapter(washerAdapter);

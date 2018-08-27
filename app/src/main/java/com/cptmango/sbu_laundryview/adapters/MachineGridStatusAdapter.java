@@ -119,7 +119,6 @@ public class MachineGridStatusAdapter extends BaseAdapter {
                 timeLeft = Integer.toString(machine.timeLeft());
                 statusIcon = (machine.getType() == Machine.Type.WASHER) ? R.drawable.icon_water : R.drawable.icon_drying;
                 inProgress = true;
-
             break;
 
             case DONE_DOOR_CLOSED:

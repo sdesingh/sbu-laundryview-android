@@ -114,41 +114,49 @@ public class DataManager {
                 JSONObject machine = machines.getJSONObject(i);
 
                 String machineStatusSummary = machine.getString("status");
-                MachineStatus statusCode;
+                Machine.Status statusCode;
+                Machine.Type machineType;
                 int machineTimeLeft;
-                boolean isWasher = machine.getString("machineType").equals("W");
+
+                switch(machine.getString("machineType")){
+
+                    case "W": machineType = Machine.Type.WASHER;
+                    case "D": machineType = Machine.Type.DRYER;
+                    default: machineType = Machine.Type.OTHER;
+
+                }
 
                 // Setting machine status.
                 switch(machine.getInt("statusCode")){
 
-                    case 0: statusCode = MachineStatus.AVAILABLE;
+                    case 0: statusCode = Machine.Status.AVAILABLE;
                     break;
 
-                    case 2: statusCode = MachineStatus.IN_PROGRESS;
+                    case 2: statusCode = Machine.Status.IN_PROGRESS;
                     break;
 
-                    case 1: statusCode = MachineStatus.DONE_DOOR_CLOSED;
+                    case 1: statusCode = Machine.Status.DONE_DOOR_CLOSED;
                     break;
 
-                    case 3: statusCode = MachineStatus.OUT_OF_ORDER;
+                    case 3: statusCode = Machine.Status.OUT_OF_ORDER;
 
-                    case 4: statusCode = MachineStatus.OUT_OF_ORDER;
+                    case 4: statusCode = Machine.Status.OUT_OF_ORDER;
                     break;
 
                     default:
                         System.out.println("Unknown status code: " + machine.getInt("statusCode"));
-                        statusCode = MachineStatus.UNKNOWN;
+                        statusCode = Machine.Status.UNKNOWN;
 
                 }
 
-                if(statusCode == MachineStatus.IN_PROGRESS) {
+                if(statusCode == Machine.Status.IN_PROGRESS) {
                     double timeLeft = 1 - (machine.getInt("completionPercentage") / 100);
                     timeLeft *= machine.getInt("cycleCompletionTime");
                     machineTimeLeft = (int) timeLeft;
                 }
                 else { machineTimeLeft = -1; }
 
-                newMachineData[i] = new Machine(i+1, machineTimeLeft, statusCode, isWasher);
+                newMachineData[i] = new Machine(i+1, machineTimeLeft, statusCode, machineType);
 
             }
 

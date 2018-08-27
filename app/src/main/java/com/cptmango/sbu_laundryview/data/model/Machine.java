@@ -8,7 +8,7 @@ public class Machine {
     private Type type;
     private boolean favorite = false;
 
-    public Machine(int machineNumber, int timeLeft, Status status, Type type, boolean isWasher){
+    public Machine(int machineNumber, int timeLeft, Status status, Type type){
 
         this.machineNumber = machineNumber;
         this.timeLeft = timeLeft;

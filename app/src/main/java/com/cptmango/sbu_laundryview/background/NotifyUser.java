@@ -6,15 +6,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.VibrationEffect;
 import android.support.v4.app.NotificationCompat;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.activities.HomeScreen;
-
-import static com.cptmango.sbu_laundryview.R.color.White;
 
 public class NotifyUser extends BroadcastReceiver {
 
