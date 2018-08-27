@@ -43,19 +43,16 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         this.roomData = roomData;
         machineMenu.setAlpha(0f);
 
-        switch(type){
-            case WASHER_ADAPTER: machines = roomData.getMachinesOfType(Machine.Type.WASHER);
-            break;
-            case DRYER_ADAPTER: machines = roomData.getMachinesOfType(Machine.Type.DRYER);
-            break;
-            case FAVORITES_ADAPTER: machines = roomData.getFavorites();
-            break;
-            default: machines = new ArrayList<>();
-            break;
-        }
+        updateMachineData();
 
         System.out.println(machines.size());
 
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        updateMachineData();
+        super.notifyDataSetChanged();
     }
 
     @Override
@@ -234,6 +231,27 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         // Show the machine menu.
         Animations.show(context.findViewById(R.id.bg), 0.6f);
         Animations.showUp(machineMenu);
+
+    }
+
+    private void updateMachineData() {
+
+        if(type == AdapterType.FAVORITES_ADAPTER){
+            machines = roomData.getFavorites();
+        }
+        else {
+
+            Machine.Type machineType;
+
+            switch(type){
+                case DRYER_ADAPTER: machineType = Machine.Type.DRYER; break;
+                case WASHER_ADAPTER: machineType = Machine.Type.WASHER; break;
+                default: machineType = Machine.Type.OTHER; break;
+            }
+
+            machines = roomData.getMachinesOfType(machineType);
+
+        }
 
     }
 

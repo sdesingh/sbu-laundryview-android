@@ -117,11 +117,7 @@ public class HomeScreen extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 this.recreate();
                 dataManager.loadFavoritesFromPreferences(context);
-                favoriteAdapter = new MachineGridStatusAdapter(
-                        this,
-                        MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER,
-                        dataManager.getRoomData()
-                );
+                favoriteAdapter.notifyDataSetChanged();
             }
 
         }
@@ -363,7 +359,7 @@ public class HomeScreen extends AppCompatActivity {
         ImageView washerIcon = (ImageView) findViewById(R.id.img_washerStatus);
         ImageView dryerIcon = (ImageView) findViewById(R.id.img_dryerStatus);
 
-        if(dataManager.getFavorites().size() == 0)
+        if(dataManager.getRoomData().totalFavorites() == 0)
             findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
         else{
             favoriteGrid.setVisibility(View.VISIBLE);
@@ -443,6 +439,7 @@ public class HomeScreen extends AppCompatActivity {
 
     void showFavoriteData(){
         favoriteGrid = pager.findViewById(R.id.grid_favoriteMachines);
+        int numberOfFavorites = dataManager.getRoomData().totalFavorites();
 
         favoriteAdapter = new MachineGridStatusAdapter(
                 this,
@@ -452,8 +449,8 @@ public class HomeScreen extends AppCompatActivity {
         favoriteGrid.setAdapter(favoriteAdapter);
 
         // Resizing grid.
-        int numberOfMachines = dataManager.getFavorites().size() / 2;
-        numberOfMachines += ((dataManager.getFavorites().size() % 2 == 0) ? 0 : 1);
+        int numberOfMachines = numberOfFavorites / 2;
+        numberOfMachines += ((numberOfFavorites % 2 == 0) ? 0 : 1);
         UI_Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
         favoriteGrid.setColumnWidth(GridView.AUTO_FIT);
@@ -493,10 +490,11 @@ public class HomeScreen extends AppCompatActivity {
 
                 TextView number = findViewById(R.id.txt_machineNumber);
                 int machineNumber = Integer.parseInt(number.getText().toString());
-                dataManager.addMachineToFavorites(machineNumber);
+                dataManager.changeFavoriteStatus(machineNumber);
+                int numberOfFavorites = dataManager.getRoomData().totalFavorites();
 
                 // Showing not found icon.
-                if(dataManager.getFavorites().size() == 0){
+                if(dataManager.getRoomData().totalFavorites() == 0){
                     favoriteGrid.setVisibility(View.GONE);
                     findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
                 }else{
@@ -505,8 +503,8 @@ public class HomeScreen extends AppCompatActivity {
                 }
 
                 // Resizing grid.
-                int numberOfMachines = dataManager.getFavorites().size() / 2;
-                numberOfMachines += ((dataManager.getFavorites().size() % 2 == 0) ? 0 : 1);
+                int numberOfMachines = numberOfFavorites / 2;
+                numberOfMachines += ((numberOfFavorites % 2 == 0) ? 0 : 1);
                 UI_Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
                 favoriteAdapter.notifyDataSetChanged();

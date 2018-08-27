@@ -44,8 +44,6 @@ public class DataManager {
         this.building = building;
         this.context = context;
 
-        favorites = new ArrayList<>();
-        favoritesList = new ArrayList<>();
         notificationList = new ArrayList<>();
         queue = Volley.newRequestQueue(context);
 
@@ -116,6 +114,7 @@ public class DataManager {
                 Machine.Type machineType;
                 int machineTimeLeft;
 
+                // Setting machine type.
                 switch(machine.getString("machineType").charAt(0)){
 
                     case 'W': machineType = Machine.Type.WASHER;
@@ -166,15 +165,7 @@ public class DataManager {
             room.setMachineData(newMachineData);
             room.setWashers_available(room.totalWashers());
             room.setDryers_available(room.totalDryers());
-
-            // Update favorite machines.
-            favorites.clear();
-
-            for(int index : favoritesList){
-                Machine machine = room.getMachine(index - 1);
-                machine.setFavorite(true);
-                favorites.add(machine);
-            }
+            loadFavoritesFromPreferences(context);
 
             // Reset timeout. Retrieval and parse was successful.
             timeout = 0;
@@ -190,8 +181,6 @@ public class DataManager {
 
     public Room getRoomData(){ return room; }
 
-    public ArrayList<Machine> getFavorites(){ return favorites; }
-
     public ArrayList<Integer> getNotificationList() {
         return notificationList;
     }
@@ -199,7 +188,6 @@ public class DataManager {
     public void changeFavoriteStatus(int machineNumber){
         Machine machine = room.getMachine(machineNumber - 1);
         ImageView star = context.findViewById(R.id.star);
-        machine.setFavorite(!machine.isFavorite());
 
         String toastText;
         int starColor;
@@ -214,6 +202,8 @@ public class DataManager {
             starColor = R.color.Yellow;
         }
 
+        machine.setFavorite(!machine.isFavorite());
+
         // UI Changes
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
         star.setColorFilter(ContextCompat.getColor(context, starColor));
@@ -227,8 +217,8 @@ public class DataManager {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         String favorites = "";
 
-        for(int machineNumber : favoritesList){
-            favorites += machineNumber + ",";
+        for(Machine machine : getRoomData().getMachines()){
+            favorites += machine.machineNumber() + ",";
         }
         editor.putString("favorites", favorites);
         editor.apply();
@@ -237,34 +227,25 @@ public class DataManager {
 
     public static void clearUserFavorites(Context context){
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-//        System.out.println("Clearing favorites... " + prefs.getString("favorites", "none"));
 
         editor.remove("favorites");
-        editor.commit();
-
-//        System.out.println("Cleared. Current favorites... " + prefs.getString("favorites", "none"));
+        editor.apply();
 
     }
 
     public void loadFavoritesFromPreferences(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        favoritesList = new ArrayList<>();
-        favorites = new ArrayList<>();
 
         if(prefs.contains("favorites")){
             String savedFavorites = prefs.getString("favorites", "");
 
+            // Favorites where never initialized. Return.
             if(savedFavorites.isEmpty()) return;
 
-            System.out.println(savedFavorites);
             for(String machineNumber : savedFavorites.split(",")){
                 int machineIndex = Integer.parseInt(machineNumber) - 1;
-                favoritesList.add(machineIndex + 1);
                 room.getMachine(machineIndex).setFavorite(true);
-                favorites.add(room.getMachine(machineIndex));
             }
 
         }
