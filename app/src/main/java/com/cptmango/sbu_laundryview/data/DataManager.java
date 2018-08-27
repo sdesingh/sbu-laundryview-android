@@ -36,8 +36,6 @@ public class DataManager {
 
     private Activity context;
     private Room room;
-    private ArrayList<Machine> favorites;
-    private ArrayList<Integer> favoritesList;
     private ArrayList<Integer> notificationList;
     private RequestQueue queue;
 
@@ -194,52 +192,35 @@ public class DataManager {
 
     public ArrayList<Machine> getFavorites(){ return favorites; }
 
-    public ArrayList<Integer> getFavoritesList() {
-        return favoritesList;
-    }
-
     public ArrayList<Integer> getNotificationList() {
         return notificationList;
     }
 
-
-    public void setFavoritesList(ArrayList<Integer> favoritesList) {
-        this.favoritesList = favoritesList;
-    }
-
-    public void addMachineToFavorites(int machineNumber){
+    public void changeFavoriteStatus(int machineNumber){
         Machine machine = room.getMachine(machineNumber - 1);
+        ImageView star = context.findViewById(R.id.star);
+        machine.setFavorite(!machine.isFavorite());
 
-        if(favoritesList.contains(machineNumber)) {
+        String toastText;
+        int starColor;
 
-            // Data Changes
-            favorites.remove(machine);
-            favoritesList.remove((Integer) machineNumber);
-            machine.setFavorite(false);
+        if(machine.isFavorite()) {
+            toastText = "Removed Machine from Favorites.";
+            starColor = R.color.Grey;
 
-            // UI Changes
-            ImageView star = context.findViewById(R.id.star);
-            star.setColorFilter(ContextCompat.getColor(context, R.color.Grey));
-            Toast.makeText(context, "Removed Machine from Favorites.", Toast.LENGTH_SHORT).show();
         }
         else{
-
-            // Data Changes
-            favorites.add(machine);
-            favoritesList.add(machineNumber);
-            machine.setFavorite(true);
-
-            // UI Changes
-            ImageView star = context.findViewById(R.id.star);
-            star.setColorFilter(ContextCompat.getColor(context, R.color.Yellow));
-            Toast.makeText(context, "Added Machine to Favorites.", Toast.LENGTH_SHORT).show();
+            toastText = "Added Machine to Favorites.";
+            starColor = R.color.Yellow;
         }
+
+        // UI Changes
+        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+        star.setColorFilter(ContextCompat.getColor(context, starColor));
 
         saveFavoritesToPreferences();
 
     }
-
-    public void removeMachineFromFavorites(int machineIndex){ favorites.remove(machineIndex); }
 
     public void saveFavoritesToPreferences(){
 
@@ -251,8 +232,6 @@ public class DataManager {
         }
         editor.putString("favorites", favorites);
         editor.apply();
-
-
 
     }
 

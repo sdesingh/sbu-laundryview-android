@@ -63,7 +63,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         return machines.size();
 
     }
-    
+
     @Override
     public Object getItem(int position) {
         return null;
