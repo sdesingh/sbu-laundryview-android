@@ -26,34 +26,44 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.ArrayList;
 
-/**
- * Created by mango on 4/18/18.
- */
 
 public class MachineGridStatusAdapter extends BaseAdapter {
 
+    private Room roomData;
     private ArrayList<Machine> machines;
     private Activity context;
     private View machineMenu;
     private AdapterType type;
 
-    public MachineGridStatusAdapter(Activity context, AdapterType type, ArrayList<Machine> machines){
+    public MachineGridStatusAdapter(Activity context, AdapterType type, Room roomData){
 
         this.context = context;
         this.machineMenu = context.findViewById(R.id.machine_menu);
-        this.machines = machines;
         this.type = type;
+        this.roomData = roomData;
         machineMenu.setAlpha(0f);
+
+        switch(type){
+            case WASHER_ADAPTER: machines = roomData.getMachinesOfType(Machine.Type.WASHER);
+            break;
+            case DRYER_ADAPTER: machines = roomData.getMachinesOfType(Machine.Type.DRYER);
+            break;
+            case FAVORITES_ADAPTER: machines = roomData.getFavorites();
+            break;
+            default: machines = new ArrayList<>();
+            break;
+        }
+
+        System.out.println(machines.size());
 
     }
 
     @Override
     public int getCount() {
-
         return machines.size();
 
     }
-
+    
     @Override
     public Object getItem(int position) {
         return null;
@@ -134,9 +144,11 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         }
 
         holder.machineNumber.setText(machine.machineNumber() + "");
+        holder.timeLeft.setText(timeLeft);
         holder.machineStatus.setText(machine.status().description());
         holder.progressBar.enableIndeterminateMode(inProgress);
         holder.machineIconLittle.setImageResource(statusIcon);
+        holder.machineIconLittle.setColorFilter(statusColor);
         holder.machineIcon.setColorFilter(statusColor);
         holder.progressBar.setColor(statusColor);
         holder.progressBar.setProgress(100);
@@ -200,7 +212,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         }
 
         progressBar.setProgress(progress);
-        progressBar.getProgressDrawable().setColorFilter(statusColor, PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, statusColor), PorterDuff.Mode.SRC_IN);
         machineMenu.findViewById(R.id.btn_notify).setVisibility( (showNotifyBtn) ? View.VISIBLE : View.GONE );
         timeLeft.setText(machine.status().description());
         timeLeft.setTextSize(textSize);
@@ -218,7 +230,6 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         else{
             star.setColorFilter(ContextCompat.getColor(context, R.color.Grey));
         }
-
 
         // Show the machine menu.
         Animations.show(context.findViewById(R.id.bg), 0.6f);

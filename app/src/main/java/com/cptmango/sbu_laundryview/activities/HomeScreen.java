@@ -117,7 +117,11 @@ public class HomeScreen extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 this.recreate();
                 dataManager.loadFavoritesFromPreferences(context);
-                favoriteAdapter = new MachineGridStatusAdapter(this, MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER, dataManager.getRoomData().getFavorites());
+                favoriteAdapter = new MachineGridStatusAdapter(
+                        this,
+                        MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER,
+                        dataManager.getRoomData()
+                );
             }
 
         }
@@ -428,7 +432,7 @@ public class HomeScreen extends AppCompatActivity {
         dryerAdapter = new MachineGridStatusAdapter(
                 context,
                 MachineGridStatusAdapter.AdapterType.DRYER_ADAPTER,
-                dataManager.getRoomData().getMachinesOfType(Machine.Type.DRYER)
+                dataManager.getRoomData()
         );
 
         dryerGrid.setAdapter(dryerAdapter);
@@ -440,7 +444,11 @@ public class HomeScreen extends AppCompatActivity {
     void showFavoriteData(){
         favoriteGrid = pager.findViewById(R.id.grid_favoriteMachines);
 
-        favoriteAdapter = new MachineGridStatusAdapter(this, MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER, dataManager.getRoomData().getFavorites());
+        favoriteAdapter = new MachineGridStatusAdapter(
+                this,
+                MachineGridStatusAdapter.AdapterType.FAVORITES_ADAPTER,
+                dataManager.getRoomData()
+        );
         favoriteGrid.setAdapter(favoriteAdapter);
 
         // Resizing grid.
@@ -462,7 +470,7 @@ public class HomeScreen extends AppCompatActivity {
         washerAdapter = new MachineGridStatusAdapter(
                 context,
                 MachineGridStatusAdapter.AdapterType.WASHER_ADAPTER,
-                dataManager.getRoomData().getMachinesOfType(Machine.Type.WASHER)
+                dataManager.getRoomData()
         );
 
         washerGrid.setColumnWidth(GridView.AUTO_FIT);

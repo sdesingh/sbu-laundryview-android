@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Room {
 
-    private Machine[] machines;
+    private ArrayList<Machine> machines;
     private String roomName;
     private String quadName;
     private int totalWashers;
@@ -23,16 +23,15 @@ public class Room {
 
     }
 
-    public Machine getMachine(int machineNumber){ return machines[machineNumber]; }
-    public Machine[] getMachines(){ return machines; }
-    public void setMachineData(Machine[] machines){ this.machines = machines; }
+    public Machine getMachine(int machineNumber){ return machines.get(machineNumber); }
+    public ArrayList<Machine> getMachines(){ return machines; }
+    public void setMachineData(ArrayList<Machine> machines){ this.machines = machines; }
 
     public ArrayList<Machine> getMachinesOfType(Machine.Type type) {
 
         ArrayList<Machine> machinesOfType = new ArrayList<>();
 
         for(Machine machine : machines){
-
             if(machine.getType() == type){
                 machinesOfType.add(machine);
             }

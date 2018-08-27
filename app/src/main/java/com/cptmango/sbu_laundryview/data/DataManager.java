@@ -107,7 +107,7 @@ public class DataManager {
 
             }
 
-            Machine[] newMachineData = new Machine[room.totalMachines()];
+            ArrayList<Machine> newMachineData = new ArrayList<>();
 
             for(int i = 0; i < room.totalMachines(); i++){
 
@@ -118,11 +118,14 @@ public class DataManager {
                 Machine.Type machineType;
                 int machineTimeLeft;
 
-                switch(machine.getString("machineType")){
+                switch(machine.getString("machineType").charAt(0)){
 
-                    case "W": machineType = Machine.Type.WASHER;
-                    case "D": machineType = Machine.Type.DRYER;
+                    case 'W': machineType = Machine.Type.WASHER;
+                    break;
+                    case 'D': machineType = Machine.Type.DRYER;
+                    break;
                     default: machineType = Machine.Type.OTHER;
+                    break;
 
                 }
 
@@ -139,6 +142,7 @@ public class DataManager {
                     break;
 
                     case 3: statusCode = Machine.Status.OUT_OF_ORDER;
+                    break;
 
                     case 4: statusCode = Machine.Status.OUT_OF_ORDER;
                     break;
@@ -146,6 +150,7 @@ public class DataManager {
                     default:
                         System.out.println("Unknown status code: " + machine.getInt("statusCode"));
                         statusCode = Machine.Status.UNKNOWN;
+                    break;
 
                 }
 
@@ -156,13 +161,13 @@ public class DataManager {
                 }
                 else { machineTimeLeft = -1; }
 
-                newMachineData[i] = new Machine(i+1, machineTimeLeft, statusCode, machineType);
+                newMachineData.add(new Machine(i+1, machineTimeLeft, statusCode, machineType));
 
             }
 
             room.setMachineData(newMachineData);
-            room.setWashers_available(data.getInt("totalWashers"));
-            room.setDryers_available(data.getInt("totalDryers"));
+            room.setWashers_available(room.totalWashers());
+            room.setDryers_available(room.totalDryers());
 
             // Update favorite machines.
             favorites.clear();
