@@ -8,9 +8,7 @@ public class Room {
     private String roomName;
     private String quadName;
     private int totalWashers;
-    private int washers_available;
     private int totalDryers;
-    private int dryers_available;
     private int totalMachines;
 
     public Room(String quadName, String roomName, int totalWashers, int dryers){
@@ -61,11 +59,44 @@ public class Room {
     public int totalWashers(){ return totalWashers; }
     public void setTotalWashers(int totalWashers){ this.totalWashers = totalWashers; }
 
-    public int dryers_available(){ return dryers_available;}
-    public void setDryers_available(int dryers_available) { this.dryers_available = dryers_available; }
+    public int dryers_available(){
 
-    public int washers_available(){ return washers_available; }
-    public void setWashers_available(int washers_available){ this.washers_available = washers_available; }
+        int available = 0;
+
+        for(Machine machine : machines){
+
+            if(machine.getType() == Machine.Type.DRYER){
+
+                if(machine.status() == Machine.Status.AVAILABLE)
+
+                    available++;
+
+            }
+
+        }
+
+
+        return available;
+    }
+
+    public int washers_available(){
+
+        int available = 0;
+
+        for(Machine machine : machines){
+
+            if(machine.getType() == Machine.Type.WASHER){
+
+                if(machine.status() == Machine.Status.AVAILABLE)
+
+                    available++;
+
+            }
+
+        }
+
+
+        return available; }
 
     public int totalDryers(){ return totalDryers; }
     public void setTotalDryers(int totalDryers){ this.totalDryers = totalDryers; }

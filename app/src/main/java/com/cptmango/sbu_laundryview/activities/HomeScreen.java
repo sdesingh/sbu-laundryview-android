@@ -116,7 +116,7 @@ public class HomeScreen extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 this.recreate();
-                dataManager.loadFavoritesFromPreferences(context);
+                dataManager.clearUserFavorites(this);
                 favoriteAdapter.notifyDataSetChanged();
             }
 

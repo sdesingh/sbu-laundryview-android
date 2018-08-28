@@ -68,7 +68,6 @@ public class Settings extends AppCompatActivity{
     }
 
     public void changeRoom(){
-        DataManager.clearUserFavorites(this);
         setResult(RESULT_OK);
         Intent intent = new Intent(this, SelectRoom.class);
         startActivityForResult(intent, 1);

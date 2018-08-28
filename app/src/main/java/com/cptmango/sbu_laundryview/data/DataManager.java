@@ -163,8 +163,6 @@ public class DataManager {
             }
 
             room.setMachineData(newMachineData);
-            room.setWashers_available(room.totalWashers());
-            room.setDryers_available(room.totalDryers());
             loadFavoritesFromPreferences(context);
 
             // Reset timeout. Retrieval and parse was successful.
@@ -229,11 +227,19 @@ public class DataManager {
 
     }
 
-    public static void clearUserFavorites(Context context){
+    public void clearUserFavorites(Context context){
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 
         editor.remove("favorites");
-        editor.apply();
+        editor.commit();
+
+        for(Machine machine : getRoomData().getMachines()){
+
+            if(machine.isFavorite()){
+                machine.setFavorite(false);
+            }
+
+        }
 
     }
 
