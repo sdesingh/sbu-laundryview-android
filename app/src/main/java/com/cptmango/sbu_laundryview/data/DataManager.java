@@ -61,21 +61,21 @@ public class DataManager {
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null,
 
-        response -> {
+            response -> {
 
-            if(!parseData(response)){
-                if(timeout == 3) return;
-                // Retry request.
-                timeout++;
-                getData();
-            }
+                if(!parseData(response)){
+                    if(timeout == 3) return;
+                    // Retry request.
+                    timeout++;
+                    getData();
+                }
 
-        },
+            },
 
-        error -> {
-            Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
-            System.out.println("An error has occurred retrieving the data. Retrying.");
-            System.out.println("ERROR" + error.toString());
+            error -> {
+                Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
+                System.out.println("An error has occurred retrieving the data. Retrying.");
+                System.out.println("ERROR" + error.toString());
         });
 
         queue.add(request);
@@ -218,7 +218,11 @@ public class DataManager {
         String favorites = "";
 
         for(Machine machine : getRoomData().getMachines()){
-            favorites += machine.machineNumber() + ",";
+
+            if(machine.isFavorite()){
+                favorites += machine.machineNumber() + ",";
+            }
+
         }
         editor.putString("favorites", favorites);
         editor.apply();
@@ -235,7 +239,6 @@ public class DataManager {
 
     public void loadFavoritesFromPreferences(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
 
         if(prefs.contains("favorites")){
             String savedFavorites = prefs.getString("favorites", "");
