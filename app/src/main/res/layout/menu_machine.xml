@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginBottom="4dp"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_timeLeft"
                     app:layout_constraintLeft_toRightOf="@+id/txt_timeLeft"/>
 

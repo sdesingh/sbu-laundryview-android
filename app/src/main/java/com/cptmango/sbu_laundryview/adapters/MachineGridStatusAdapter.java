@@ -93,16 +93,15 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
 
-
         }else{
 
             holder = (ViewHolder) convertView.getTag();
 
         }
 
+
         //Setup View
         setupView(holder, machines.get(position));
-
 
         return convertView;
     }
@@ -111,6 +110,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         int statusColor;
         int statusIcon;
+        int progress = 100;
         String timeLeft = "";
         boolean inProgress = false;
 
@@ -126,6 +126,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
                 timeLeft = Integer.toString(machine.timeLeft());
                 statusIcon = (machine.getType() == Machine.Type.WASHER) ? R.drawable.icon_water : R.drawable.icon_drying;
                 inProgress = true;
+                progress = 50;
             break;
 
             case DONE_DOOR_CLOSED:
@@ -143,12 +144,12 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         holder.machineNumber.setText(machine.machineNumber() + "");
         holder.timeLeft.setText(timeLeft);
         holder.machineStatus.setText(machine.status().description());
-        holder.progressBar.enableIndeterminateMode(inProgress);
+        holder.progressBar.enableIndeterminateMode(machine.status() == Machine.Status.IN_PROGRESS);
+        holder.progressBar.setProgress(progress);
         holder.machineIconLittle.setImageResource(statusIcon);
         holder.machineIconLittle.setColorFilter(statusColor);
         holder.machineIcon.setColorFilter(statusColor);
         holder.progressBar.setColor(statusColor);
-        holder.progressBar.setProgress(100);
         holder.statusIcon.setCardBackgroundColor(statusColor);
 
         holder.container.setOnClickListener(v -> showMachineMenu(machine));
@@ -173,6 +174,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         boolean showNotifyBtn = false;
         int progress = 100;
         String statusExtraText = "";
+        String machineTimeLeft = "";
         float textSize;
         int statusColor;
 
@@ -185,25 +187,29 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             case AVAILABLE:
                 statusColor = R.color.Green;
                 textSize = 45;
+                machineTimeLeft = machine.status().description();
             break;
 
             case IN_PROGRESS:
                 showNotifyBtn = true;
                 statusColor = R.color.Red;
-                textSize = 30;
-                statusExtraText = "minutes remaining";
+                textSize = 45;
+                machineTimeLeft = Integer.toString(machine.timeLeft());
+                statusExtraText = "mins remaining";
                 timeLeft.setPadding(0, 0, 0, 0);
             break;
 
             case DONE_DOOR_CLOSED:
                 showNotifyBtn = true;
+                machineTimeLeft = machine.status().description();
                 statusColor = R.color.Yellow;
                 textSize = 30;
             break;
 
             default:
                 statusColor = R.color.Grey;
-                textSize = 30;
+                textSize = 45;
+                machineTimeLeft = machine.status().description();
             break;
 
         }
@@ -211,7 +217,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         progressBar.setProgress(progress);
         progressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(context, statusColor), PorterDuff.Mode.SRC_IN);
         machineMenu.findViewById(R.id.btn_notify).setVisibility( (showNotifyBtn) ? View.VISIBLE : View.GONE );
-        timeLeft.setText(machine.status().description());
+        timeLeft.setText(machineTimeLeft);
         timeLeft.setTextSize(textSize);
         timeExtraText.setText(statusExtraText);
 

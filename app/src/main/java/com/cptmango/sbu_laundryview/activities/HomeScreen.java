@@ -305,6 +305,7 @@ public class HomeScreen extends AppCompatActivity {
                 updateSummaryPage();
                 washerAdapter.notifyDataSetChanged();
                 dryerAdapter.notifyDataSetChanged();
+                favoriteAdapter.notifyDataSetChanged();
 
             }
 
@@ -415,8 +416,6 @@ public class HomeScreen extends AppCompatActivity {
             summary_washerAvailable.setText(numbers[roomData.washers_available()] + "");
             washerIcon.setColorFilter(ContextCompat.getColor(context, R.color.Red));
         }
-
-        favoriteAdapter.notifyDataSetChanged();
     }
 
     void showDryerData(){
