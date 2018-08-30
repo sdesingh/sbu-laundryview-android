@@ -509,7 +509,7 @@ public class HomeScreen extends AppCompatActivity {
                 favoriteAdapter.notifyDataSetChanged();
             break;
 
-            case R.id.btn_notify: setReminder();
+            case R.id.btn_notify: createNotification();
             break;
 
             case R.id.btn_settings:
@@ -523,11 +523,14 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
-    void setReminder(){
+    void createNotification(){
+
         TextView number = (TextView) findViewById(R.id.txt_machineNumber);
         int machineNumber = Integer.parseInt(number.getText().toString());
+        Machine machine = dataManager.getRoomData().getMachine(machineNumber - 1);
+
         // Time is set to the minutes left until the machine is done.
-        long notificationTime = dataManager.getRoomData().getMachine(machineNumber).timeLeft() * 60000;
+        long notificationTime = machine.timeLeft() * 60000;
         // Two minutes are subtracted from the notification time.
         notificationTime -= 120000;
         if(notificationTime < 0){

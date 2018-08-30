@@ -119,24 +119,26 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             case AVAILABLE:
                 statusColor = ContextCompat.getColor(context, R.color.Green);
                 statusIcon = R.drawable.icon_check;
+                holder.progressBar.setProgress(progress);
             break;
 
             case IN_PROGRESS:
                 statusColor = ContextCompat.getColor(context, R.color.Red);
                 timeLeft = Integer.toString(machine.timeLeft());
                 statusIcon = (machine.getType() == Machine.Type.WASHER) ? R.drawable.icon_water : R.drawable.icon_drying;
-                inProgress = true;
-                progress = 50;
+                holder.progressBar.enableIndeterminateMode(true);
             break;
 
             case DONE_DOOR_CLOSED:
                 statusColor = ContextCompat.getColor(context, R.color.Yellow);
                 statusIcon = R.drawable.icon_waiting;
+                holder.progressBar.setProgress(progress);
             break;
 
             default:
                 statusColor = ContextCompat.getColor(context, R.color.Grey);
                 statusIcon = R.drawable.icon_close;
+                holder.progressBar.setProgress(progress);
             break;
 
         }
@@ -144,8 +146,6 @@ public class MachineGridStatusAdapter extends BaseAdapter {
         holder.machineNumber.setText(machine.machineNumber() + "");
         holder.timeLeft.setText(timeLeft);
         holder.machineStatus.setText(machine.status().description());
-        holder.progressBar.enableIndeterminateMode(machine.status() == Machine.Status.IN_PROGRESS);
-        holder.progressBar.setProgress(progress);
         holder.machineIconLittle.setImageResource(statusIcon);
         holder.machineIconLittle.setColorFilter(statusColor);
         holder.machineIcon.setColorFilter(statusColor);
