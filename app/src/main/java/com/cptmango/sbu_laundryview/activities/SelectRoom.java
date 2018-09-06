@@ -42,7 +42,7 @@ public class SelectRoom extends AppCompatActivity{
 
     }
 
-    void onButtonClick(View view){
+    public void onButtonClick(View view){
 
         switch(view.getId()){
 

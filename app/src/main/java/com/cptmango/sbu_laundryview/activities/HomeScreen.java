@@ -150,10 +150,12 @@ public class HomeScreen extends AppCompatActivity {
     public void onBackPressed() {
 
         View machineMenu = findViewById(R.id.machine_menu);
+        View machineBG = findViewById(R.id.bg);
 
         // If the machine info menu is showing, hide it.
         if(machineMenu.getAlpha() == 1.0){
             Animations.hide(machineMenu);
+            Animations.hide(machineBG);
         }
         // Do regular back button stuff (exit the app/activity).
         else {
