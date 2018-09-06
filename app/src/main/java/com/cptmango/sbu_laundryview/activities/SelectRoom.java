@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
-import com.cptmango.sbu_laundryview.data.DataManager;
 import com.cptmango.sbu_laundryview.ui.Animations;
 
 /**

@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 
-public class UI_Utilities {
+public class Utilities {
 
     public static void changeStatusBarColor(Window window, String color){
 

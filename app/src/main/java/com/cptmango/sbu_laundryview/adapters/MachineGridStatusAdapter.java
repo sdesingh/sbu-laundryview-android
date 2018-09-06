@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -18,10 +17,8 @@ import android.widget.TextView;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.data.model.Machine;
-import com.cptmango.sbu_laundryview.data.model.MachineStatus;
 import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
-import com.cptmango.sbu_laundryview.ui.UI_Utilities;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.ArrayList;

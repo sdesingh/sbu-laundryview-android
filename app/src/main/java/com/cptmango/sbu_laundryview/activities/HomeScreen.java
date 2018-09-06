@@ -37,7 +37,7 @@ import com.cptmango.sbu_laundryview.data.DataManager;
 import com.cptmango.sbu_laundryview.data.model.Machine;
 import com.cptmango.sbu_laundryview.data.model.Room;
 import com.cptmango.sbu_laundryview.ui.Animations;
-import com.cptmango.sbu_laundryview.ui.UI_Utilities;
+import com.cptmango.sbu_laundryview.ui.Utilities;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -91,7 +91,8 @@ public class HomeScreen extends AppCompatActivity {
 
             // Setup User Defaults
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-            editor.putInt("reminder", 5);
+            editor.putInt("reminder", 2);
+            editor.apply();
 
             // Start activity to select a room.
             Intent intent = new Intent(this, SelectRoom.class);
@@ -133,6 +134,7 @@ public class HomeScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(appPaused){
+            Log.i("LOG", "App has returned from background.");
             updateData();
             appPaused = false;
         }
@@ -142,6 +144,7 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i("LOG", "App has entered the background.");
         appPaused = true;
     }
 
@@ -328,7 +331,7 @@ public class HomeScreen extends AppCompatActivity {
         refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
 
         // Setting up title bar.
-        UI_Utilities.changeStatusBarColor(getWindow(), quadColor);
+        Utilities.changeStatusBarColor(getWindow(), quadColor);
 
         TextView buildingNameText = (TextView) findViewById(R.id.txt_buildingName);
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
@@ -463,7 +466,7 @@ public class HomeScreen extends AppCompatActivity {
         // Resizing grid.
         int numberOfMachines = numberOfFavorites / 2;
         numberOfMachines += ((numberOfFavorites % 2 == 0) ? 0 : 1);
-        UI_Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+        Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
         favoriteGrid.setColumnWidth(GridView.AUTO_FIT);
         favoriteGrid.setNumColumns(GridView.AUTO_FIT);
@@ -517,7 +520,7 @@ public class HomeScreen extends AppCompatActivity {
                 // Resizing grid.
                 int numberOfMachines = numberOfFavorites / 2;
                 numberOfMachines += ((numberOfFavorites % 2 == 0) ? 0 : 1);
-                UI_Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+                Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
 
                 favoriteAdapter.notifyDataSetChanged();
             break;
@@ -544,8 +547,9 @@ public class HomeScreen extends AppCompatActivity {
 
         // Time is set to the minutes left until the machine is done.
         long notificationTime = machine.timeLeft() * 60000;
-        // Two minutes are subtracted from the notification time.
-        notificationTime -= 120000;
+        // User defined minutes are subtracted from the notification time.
+        int userReminderTime = 60_000 * PreferenceManager.getDefaultSharedPreferences(this).getInt("reminder", 2);
+        notificationTime -= userReminderTime;
         if(notificationTime < 0){
             Toast.makeText(context, "The machine will be ready soon. No reminder set.", Toast.LENGTH_SHORT).show();
             return;
@@ -556,7 +560,6 @@ public class HomeScreen extends AppCompatActivity {
         notificationIntent.putExtra("roomName", buildingName);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, machineNumber, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
 
         long timeInFuture = SystemClock.elapsedRealtime() + notificationTime;
 

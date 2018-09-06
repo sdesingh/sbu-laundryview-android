@@ -7,18 +7,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.activities.HomeScreen;
 
 public class NotifyUser extends BroadcastReceiver {
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         final long[] DEFAULT_VIBRATE_PATTERN = {0, 1000, 250, 1000, 250, 1000, 250, 1000, 250, 1000, 250};
 
-        System.out.println("THIS WAS CALLED!");
         int machineNumber = intent.getIntExtra("machineNumber", 0);
         String roomName = intent.getStringExtra("roomName");
 
@@ -39,8 +38,8 @@ public class NotifyUser extends BroadcastReceiver {
         Notification notification = builder.build();
         notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE |  Notification.DEFAULT_LIGHTS;
 
+        Log.i("LOG", "Creating user notification.");
         notificationManager.notify(machineNumber, notification);
-
 
     }
 }

@@ -50,7 +50,7 @@ public class DataManager {
 
         String url = context.getResources().getString(R.string.url);
         dataURL = url + "/" + getURLName(quad) + "/" + getURLName(building);
-        System.out.println(dataURL);
+
     }
 
     public void getData(){
@@ -76,7 +76,7 @@ public class DataManager {
             error -> {
                 Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
                 Log.i("LOG", "An error has occurred while retrieving the data.");
-                Log.v("NETWORK_ERROR", error.toString());
+                Log.v("LOG", error.toString());
         });
 
         queue.add(request);
@@ -142,11 +142,10 @@ public class DataManager {
                     case 3: statusCode = Machine.Status.OUT_OF_ORDER;
                     break;
 
-                    case 4: statusCode = Machine.Status.OUT_OF_ORDER;
+                    case 4: statusCode = Machine.Status.UNKNOWN;
                     break;
 
                     default:
-                        System.out.println("Unknown status code: " + machine.getInt("statusCode"));
                         statusCode = Machine.Status.UNKNOWN;
                     break;
 
@@ -174,7 +173,7 @@ public class DataManager {
 
         } catch (JSONException e){
             Log.i("LOG", "An error has occurred while parsing the data.");
-            Log.v("JSON_ERROR", e.toString());
+            Log.v("LOG", e.toString());
             return false;
         }
 

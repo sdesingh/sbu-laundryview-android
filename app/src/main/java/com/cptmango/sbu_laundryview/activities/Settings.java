@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,9 @@ import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.data.DataManager;
 
 public class Settings extends AppCompatActivity{
+
+    // Used to fix a weird bug in Android with the selection of the drop down menu.
+    private boolean created = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,13 +39,19 @@ public class Settings extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                if(!created){
+                    created = true;
+                }else {
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
 
-                int reminderTime = 5 - position;
+                    int reminderTime = 5 - position;
 
-                editor.putInt("reminder", reminderTime);
-                editor.apply();
-                Toast.makeText(getApplicationContext(), "Reminder time set.", Toast.LENGTH_SHORT).show();
+                    editor.putInt("reminder", reminderTime);
+                    editor.apply();
+                    Toast.makeText(getApplicationContext(), "Reminder time set.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
             @Override
@@ -68,6 +78,7 @@ public class Settings extends AppCompatActivity{
     }
 
     public void changeRoom(){
+        Log.i("LOG", "User is changing the room.");
         setResult(RESULT_OK);
         Intent intent = new Intent(this, SelectRoom.class);
         startActivityForResult(intent, 1);
