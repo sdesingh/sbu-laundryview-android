@@ -20,6 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.GridView;
@@ -66,6 +67,8 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        Log.i("LOG", "App launched successfully. Checking for user defaults.");
+
         context = this;
         initialCheck();
         createNotificationChannel();
@@ -83,6 +86,8 @@ public class HomeScreen extends AppCompatActivity {
 
 //        ENABLE THIS ONCE TESTING DONE
         if(!prefs.contains("quad")){
+
+            Log.i("LOG", "User preferences not found. Launching room select activity.");
 
             // Setup User Defaults
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
@@ -166,6 +171,8 @@ public class HomeScreen extends AppCompatActivity {
 
     void connectToAPI() {
 
+        Log.i("LOG", "User preferences found. Connecting to API.");
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         quadName = prefs.getString("quad", "Mendelsohn");
@@ -179,6 +186,8 @@ public class HomeScreen extends AppCompatActivity {
             request -> {
                 if (pager == null && dataManager.getRoomData() != null) {
                     dataManager.loadFavoritesFromPreferences(context);
+
+                    Log.i("LOG", "Initializing UI.");
                     initializeUI();
 
                 } else {
@@ -343,6 +352,8 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     void updateData(){
+
+        Log.i("LOG", "Refreshing data.");
 
         dataManager.getData();
         // Show Refreshing

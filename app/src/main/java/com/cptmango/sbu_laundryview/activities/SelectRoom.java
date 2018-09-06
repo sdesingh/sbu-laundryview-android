@@ -1,10 +1,13 @@
 package com.cptmango.sbu_laundryview.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.SelectQuadAdapter;
@@ -68,8 +71,25 @@ public class SelectRoom extends AppCompatActivity{
 
         View roomMenu = findViewById(R.id.menu_roomSelect);
         View menuDark = findViewById(R.id.img_darkMenu);
+
+        // User decided to change his mind about the quad.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.remove("quad");
+        editor.remove("quadColor");
+        editor.apply();
+
+
         Animations.hide(roomMenu);
         Animations.hide(menuDark);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Toast.makeText(this, "Please select a room.", Toast.LENGTH_SHORT).show();
 
     }
 

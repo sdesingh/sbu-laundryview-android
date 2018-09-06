@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -55,8 +56,8 @@ public class DataManager {
     public void getData(){
 
         if(timeout != 0) {
-//            Toast.makeText(context, "Retrying refresh request " + timeout, Toast.LENGTH_SHORT).show();
-            System.out.println("Retrying request " + timeout);
+
+            Log.i("LOG", "Unable to retrieve data. Retrying request... " + timeout + "/3");
         }
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, dataURL, null,
@@ -74,8 +75,8 @@ public class DataManager {
 
             error -> {
                 Toast.makeText(context, "An error occurred while retrieving data. Try again later.", Toast.LENGTH_LONG).show();
-                System.out.println("An error has occurred retrieving the data. Retrying.");
-                System.out.println("ERROR" + error.toString());
+                Log.i("LOG", "An error has occurred while retrieving the data.");
+                Log.v("NETWORK_ERROR", error.toString());
         });
 
         queue.add(request);
@@ -90,7 +91,7 @@ public class DataManager {
 
             // Check whether the data retrieval was successful.
             if(machines.length() == 0){
-                System.out.println("Data was empty.");
+                Log.i("LOG", "Error while parsing JSON. The data was empty.");
                 return false;
             }
 
@@ -167,11 +168,13 @@ public class DataManager {
 
             // Reset timeout. Retrieval and parse was successful.
             timeout = 0;
+
+            Log.i("LOG", "JSON Data parsed successfully.");
             return true;
 
         } catch (JSONException e){
-            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-            System.out.println("JSON EXCEPTION: " + e.toString() );
+            Log.i("LOG", "An error has occurred while parsing the data.");
+            Log.v("JSON_ERROR", e.toString());
             return false;
         }
 
