@@ -75,7 +75,6 @@ public class Room {
 
         }
 
-
         return available;
     }
 
@@ -95,8 +94,8 @@ public class Room {
 
         }
 
-
-        return available; }
+        return available;
+    }
 
     public int totalDryers(){ return totalDryers; }
     public void setTotalDryers(int totalDryers){ this.totalDryers = totalDryers; }

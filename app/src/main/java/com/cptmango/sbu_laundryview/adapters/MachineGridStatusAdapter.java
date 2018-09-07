@@ -197,7 +197,7 @@ public class MachineGridStatusAdapter extends BaseAdapter {
             break;
 
             case DONE_DOOR_CLOSED:
-                showNotifyBtn = true;
+                showNotifyBtn = false;
                 machineTimeLeft = machine.status().description();
                 statusColor = R.color.Yellow;
                 textSize = 30;

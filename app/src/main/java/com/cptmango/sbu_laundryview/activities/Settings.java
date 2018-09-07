@@ -77,12 +77,25 @@ public class Settings extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == 1){
+
+            if(resultCode == RESULT_OK){
+                finish();
+            }else{
+
+            }
+
+        }
+    }
+
     public void changeRoom(){
         Log.i("LOG", "User is changing the room.");
         setResult(RESULT_OK);
         Intent intent = new Intent(this, SelectRoom.class);
         startActivityForResult(intent, 1);
-
     }
 
 

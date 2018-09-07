@@ -10,10 +10,10 @@
         <item>Kelly</item>
         <item>Roosevelt</item>
         <item>H Quad</item>
+        <item>Nobel</item>
         <item>West</item>
         <item>Chavez</item>
         <item>Tubman</item>
-
 
     </string-array>
 
@@ -28,6 +28,7 @@
         <item> </item>
         <item> </item>
         <item> </item>
+        <item> </item>
 
     </string-array>
 
@@ -39,6 +40,7 @@
         <item>#8e44ad</item>
         <item>#ff5705</item>
         <item>#27ae60</item>
+        <item>#ff9f43</item>
         <item>#8b052a</item>
         <item>#96d8f2</item>
         <item>#96d8f2</item>
@@ -109,6 +111,11 @@
         <item>James</item>
         <item>Langmuir</item>
 
+    </string-array>
+    <!--Nobel Buildings-->
+    <string-array name="Nobel">
+        <item>Lauterbur</item>
+        <item>Yang</item>
     </string-array>
     <!--West Buildings-->
     <string-array name="West">

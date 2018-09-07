@@ -67,7 +67,7 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        Log.i("LOG", "App launched successfully. Checking for user defaults.");
+        Log.i("LOG", "App launched successfully. Checking for user preferences.");
 
         context = this;
         initialCheck();
@@ -98,11 +98,12 @@ public class HomeScreen extends AppCompatActivity {
             Intent intent = new Intent(this, SelectRoom.class);
             startActivityForResult(intent, 1);
 
-
         }
         // The user has already previously selected a room.
-        else connectToAPI();
-
+        else {
+            Log.i("LOG", "User preferences found. Connecting to API.");
+            connectToAPI();
+        }
 
     }
 
@@ -119,11 +120,12 @@ public class HomeScreen extends AppCompatActivity {
         }
         // Changed Room
         else if (requestCode == 2){
-
             if(resultCode == RESULT_OK){
                 this.recreate();
                 dataManager.clearUserFavorites(this);
                 favoriteAdapter.notifyDataSetChanged();
+            }else {
+
             }
 
         }
@@ -174,13 +176,11 @@ public class HomeScreen extends AppCompatActivity {
 
     void connectToAPI() {
 
-        Log.i("LOG", "User preferences found. Connecting to API.");
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         quadName = prefs.getString("quad", "Mendelsohn");
         buildingName = prefs.getString("building", "Irving");
-        quadColor = prefs.getString("quadColor", "000000");
+        quadColor = prefs.getString("quadColor", "#f1c40f");
 
         dataManager = new DataManager(this, quadName, buildingName);
         dataManager.getData();
@@ -544,6 +544,11 @@ public class HomeScreen extends AppCompatActivity {
         TextView number = (TextView) findViewById(R.id.txt_machineNumber);
         int machineNumber = Integer.parseInt(number.getText().toString());
         Machine machine = dataManager.getRoomData().getMachine(machineNumber - 1);
+
+        if(!dataManager.getRoomData().getMachine(machineNumber - 1).isFavorite()){
+            dataManager.changeFavoriteStatus(machineNumber - 1);
+            favoriteAdapter.notifyDataSetChanged();
+        }
 
         // Time is set to the minutes left until the machine is done.
         long notificationTime = machine.timeLeft() * 60000;

@@ -186,7 +186,7 @@ public class DataManager {
     }
 
     public void changeFavoriteStatus(int machineNumber){
-        Machine machine = room.getMachine(machineNumber - 1);
+        Machine machine = room.getMachine(machineNumber);
         ImageView star = context.findViewById(R.id.star);
 
         String toastText;
@@ -233,7 +233,7 @@ public class DataManager {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 
         editor.remove("favorites");
-        editor.commit();
+        editor.apply();
 
         for(Machine machine : getRoomData().getMachines()){
 
