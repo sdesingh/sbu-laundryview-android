@@ -36,7 +36,7 @@ public class NotifyUser extends BroadcastReceiver {
         builder.setVibrate(DEFAULT_VIBRATE_PATTERN);
         builder.setContentIntent(pendingIntent);
         Notification notification = builder.build();
-        notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE |  Notification.DEFAULT_LIGHTS;
+        notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE |  Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
 
         Log.i("LOG", "Creating user notification.");
         notificationManager.notify(machineNumber, notification);
