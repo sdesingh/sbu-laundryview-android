@@ -505,7 +505,7 @@ public class HomeScreen extends AppCompatActivity {
 
                 TextView number = findViewById(R.id.txt_machineNumber);
                 int machineNumber = Integer.parseInt(number.getText().toString());
-                dataManager.changeFavoriteStatus(machineNumber);
+                dataManager.changeFavoriteStatus(machineNumber - 1);
                 int numberOfFavorites = dataManager.getRoomData().totalFavorites();
 
                 // Showing not found icon.
@@ -545,8 +545,15 @@ public class HomeScreen extends AppCompatActivity {
         int machineNumber = Integer.parseInt(number.getText().toString());
         Machine machine = dataManager.getRoomData().getMachine(machineNumber - 1);
 
-        if(!dataManager.getRoomData().getMachine(machineNumber - 1).isFavorite()){
+        if(!machine.isFavorite()){
             dataManager.changeFavoriteStatus(machineNumber - 1);
+
+            // Resizing grid.
+            int numberOfFavorites = dataManager.getRoomData().totalFavorites();
+            int numberOfMachines = numberOfFavorites / 2;
+            numberOfMachines += ((numberOfFavorites % 2 == 0) ? 0 : 1);
+            Utilities.resizeGridViewHeight(favoriteGrid, 200 * (numberOfMachines), context);
+
             favoriteAdapter.notifyDataSetChanged();
         }
 
