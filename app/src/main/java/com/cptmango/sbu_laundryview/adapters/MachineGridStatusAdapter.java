@@ -42,8 +42,6 @@ public class MachineGridStatusAdapter extends BaseAdapter {
 
         updateMachineData();
 
-        System.out.println(machines.size());
-
     }
 
     @Override

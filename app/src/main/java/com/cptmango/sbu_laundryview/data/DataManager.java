@@ -32,7 +32,6 @@ import javax.crypto.Mac;
 public class DataManager {
 
     private String quad, building, dataURL;
-    private boolean saved = false;
     private int timeout = 0;
 
     private Activity context;

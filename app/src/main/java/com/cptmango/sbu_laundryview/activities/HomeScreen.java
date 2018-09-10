@@ -46,7 +46,7 @@ public class HomeScreen extends AppCompatActivity {
     GridView dryerGrid;
     GridView favoriteGrid;
     ViewPager pager;
-    View refreshed;
+    View networkStatusBar;
     MachineGridStatusAdapter washerAdapter;
     MachineGridStatusAdapter dryerAdapter;
     MachineGridStatusAdapter favoriteAdapter;
@@ -65,6 +65,7 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.ThemeOverlay_AppCompat_Dark_ActionBar);
         setContentView(R.layout.activity_home_screen);
 
         Log.i("LOG", "App launched successfully. Checking for user preferences.");
@@ -302,16 +303,16 @@ public class HomeScreen extends AppCompatActivity {
             summaryRefresh.setRefreshing(false);
 
             if(dataManager.getRoomData() != null){
-                refreshed.setVisibility(View.VISIBLE);
-                refreshed
+                networkStatusBar.setVisibility(View.VISIBLE);
+                networkStatusBar
                         .animate()
                         .translationY(0)
                         .setDuration(200)
                         .setInterpolator(new LinearInterpolator())
                         .withEndAction(() -> {
-                            refreshed.animate().translationY(-100).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
+                            networkStatusBar.animate().translationY(-100).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
                                     .withEndAction(() -> {
-                                        refreshed.setVisibility(View.GONE);
+                                        networkStatusBar.setVisibility(View.GONE);
                                     });
 
                         });
@@ -328,7 +329,7 @@ public class HomeScreen extends AppCompatActivity {
         TextView quadNameText = (TextView) findViewById(R.id.txt_quadName);
         View machineMenu = findViewById(R.id.machine_menu); machineMenu.setTranslationY(50);
 
-        refreshed = findViewById(R.id.network_status); refreshed.setTranslationY(-100); refreshed.setVisibility(View.GONE);
+        networkStatusBar = findViewById(R.id.network_status); networkStatusBar.setTranslationY(-100); networkStatusBar.setVisibility(View.GONE);
 
         // Setting up title bar.
         Utilities.changeStatusBarColor(getWindow(), quadColor);
@@ -547,6 +548,15 @@ public class HomeScreen extends AppCompatActivity {
 
         if(!machine.isFavorite()){
             dataManager.changeFavoriteStatus(machineNumber - 1);
+
+            // Showing not found icon.
+            if(dataManager.getRoomData().totalFavorites() == 0){
+                favoriteGrid.setVisibility(View.GONE);
+                findViewById(R.id.img_notFound).setVisibility(View.VISIBLE);
+            }else{
+                findViewById(R.id.img_notFound).setVisibility(View.GONE);
+                favoriteGrid.setVisibility(View.VISIBLE);
+            }
 
             // Resizing grid.
             int numberOfFavorites = dataManager.getRoomData().totalFavorites();
