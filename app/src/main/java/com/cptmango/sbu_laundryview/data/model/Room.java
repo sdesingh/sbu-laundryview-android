@@ -11,13 +11,13 @@ public class Room {
     private int totalDryers;
     private int totalMachines;
 
-    public Room(String quadName, String roomName, int totalWashers, int dryers){
+    public Room(String quadName, String roomName){
 
         this.roomName = roomName;
         this.quadName = quadName;
-        this.totalWashers = totalWashers;
-        this.totalDryers = dryers;
-        this.totalMachines = totalWashers + dryers;
+        this.totalWashers = 0;
+        this.totalDryers = 0;
+        this.totalMachines =  0;
 
     }
 

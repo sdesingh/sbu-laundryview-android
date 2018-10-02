@@ -94,28 +94,22 @@ public class DataManager {
                 return false;
             }
 
-            if(room == null){
-                room = new Room(
-                        quad,
-                        building,
-                        data.getInt("totalWashers"),
-                        data.getInt("totalDryers"));
-
-            }
+            if(room == null)
+                room = new Room(quad, building);
 
             ArrayList<Machine> newMachineData = new ArrayList<>();
 
-            for(int i = 0; i < room.totalMachines(); i++){
+            for(int i = 0; i < machines.length(); i++){
 
                 JSONObject machine = machines.getJSONObject(i);
 
-                String machineStatusSummary = machine.getString("status");
                 Machine.Status statusCode;
                 Machine.Type machineType;
                 int machineTimeLeft;
+                int machineNumber = Integer.parseInt(machine.getString("appliance_desc"));
 
                 // Setting machine type.
-                switch(machine.getString("machineType").charAt(0)){
+                switch(machine.getString("appliance_type").charAt(0)){
 
                     case 'W': machineType = Machine.Type.WASHER;
                     break;
@@ -127,7 +121,7 @@ public class DataManager {
                 }
 
                 // Setting machine status.
-                switch(machine.getInt("statusCode")){
+                switch(machine.getInt("status_toggle")){
 
                     case 0: statusCode = Machine.Status.AVAILABLE;
                     break;
@@ -151,13 +145,11 @@ public class DataManager {
                 }
 
                 if(statusCode == Machine.Status.IN_PROGRESS) {
-                    double timeLeft = 1 - (machine.getInt("completionPercentage") / 100);
-                    timeLeft *= machine.getInt("cycleCompletionTime");
-                    machineTimeLeft = (int) timeLeft;
+                    machineTimeLeft = machine.getInt("time_remaining");
                 }
                 else { machineTimeLeft = -1; }
 
-                newMachineData.add(new Machine(i+1, machineTimeLeft, statusCode, machineType));
+                newMachineData.add(new Machine(machineNumber, machineTimeLeft, statusCode, machineType));
 
             }
 
