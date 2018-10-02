@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import javax.crypto.Mac;
 
@@ -38,6 +39,7 @@ public class DataManager {
     private Room room;
     private ArrayList<Integer> notificationList;
     private RequestQueue queue;
+    private HashMap<String,String> roomCodes = new HashMap<>();
 
     public DataManager(Activity context, String quad, String building){
         this.quad = quad;
@@ -47,8 +49,18 @@ public class DataManager {
         notificationList = new ArrayList<>();
         queue = Volley.newRequestQueue(context);
 
+        for(String code : context.getResources().getStringArray(R.array.LocationCodes)){
+
+            System.out.println(code);
+            String key = code.substring(0, code.indexOf("-"));
+            String value = code.substring(code.indexOf("-") + 1, code.length());
+
+            roomCodes.put(key, value);
+
+        }
+
         String url = context.getResources().getString(R.string.url);
-        dataURL = url + "/" + getURLName(quad) + "/" + getURLName(building);
+        dataURL = url + roomCodes.get(building);
 
     }
 
@@ -86,7 +98,7 @@ public class DataManager {
 
         try{
 
-            JSONArray machines = data.getJSONArray("machines");
+            JSONArray machines = data.getJSONArray("objects");
 
             // Check whether the data retrieval was successful.
             if(machines.length() == 0){
@@ -102,6 +114,9 @@ public class DataManager {
             for(int i = 0; i < machines.length(); i++){
 
                 JSONObject machine = machines.getJSONObject(i);
+
+                // Check if it is a washing machine.
+                if(!machine.has("appliance_desc")) continue;
 
                 Machine.Status statusCode;
                 Machine.Type machineType;
@@ -126,10 +141,10 @@ public class DataManager {
                     case 0: statusCode = Machine.Status.AVAILABLE;
                     break;
 
-                    case 2: statusCode = Machine.Status.IN_PROGRESS;
+                    case 1: statusCode = Machine.Status.DONE_DOOR_CLOSED;
                     break;
 
-                    case 1: statusCode = Machine.Status.DONE_DOOR_CLOSED;
+                    case 2: statusCode = Machine.Status.IN_PROGRESS;
                     break;
 
                     case 3: statusCode = Machine.Status.OUT_OF_ORDER;
@@ -138,8 +153,7 @@ public class DataManager {
                     case 4: statusCode = Machine.Status.UNKNOWN;
                     break;
 
-                    default:
-                        statusCode = Machine.Status.UNKNOWN;
+                    default: statusCode = Machine.Status.UNKNOWN;
                     break;
 
                 }

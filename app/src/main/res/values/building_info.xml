@@ -136,5 +136,45 @@
 
     </string-array>
 
+    <string-array name="LocationCodes">
+        <item>Irving-88000529</item>
+        <item>Amman-88000531</item>
+        <item>Gray-88000532</item>
+        <item>Oneill-88000530</item>
+        <item>Baruch-88000052</item>
+        <item>Dewey-88000051</item>
+        <item>Eisenhower-88000053</item>
+        <item>Hamilton-88000055</item>
+        <item>Schick-88000054</item>
+        <item>Cardozo-88000524</item>
+        <item>Gershwin-88000527</item>
+        <item>Hendrix-88000526</item>
+        <item>Mount-88000525</item>
+        <item>Whitman-88000528</item>
+        <item>Benedict AB-88000533</item>
+        <item>Benedict DE-88000534</item>
+        <item>James-88000535</item>
+        <item>Langmuir-88000536</item>
+        <item>Greeley A-88000510</item>
+        <item>Greeley B-88000511</item>
+        <item>Keller A-8800058</item>
+        <item>Keller B-8800059</item>
+        <item>Stimson A-8800056</item>
+        <item>Stimson B-8800057</item>
+        <item>Wagner A-88000512</item>
+        <item>Douglass A-88000514</item>
+        <item>Douglass B-88000515</item>
+        <item>Dreiser A-88000516</item>
+        <item>Dreiser B-88000517</item>
+        <item>Hand A-88000522</item>
+        <item>Hand B-88000523</item>
+        <item>Sanger A-88000518</item>
+        <item>Sanger B-88000519</item>
+        <item>Toscanini A-88000520</item>
+        <item>Toscanini B-88000521</item>
+        <item>Lauterber-88000569</item>
+        <item>Yang-88000570</item>
+    </string-array>
+
 
 </resources>
