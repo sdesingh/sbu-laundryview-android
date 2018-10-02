@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.crypto.Mac;
@@ -164,7 +165,7 @@ public class DataManager {
                 else { machineTimeLeft = -1; }
 
                 newMachineData.add(new Machine(machineNumber, machineTimeLeft, statusCode, machineType));
-
+                Collections.sort(newMachineData);
             }
 
             room.setMachineData(newMachineData);

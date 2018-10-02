@@ -1,6 +1,8 @@
 package com.cptmango.sbu_laundryview.data.model;
 
-public class Machine {
+import android.support.annotation.NonNull;
+
+public class Machine implements Comparable{
 
     private int machineNumber;
     private int timeLeft;
@@ -31,6 +33,16 @@ public class Machine {
 
     public Type getType() { return type; }
     public void setType(Type type) { this.type = type; }
+
+    @Override
+    public int compareTo(@NonNull Object compare) {
+        if(compare instanceof Machine){
+            return this.machineNumber() - ((Machine) compare).machineNumber();
+        }else {
+            return 0;
+        }
+    }
+
 
     public enum Type {
 
