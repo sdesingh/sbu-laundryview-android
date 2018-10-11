@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SBU-LaundryView</string>
+    <string name="app_name">SBU LaundryView</string>
     <string name="url">https://www.laundryview.com/api/currentRoomData?school_desc_key=2376&amp;location=</string>
     <string name="preference_file_key" />
     <string name="nav_Home">Summary</string>

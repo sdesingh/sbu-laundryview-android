@@ -30,7 +30,7 @@ public class NotifyUser extends BroadcastReceiver {
 //        Drawable icon = (Drawable) context.getDrawable(R.drawable.icon_water);
 //        icon.setTint(context.getResources().getColor(R.color.White));
         //@TODO Change icon for the Notification.
-        builder.setSmallIcon(R.mipmap.ic_launcher_round);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(context.getResources().getColor(R.color.White));
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         builder.setVibrate(DEFAULT_VIBRATE_PATTERN);
