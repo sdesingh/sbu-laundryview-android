@@ -11,9 +11,12 @@
         <item>Roosevelt</item>
         <item>H Quad</item>
         <item>Nobel</item>
+        <item>Chapin</item>
         <item>West</item>
         <item>Chavez</item>
         <item>Tubman</item>
+        <item>Schomburg</item>
+
 
     </string-array>
 
@@ -25,10 +28,13 @@
         <item>Human Development</item>
         <item>Global Studies</item>
         <item>Leadership and Service</item>
+        <item>Sustainability</item>
+        <item>Housing for Graduate Students</item>
         <item> </item>
         <item> </item>
         <item> </item>
         <item> </item>
+
 
     </string-array>
 
@@ -39,11 +45,14 @@
         <item>#095892</item>
         <item>#8e44ad</item>
         <item>#ff5705</item>
-        <item>#27ae60</item>
-        <item>#ff9f43</item>
-        <item>#8b052a</item>
-        <item>#96d8f2</item>
-        <item>#96d8f2</item>
+        <item>#27ae60</item> <!--H Quad-->
+        <item>#ff9f43</item> <!--Nobel-->
+        <item>#B53471</item> <!--Chapin-->
+        <item>#0652DD</item> <!--West-->
+        <item>#e74c3c</item> <!--Chavez-->
+        <item>#1abc9c</item> <!--Tubman-->
+        <item>#34495e</item> <!--Schomburg-->
+
 
     </string-array>
 
@@ -120,41 +129,101 @@
     <!--West Buildings-->
     <string-array name="West">
 
-        <item>Unavailable</item>
+        <item>BLDG A / Floor 1</item>
+        <item>BLDG A / Floor 2</item>
+        <item>BLDG A / Floor 3</item>
+
+        <item>BLDG B / Floor 1</item>
+        <item>BLDG B / Floor 2</item>
+        <item>BLDG B / Floor 3</item>
+
+        <item>BLDG C / Floor 1</item>
+        <item>BLDG C / Floor 2</item>
+        <item>BLDG C / Floor 3</item>
+
+        <item>BLDG D / Floor 1</item>
+        <item>BLDG D / Floor 2</item>
+        <item>BLDG D / Floor 3</item>
+
+        <item>BLDG E / Floor 1</item>
+        <item>BLDG E / Floor 2</item>
+        <item>BLDG E / Floor 3</item>
+
+        <item>BLDG F / Floor 1</item>
+        <item>BLDG F / Floor 2</item>
+        <item>BLDG F / Floor 3</item>
+
+        <item>BLDG G / Floor 1</item>
+        <item>BLDG G / Floor 2</item>
+        <item>BLDG G / Floor 3</item>
+
+        <item>BLDG H / Floor 1</item>
+        <item>BLDG H / Floor 2</item>
+        <item>BLDG H / Floor 3</item>
+
+        <item>BLDG I / Floor 1</item>
+        <item>BLDG I / Floor 2</item>
+        <item>BLDG I / Floor 3</item>
 
     </string-array>
     <!--Chavez Buildings-->
     <string-array name="Chavez">
 
-        <item>Unavailable</item>
+        <item>RM B213A</item>
+        <item>RM B313A</item>
+        <item>RM B413A</item>
+        <item>RM B503A</item>
+        <item>RM B513A</item>
 
     </string-array>
     <!--Tubman Buildings-->
     <string-array name="Tubman">
 
-        <item>Unavailable</item>
+        <item>Room B013A</item>
+        <item>Room B113A</item>
+        <item>Room B213A</item>
+        <item>Room B313A</item>
+        <item>Room B413A</item>
+        <item>Room B509A</item>
+        <item>Room C514</item>
 
+    </string-array>
+    <!--Chapin Buildings-->
+    <string-array name="Chapin">
+        <item>Building B</item>
+        <item>Building C</item>
+        <item>Building E</item>
+        <item>Building K</item>
+    </string-array>
+    <!--Schomburg-->
+    <string-array name="Schomburg">
+        <item>Commons</item>
     </string-array>
 
     <string-array name="LocationCodes">
+        <!--Mendelsohn-->
         <item>Irving-88000529</item>
         <item>Amman-88000531</item>
         <item>Gray-88000532</item>
         <item>Oneill-88000530</item>
+        <!--Kelly-->
         <item>Baruch-8800052</item>
         <item>Dewey-8800051</item>
         <item>Eisenhower-8800053</item>
         <item>Hamilton-8800055</item>
         <item>Schick-8800054</item>
+        <!--Roth-->
         <item>Cardozo-88000524</item>
         <item>Gershwin-88000527</item>
         <item>Hendrix-88000526</item>
         <item>Mount-88000525</item>
         <item>Whitman-88000528</item>
+        <!--H Quad-->
         <item>Benedict AB-88000533</item>
         <item>Benedict DE-88000534</item>
         <item>James-88000535</item>
         <item>Langmuir-88000536</item>
+        <!--Roosevelt-->
         <item>Greeley A-88000510</item>
         <item>Greeley B-88000511</item>
         <item>Keller A-8800058</item>
@@ -162,6 +231,7 @@
         <item>Stimson A-8800056</item>
         <item>Stimson B-8800057</item>
         <item>Wagner A-88000512</item>
+        <!--Tabler-->
         <item>Douglass A-88000514</item>
         <item>Douglass B-88000515</item>
         <item>Dreiser A-88000516</item>
@@ -172,8 +242,68 @@
         <item>Sanger B-88000519</item>
         <item>Toscanini A-88000520</item>
         <item>Toscanini B-88000521</item>
+        <!--Nobel-->
         <item>Lauterber-88000569</item>
         <item>Yang-88000570</item>
+        <!--Chapin-->
+        <item>Building B-88000538</item>
+        <item>Building C-88000539</item>
+        <item>Building E-88000540</item>
+        <item>Building K-88000541</item>
+        <!--Tubman-->
+        <item>Room B013A-88000579</item>
+        <item>Room B113A-88000580</item>
+        <item>Room B213A-88000588</item>
+        <item>Room B313A-88000585</item>
+        <item>Room B413A-88000584</item>
+        <item>Room B509A-88000587</item>
+        <item>Room C514-88000586</item>
+        <!--Chavez-->
+        <item>RM B213A-88000583</item>
+        <item>RM B313A-88000578</item>
+        <item>RM B413A-88000577</item>
+        <item>RM B503A-88000582</item>
+        <item>RM B513A-88000581</item>
+        <!--Schomburg-->
+        <item>Commons-88000537</item>
+        <!--West-->
+        <item>BLDG A / Floor 1-88000542</item>
+        <item>BLDG A / Floor 2-88000543</item>
+        <item>BLDG A / Floor 3-88000544</item>
+
+        <item>BLDG B / Floor 1-88000545</item>
+        <item>BLDG B / Floor 2-88000546</item>
+        <item>BLDG B / Floor 3-88000547</item>
+
+        <item>BLDG C / Floor 1-88000548</item>
+        <item>BLDG C / Floor 2-88000549</item>
+        <item>BLDG C / Floor 3-88000550</item>
+
+        <item>BLDG D / Floor 1-88000551</item>
+        <item>BLDG D / Floor 2-88000552</item>
+        <item>BLDG D / Floor 3-88000553</item>
+
+        <item>BLDG E / Floor 1-88000554</item>
+        <item>BLDG E / Floor 2-88000555</item>
+        <item>BLDG E / Floor 3-88000556</item>
+
+        <item>BLDG F / Floor 1-88000557</item>
+        <item>BLDG F / Floor 2-88000558</item>
+        <item>BLDG F / Floor 3-88000559</item>
+
+        <item>BLDG G / Floor 1-88000560</item>
+        <item>BLDG G / Floor 2-88000561</item>
+        <item>BLDG G / Floor 3-88000562</item>
+
+        <item>BLDG H / Floor 1-88000563</item>
+        <item>BLDG H / Floor 2-88000564</item>
+        <item>BLDG H / Floor 3-88000565</item>
+
+        <item>BLDG I / Floor 1-88000566</item>
+        <item>BLDG I / Floor 2-88000567</item>
+        <item>BLDG I / Floor 3-88000568</item>
+
+
     </string-array>
 
 

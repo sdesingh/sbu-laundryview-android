@@ -64,6 +64,12 @@ public class SelectRoomAdapter extends BaseAdapter {
             case "Nobel": roomNames = context.getResources().getStringArray(R.array.Nobel);
             break;
 
+            case "Chapin": roomNames = context.getResources().getStringArray(R.array.Chapin);
+            break;
+
+            case "Schomburg": roomNames = context.getResources().getStringArray(R.array.Schomburg);
+            break;
+
             default: roomNames = new String[0];
             break;
         }

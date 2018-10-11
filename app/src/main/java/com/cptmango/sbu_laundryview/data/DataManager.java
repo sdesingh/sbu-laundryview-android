@@ -119,45 +119,47 @@ public class DataManager {
                 // Check if it is a washing machine.
                 if(!machine.has("appliance_desc")) continue;
 
-                Machine.Status statusCode;
-                Machine.Type machineType;
+                // Check if double machine
+                if(machine.get("model_number").equals("COMBO") || machine.get("type").equals("dblDry")){
+                    // Setting up the washer.
+                    Machine.Status statusCode = Room.parseMachineStatus(machine.getInt("status_toggle2"));
+
+                    Machine.Type machineType = Machine.Type.WASHER;
+                    if(machine.get("type").equals("dblDry")){
+                        machineType = Machine.Type.DRYER;
+                    }
+
+                    int machineNumber = Integer.parseInt(machine.getString("appliance_desc2"));
+                    int machineTimeLeft;
+
+                    if(statusCode == Machine.Status.IN_PROGRESS) {
+                        machineTimeLeft = machine.getInt("time_remaining2");
+                    }
+                    else { machineTimeLeft = -1; }
+
+                    // Add the washer to the list.
+                    newMachineData.add(new Machine(machineNumber, machineTimeLeft, statusCode, machineType));
+
+                    // Setting up the dryer.
+                    statusCode = Room.parseMachineStatus(machine.getInt("status_toggle"));
+                    machineType = Machine.Type.DRYER;
+                    machineNumber = Integer.parseInt(machine.getString("appliance_desc"));
+
+                    if(statusCode == Machine.Status.IN_PROGRESS) {
+                        machineTimeLeft = machine.getInt("time_remaining");
+                    }
+                    else { machineTimeLeft = -1; }
+
+                    // Add the dryer to the list.
+                    newMachineData.add(new Machine(machineNumber, machineTimeLeft, statusCode, machineType));
+
+                    continue; // Go to next machine.
+                }
+
+                Machine.Status statusCode = Room.parseMachineStatus(machine.getInt("status_toggle"));
+                Machine.Type machineType = Room.parseMachineType(machine.getString("appliance_type"));
                 int machineTimeLeft;
                 int machineNumber = Integer.parseInt(machine.getString("appliance_desc"));
-
-                // Setting machine type.
-                switch(machine.getString("appliance_type").charAt(0)){
-
-                    case 'W': machineType = Machine.Type.WASHER;
-                    break;
-                    case 'D': machineType = Machine.Type.DRYER;
-                    break;
-                    default: machineType = Machine.Type.OTHER;
-                    break;
-
-                }
-
-                // Setting machine status.
-                switch(machine.getInt("status_toggle")){
-
-                    case 0: statusCode = Machine.Status.AVAILABLE;
-                    break;
-
-                    case 1: statusCode = Machine.Status.DONE_DOOR_CLOSED;
-                    break;
-
-                    case 2: statusCode = Machine.Status.IN_PROGRESS;
-                    break;
-
-                    case 3: statusCode = Machine.Status.OUT_OF_ORDER;
-                    break;
-
-                    case 4: statusCode = Machine.Status.UNKNOWN;
-                    break;
-
-                    default: statusCode = Machine.Status.UNKNOWN;
-                    break;
-
-                }
 
                 if(statusCode == Machine.Status.IN_PROGRESS) {
                     machineTimeLeft = machine.getInt("time_remaining");

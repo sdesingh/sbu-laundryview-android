@@ -97,6 +97,49 @@ public class Room {
         return available;
     }
 
+    public static Machine.Type parseMachineType(String type){
+        Machine.Type machineType;
+        switch(type.charAt(0)){
+
+            case 'W': machineType = Machine.Type.WASHER;
+                break;
+            case 'D': machineType = Machine.Type.DRYER;
+                break;
+            default: machineType = Machine.Type.OTHER;
+                break;
+        }
+        return machineType;
+    }
+
+    public static Machine.Status parseMachineStatus(int status){
+        Machine.Status statusCode;
+
+        // Setting machine status.
+        switch(status){
+
+            case 0: statusCode = Machine.Status.AVAILABLE;
+                break;
+
+            case 1: statusCode = Machine.Status.DONE_DOOR_CLOSED;
+                break;
+
+            case 2: statusCode = Machine.Status.IN_PROGRESS;
+                break;
+
+            case 3: statusCode = Machine.Status.OUT_OF_ORDER;
+                break;
+
+            case 4: statusCode = Machine.Status.UNKNOWN;
+                break;
+
+            default: statusCode = Machine.Status.UNKNOWN;
+                break;
+
+        }
+
+        return statusCode;
+    }
+
     public int totalDryers(){ return totalDryers; }
     public void setTotalDryers(int totalDryers){ this.totalDryers = totalDryers; }
 
