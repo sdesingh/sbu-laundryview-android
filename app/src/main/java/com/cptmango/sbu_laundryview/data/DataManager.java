@@ -52,7 +52,7 @@ public class DataManager {
 
         for(String code : context.getResources().getStringArray(R.array.LocationCodes)){
 
-            System.out.println(code);
+//            System.out.println(code);
             String key = code.substring(0, code.indexOf("-"));
             String value = code.substring(code.indexOf("-") + 1, code.length());
 

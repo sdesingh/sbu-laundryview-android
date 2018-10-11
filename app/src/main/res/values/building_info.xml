@@ -114,7 +114,7 @@
     </string-array>
     <!--Nobel Buildings-->
     <string-array name="Nobel">
-        <item>Lauterbur</item>
+        <item>Lauterber</item>
         <item>Yang</item>
     </string-array>
     <!--West Buildings-->
@@ -141,11 +141,11 @@
         <item>Amman-88000531</item>
         <item>Gray-88000532</item>
         <item>Oneill-88000530</item>
-        <item>Baruch-88000052</item>
-        <item>Dewey-88000051</item>
-        <item>Eisenhower-88000053</item>
-        <item>Hamilton-88000055</item>
-        <item>Schick-88000054</item>
+        <item>Baruch-8800052</item>
+        <item>Dewey-8800051</item>
+        <item>Eisenhower-8800053</item>
+        <item>Hamilton-8800055</item>
+        <item>Schick-8800054</item>
         <item>Cardozo-88000524</item>
         <item>Gershwin-88000527</item>
         <item>Hendrix-88000526</item>
