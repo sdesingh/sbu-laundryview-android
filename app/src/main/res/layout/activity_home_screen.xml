@@ -146,6 +146,7 @@
         layout="@layout/item_networkstatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"

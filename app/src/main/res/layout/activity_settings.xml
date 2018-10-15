@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
-        android:text="Appearance (Coming Soon)"
+        android:text="Appearance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/setting_changeRoom" />
     <!--Setting - Dark Mode-->
@@ -152,6 +152,7 @@
                 android:layout_marginEnd="16dp"
                 android:enabled="false"
                 android:clickable="false"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -161,7 +162,7 @@
     </android.support.v7.widget.CardView>
     <!--Setting - Accent Color-->
     <android.support.v7.widget.CardView
-        android:id="@+id/setting_accentColor"
+        android:id="@+id/setting_refresh"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
@@ -184,11 +185,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:fontFamily="@font/lato_bold"
-                android:text="Accent Color"
+                android:text="Refresh Button"
                 android:textColor="@color/Black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/switch_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:enabled="true"
+                android:onClick="onClick"
+                android:checked="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
@@ -204,7 +217,7 @@
         android:layout_marginTop="25dp"
         android:text="Notifications"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setting_accentColor" />
+        app:layout_constraintTop_toBottomOf="@id/setting_refresh" />
     <!--Setting - Remind Time-->
     <android.support.v7.widget.CardView
         android:id="@+id/settings_remindTime"

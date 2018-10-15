@@ -274,6 +274,10 @@ public class DataManager {
         return queue;
     }
 
+    public void resetQueue() {
+        queue = Volley.newRequestQueue(context);
+    }
+
     /**
      * Changes the spaces of the names within building to underscores.
      * Example --> "Greeley A" to "Greeley_A"

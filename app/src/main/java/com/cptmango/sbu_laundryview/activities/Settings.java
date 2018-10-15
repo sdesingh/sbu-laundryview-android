@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.cptmango.sbu_laundryview.R;
@@ -39,18 +41,12 @@ public class Settings extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(!created){
-                    created = true;
-                }else {
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
 
-                    int reminderTime = 5 - position;
+                int reminderTime = 5 - position;
 
-                    editor.putInt("reminder", reminderTime);
-                    editor.apply();
-                    Toast.makeText(getApplicationContext(), "Reminder time set.", Toast.LENGTH_SHORT).show();
-                }
-
+                editor.putInt("reminder", reminderTime);
+                editor.apply();
 
             }
 
@@ -59,9 +55,19 @@ public class Settings extends AppCompatActivity{
 
             }
         };
-
         spinner.setOnItemSelectedListener(listener);
 
+        Switch refresh = (Switch) findViewById(R.id.switch_refresh);
+        refresh.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            editor.putBoolean("refresh_button", isChecked);
+            editor.apply();
+//            Toast.makeText(getApplicationContext(), "Toggled refresh button.", Toast.LENGTH_SHORT).show();
+
+
+        });
+        refresh.setChecked(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("refresh_button", true)); // Set enabled/disabled
     }
 
     public void onClick(View view){
@@ -73,6 +79,7 @@ public class Settings extends AppCompatActivity{
             case R.id.setting_changeRoom:
                 changeRoom();
             break;
+
         }
 
     }

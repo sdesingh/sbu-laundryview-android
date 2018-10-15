@@ -29,6 +29,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
 import com.cptmango.sbu_laundryview.R;
 import com.cptmango.sbu_laundryview.adapters.HomeScreenFragmentPagerAdapter;
 import com.cptmango.sbu_laundryview.adapters.MachineGridStatusAdapter;
@@ -93,6 +94,7 @@ public class HomeScreen extends AppCompatActivity {
             // Setup User Defaults
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
             editor.putInt("reminder", 2);
+            editor.putBoolean("refresh_button", true);
             editor.apply();
 
             // Start activity to select a room.
@@ -111,12 +113,18 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intentData) {
 
+        appPaused = false;
+
+        // Show/hide the refresh button.
+        FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.btn_refresh);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        refresh.setVisibility(prefs.getBoolean("refresh_button", true) ? View.VISIBLE : View.GONE); // Show or hide the refresh button.
+
         // Selected Room
         if(requestCode == 1){
 
             if(resultCode == RESULT_OK){
                 connectToAPI();
-                appPaused = false;
             }
         }
         // Changed Room
@@ -124,7 +132,6 @@ public class HomeScreen extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 this.recreate();
                 dataManager.clearUserFavorites(this);
-                favoriteAdapter.notifyDataSetChanged();
             }else {
 
             }
@@ -138,8 +145,8 @@ public class HomeScreen extends AppCompatActivity {
         super.onResume();
         if(appPaused){
             Log.i("LOG", "App has returned from background.");
-            updateData();
             appPaused = false;
+            updateData();
         }
 
     }
@@ -149,12 +156,6 @@ public class HomeScreen extends AppCompatActivity {
         super.onPause();
         Log.i("LOG", "App has entered the background.");
         appPaused = true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dataManager.saveFavoritesToPreferences();
     }
 
     @Override
@@ -203,6 +204,8 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     void initializeUI(){
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         //Setting up view pager.
         pagerAdapter = new HomeScreenFragmentPagerAdapter(getSupportFragmentManager(), this);
@@ -295,7 +298,10 @@ public class HomeScreen extends AppCompatActivity {
         summaryRefresh.setOnRefreshListener(listener);
 
         // Data Refresh Listener
+        dataManager.resetQueue();
         dataManager.getQueue().addRequestFinishedListener(response -> {
+
+            Log.i("LOG", "Updating UI after refresh.");
 
             // Stop Refreshing
             dryerRefresh.setRefreshing(false);
@@ -310,10 +316,8 @@ public class HomeScreen extends AppCompatActivity {
                         .setDuration(200)
                         .setInterpolator(new LinearInterpolator())
                         .withEndAction(() -> {
-                            networkStatusBar.animate().translationY(-100).setDuration(300).setInterpolator(new LinearInterpolator()).setStartDelay(1000)
-                                    .withEndAction(() -> {
-                                        networkStatusBar.setVisibility(View.GONE);
-                                    });
+                            networkStatusBar.animate().translationY(-100).setDuration(300).setStartDelay(1000)
+                                    .withEndAction(() -> networkStatusBar.setVisibility(View.GONE));
 
                         });
 
@@ -347,7 +351,8 @@ public class HomeScreen extends AppCompatActivity {
         // Changing the color of UI elements to match the quad's color.
         refresh.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(quadColor)));
         refresh.setOnClickListener(v -> updateData());
-        refresh.setVisibility(View.GONE);
+
+        refresh.setVisibility(prefs.getBoolean("refresh_button", true) ? View.VISIBLE : View.GONE); // Show or hide the refresh button.
 
         colorL.setColorFilter(Color.parseColor(quadColor));
         colorR.setColorFilter(Color.parseColor(quadColor));
