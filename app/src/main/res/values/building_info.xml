@@ -165,6 +165,9 @@
         <item>BLDG I / Floor 2</item>
         <item>BLDG I / Floor 3</item>
 
+        <item>BLDG J / Floor 1</item>
+        <item>BLDG J / Floor 2</item>
+        <item>BLDG J / Floor 3</item>
     </string-array>
     <!--Chavez Buildings-->
     <string-array name="Chavez">
@@ -302,6 +305,10 @@
         <item>BLDG I / Floor 1-88000566</item>
         <item>BLDG I / Floor 2-88000567</item>
         <item>BLDG I / Floor 3-88000568</item>
+
+        <item>BLDG J / Floor 1-88000592</item>
+        <item>BLDG J / Floor 2-88000593</item>
+        <item>BLDG J / Floor 3-88000591</item>
 
     </string-array>
 
