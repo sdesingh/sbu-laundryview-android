@@ -1,7 +1,7 @@
-##SBU LaundryView
+## SBU LaundryView
 Allows students to track and view the status of more than a hundred machines on campus.
 
-###Features
+### Features
 - All buildings on the Stony Brook West Campus are supported.
 - View the status of each laundry machine and know when its available.
 - Set notifications to remind you when your laundry is done!
@@ -12,9 +12,10 @@ Allows students to track and view the status of more than a hundred machines on 
 F-Droid (Coming Soon)
 
 
-###Screenshots
+### Screenshots
 ![alt-text](https://i.imgur.com/HiKOuJ8.png)
 ![alt-text](https://i.imgur.com/PXx3rlK.png)
 ![alt-text](https://i.imgur.com/QT3NXZW.png)
 
 
+†
