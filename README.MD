@@ -14,9 +14,9 @@ Allows students to track and view the status of more than a hundred laundry mach
 </a>
 
 ## Screenshots
-<div style="display:grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px;" >
-    <img src="https://i.imgur.com/HiKOuJ8.png">
-    <img src="https://i.imgur.com/PXx3rlK.png">
-    <img src="https://i.imgur.com/QT3NXZW.png">
+<div style="display:flex;" >
+    <img width="33%" src="https://i.imgur.com/HiKOuJ8.png">
+    <img width="33%" src="https://i.imgur.com/PXx3rlK.png">
+    <img width="33%" src="https://i.imgur.com/QT3NXZW.png">
 
 </div>
