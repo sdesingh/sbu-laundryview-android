@@ -120,20 +120,17 @@ public class DataManager {
                 if(!machine.has("appliance_desc")) continue;
 
                 // Check if double machine
-                if(machine.get("model_number").equals("COMBO") || machine.get("type").equals("dblDry")){
+                if(machine.get("model_number").equals("COMBO")){
+
                     // Setting up the washer.
-                    Machine.Status statusCode = Room.parseMachineStatus(machine.getInt("status_toggle2"));
+                    Machine.Status statusCode = Room.parseMachineStatus(machine.getInt("status_toggle"));
+                    Machine.Type machineType = machine.get("appliance_type").equals("D") ? Machine.Type.DRYER : Machine.Type.WASHER;
 
-                    Machine.Type machineType = Machine.Type.WASHER;
-                    if(machine.get("type").equals("dblDry")){
-                        machineType = Machine.Type.DRYER;
-                    }
-
-                    int machineNumber = Integer.parseInt(machine.getString("appliance_desc2"));
+                    int machineNumber = Integer.parseInt(machine.getString("appliance_desc"));
                     int machineTimeLeft;
 
                     if(statusCode == Machine.Status.IN_PROGRESS) {
-                        machineTimeLeft = machine.getInt("time_remaining2");
+                        machineTimeLeft = machine.getInt("time_remaining");
                     }
                     else { machineTimeLeft = -1; }
 
@@ -141,12 +138,12 @@ public class DataManager {
                     newMachineData.add(new Machine(machineNumber, machineTimeLeft, statusCode, machineType));
 
                     // Setting up the dryer.
-                    statusCode = Room.parseMachineStatus(machine.getInt("status_toggle"));
-                    machineType = Machine.Type.DRYER;
-                    machineNumber = Integer.parseInt(machine.getString("appliance_desc"));
+                    statusCode = Room.parseMachineStatus(machine.getInt("status_toggle2"));
+                    machineType = machine.get("appliance_type").equals("D") ? Machine.Type.WASHER : Machine.Type.DRYER;
+                    machineNumber = Integer.parseInt(machine.getString("appliance_desc2"));
 
                     if(statusCode == Machine.Status.IN_PROGRESS) {
-                        machineTimeLeft = machine.getInt("time_remaining");
+                        machineTimeLeft = machine.getInt("time_remaining2");
                     }
                     else { machineTimeLeft = -1; }
 
